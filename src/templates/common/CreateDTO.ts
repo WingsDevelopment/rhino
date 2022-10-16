@@ -1,4 +1,4 @@
-import { generateProperties, DTOSchema } from "../../schema/ShemaModel";
+import { generateProperties, DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 
 export const GetCreateDTOString = (modelName: string, model: DTOSchema) => {

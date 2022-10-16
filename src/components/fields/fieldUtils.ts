@@ -1,6 +1,6 @@
 import { SingleColumnBoxTsx, TwoColumnBoxTsx } from "../boxes";
 import { DefaultReadOnlyTextField } from "./DefaultReadOnlyTextField";
-import { DTOSchema, getPropertiesFromSchema } from "../../schema/ShemaModel";
+import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
 import {
   pascalSplitedWithSpaceForEveryCapitalLetter,
   camelCase,
@@ -61,7 +61,9 @@ export const RenderReadonlyFields = (model: DTOSchema, modelName: string) => {
         .map((property) => {
           return DefaultReadOnlyTextField({
             label: pascalSplitedWithSpaceForEveryCapitalLetter(property.name),
-            propertyName: `${camelCase(modelName)}.${property.name}`,
+            propertyName: `${camelCase(modelName)}?.${
+              property.name
+            }?.toString()`,
           });
         })
         .join("\n")}`;

@@ -1,4 +1,4 @@
-import { getPropertiesFromSchema, DTOSchema } from "../../schema/ShemaModel";
+import { getPropertiesFromSchema, DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { LoadableCardWrapperTsx } from "../../components/loadable";
 import {

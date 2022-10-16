@@ -1,0 +1,13 @@
+'{ type: string; properties:
+{ [property: string]: 
+    { type: string; format?: string | undefined; items?: 
+    { type: string; format?: string | undefined; } | undefined; }; 
+}; 
+}' is not assignable to parameter of type 'DTOSchemaDTO'.
+  Property 'additionalProperties' is missing in type 
+  '{ type: string; properties: 
+  { [property: string]: 
+    { type: string; format?: string | undefined; items?: 
+    { type: string; format?: string | undefined; } | undefined; }; 
+}; 
+}' but required in type 'DTOSchemaDTO'.ts(2345)

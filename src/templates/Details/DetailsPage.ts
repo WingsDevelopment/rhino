@@ -1,4 +1,4 @@
-import { DTOSchema } from "../../schema/ShemaModel";
+import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";

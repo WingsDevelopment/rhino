@@ -1,9 +1,10 @@
 export interface DTOSchema {
+  name: string;
   type: string;
+  enum: string[];
   properties: {
     [key: string]: Property;
   };
-  additionalProperties: boolean;
 }
 
 export interface Property {
@@ -31,7 +32,6 @@ export const getPropertiesFromSchema = (model: DTOSchema): Property[] => {
 export const generateProperties = (model: DTOSchema) => {
   return `${getPropertiesFromSchema(model)
     .map((property) => {
-      console.log(property);
       return `${property.name}${property.nullable ? "?" : ""}: ${
         property.type || "any"
       };`;

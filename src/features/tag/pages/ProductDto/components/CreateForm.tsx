@@ -2,16 +2,16 @@ import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface Props {
-    submitHandler: (tag: Tag) => Promise<void>;
+    submitHandler: (productDto: ProductDto) => Promise<void>;
     isLoading: boolean;
 }
 
-export const CreateTagForm: React.FC<Props> = ({ submitHandler, isLoading }) => {
-    const methods = useForm<Tag>()
+export const CreateProductDtoForm: React.FC<Props> = ({ submitHandler, isLoading }) => {
+    const methods = useForm<ProductDto>()
     const { handleSubmit } = methods;
     
-    const onSubmit: SubmitHandler<Tag> = async (tag: Tag) => {
-        await submitHandler(tag);
+    const onSubmit: SubmitHandler<ProductDto> = async (productDto: ProductDto) => {
+        await submitHandler(productDto);
     };
     
     return (

@@ -51,8 +51,6 @@ interface Props<T> {
 //   );
 // };
 export const Table = <T extends {}>(props: Props<T>) => {
-  console.log("table log");
-  console.log(props);
   var firstModel = props.models[0];
   Object.keys(firstModel).forEach((key) => {
     console.log(typeof (firstModel as any)[key]);

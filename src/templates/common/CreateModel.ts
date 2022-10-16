@@ -4,7 +4,7 @@ import {
   getPropertiesFromSchema,
   Property,
   DTOSchema,
-} from "../../schema/ShemaModel";
+} from "../../models/DTOSchema";
 import { pascalCase } from "../../utils/stringUtils";
 
 export const GetCreateModelString = (modelName: string, model: DTOSchema) => {
