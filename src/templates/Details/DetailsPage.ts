@@ -3,7 +3,7 @@ import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";
 import { DetailsBody } from "./DetailsBody";
-import { id } from "../common";
+import { id, isLoading } from "../common";
 
 // prettier-ignore
 export const GetDetailsPageString = (
@@ -19,12 +19,12 @@ import { useParams } from 'react-router';
 
 export const Details${pascalCase(modelName)}Page: React.FC = () => {
     const { ${id} } = useParams<{ id: string }>();
-    const { ${camelCase(modelName)}, isLoading } = useGet${pascalCase(modelName)}();
+    const { ${camelCase(modelName)}, ${isLoading} } = useGet${pascalCase(modelName)}();
     const ${camelCase(modelName)} = get${pascalCase(modelName)}ByIdAsync(${id});
     ${renderDependencyHooks(model)}
 
     return (${PageLayout(
-      DetailsBody(modelName, "isLoading"),
+      DetailsBody(modelName),
       title,
       links,
       breadcrumbsAction

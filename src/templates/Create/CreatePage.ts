@@ -34,7 +34,7 @@ export const Create${pascalCase(modelName)}Page: React.FC = () => {
 
 
     return (${PageLayout(
-      CreateForm(modelName, handleSubmit, isLoading),
+      CreateForm(modelName),
       title,
       links,
       breadcrumbsAction

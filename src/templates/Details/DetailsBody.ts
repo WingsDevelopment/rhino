@@ -10,9 +10,8 @@ import { isLoading } from "../common";
 // prettier-ignore
 export const DetailsBody = (
     modelName: string,
-    isLoadingName: string,
 ) => {
-    return `<Details${pascalCase(modelName)}Body ${camelCase(modelName)}={${camelCase(modelName)}} isLoading={${isLoadingName}} />`;
+    return `<Details${pascalCase(modelName)}Body ${camelCase(modelName)}={${camelCase(modelName)}} ${isLoading}={${isLoading}} />`;
 }
 // prettier-ignore
 export const GetDetailsBodyString = (

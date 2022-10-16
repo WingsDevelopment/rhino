@@ -5,10 +5,11 @@ import {
   SingleColumnBody,
   TwoColumnBody,
 } from "../../components/fields/fieldUtils";
+import { handleSubmit, isLoading } from "../common";
 
 // prettier-ignore
-export const CreateForm = (modelName: string, handleSubmitName: string, isLoadingName: string) => {
-  return `<Create${pascalCase(modelName)}Form submitHandler={${handleSubmitName}} isLoading={${isLoadingName}} />`;
+export const CreateForm = (modelName: string) => {
+  return `<Create${pascalCase(modelName)}Form submitHandler={${handleSubmit}} ${isLoading}={${isLoading}} />`;
 }
 
 // prettier-ignore
@@ -21,12 +22,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface Props {
     submitHandler: (${camelCase(modelName)}: ${pascalCase(modelName)}) => Promise<void>;
-    isLoading: boolean;
+    ${isLoading}: boolean;
 }
 
-export const Create${pascalCase(modelName)}Form: React.FC<Props> = ({ submitHandler, isLoading }) => {
+export const Create${pascalCase(modelName)}Form: React.FC<Props> = ({ submitHandler, ${isLoading} }) => {
     const methods = useForm<${pascalCase(modelName)}>()
-    const { handleSubmit } = methods;
+    const { ${handleSubmit} } = methods;
     
     const onSubmit: SubmitHandler<${pascalCase(modelName)}> = async (${camelCase(modelName)}: ${pascalCase(modelName)}) => {
         await submitHandler(${camelCase(modelName)});
@@ -35,8 +36,8 @@ export const Create${pascalCase(modelName)}Form: React.FC<Props> = ({ submitHand
     return (
         <${MyFormProviderWithCardLayoutTsx}
             methods={methods}
-            onSubmit={handleSubmit(onSubmit)}
-            isLoading={isLoading}
+            onSubmit={${handleSubmit}(onSubmit)}
+            ${isLoading}={${isLoading}}
         >
             ${RenderFormBody(model, modelName)}
         </${MyFormProviderWithCardLayoutTsx}>
