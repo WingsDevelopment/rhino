@@ -1,4 +1,5 @@
 import { DTOSchema } from "./models/DTOSchema";
+import { getDtoName, getModelNameFromDtoName } from "./utils/consoleInputUtils";
 
 export let DTOs: { [key: string]: DTOSchema } = {};
 
@@ -10,7 +11,8 @@ export const fillDTOsFromEveryRef = (dtos: DTOSchema[], definitions: any) => {
   const onRefFound = (nameFromRef: string | undefined) => {
     if (!nameFromRef || DTOs[nameFromRef]) return;
     const newDTO: DTOSchema = {
-      name: nameFromRef,
+      name: getDtoName(nameFromRef),
+      modelName: getModelNameFromDtoName(getDtoName(nameFromRef)),
       ...(definitions as any)[nameFromRef],
     };
     newDtos.push(newDTO);

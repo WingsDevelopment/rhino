@@ -3,7 +3,9 @@ import * as readline from "readline";
 import { DTOs, fillDTOsFromEveryRef } from "./DTOManager";
 import {
   DTONames,
+  getDtoName,
   getDTONamesFromInput,
+  getModelNameFromDtoName,
   getModelNamesConfigured,
   ModelNames,
 } from "./utils/consoleInputUtils";
@@ -41,8 +43,13 @@ rl.question(
     Object.keys(dtoNames).forEach(key => {
       //todo change names
       let fullDtoName = (dtoNames as any)[key];
+      const modifiedDtoName = getDtoName(fullDtoName);
       if (fullDtoName) {
-        let DTO = { ...(definitions as any)[fullDtoName], name: fullDtoName };
+        let DTO = {
+          ...(definitions as any)[fullDtoName],
+          name: modifiedDtoName,
+          modelName: getModelNameFromDtoName(modifiedDtoName),
+        };
         if (DTO) {
           if (DTOs[fullDtoName]) console.log("DTO already exists");
           else DTOs[fullDtoName] = { ...DTO };

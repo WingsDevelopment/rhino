@@ -10,12 +10,10 @@ import {
   CreatePageName,
   GetCreatePageString,
 } from "./templates/Create/CreatePage";
-import { DetailsBodyName } from "./templates/Details/DetailsBody";
 import {
   DetailsPageName,
   GetDetailsPageString,
 } from "./templates/Details/DetailsPage";
-import { DTONames, ModelNames } from "./utils/consoleInputUtils";
 import { plural } from "./utils/stringUtils";
 
 //todo config?
@@ -40,11 +38,13 @@ export const CreateAllModelsAndDTOsFromDTOSchemas = (
       return DTOs[key];
     })
     .forEach(dto => {
-      const modelString = GetCreateModelString(dto.name, dto);
+      console.log("dto");
+      console.log(dto);
+      const modelString = GetCreateModelString(dto.modelName, dto);
       const dtoString = GetCreateDTOString(dto.name, dto);
 
       writeFileSync(
-        `${BaseModelsRoute(featureName)}/${dto.name}.ts`,
+        `${BaseModelsRoute(featureName)}/${dto.modelName}.ts`,
         modelString
       );
       writeFileSync(`${BaseDTOsRoute(featureName)}/${dto.name}.ts`, dtoString);

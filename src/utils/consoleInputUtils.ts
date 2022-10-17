@@ -52,10 +52,10 @@ export const getDTONamesFromInput = (
 export const getDTONamesConfigured = (dtoNames: DTONames): DTONames => {
   const { create, details, update, list } = dtoNames;
   return {
-    create: create?.replace(DTOExtensionRemove, DTOExtensionAdd),
-    details: details?.replace(DTOExtensionRemove, DTOExtensionAdd),
-    update: update?.replace(DTOExtensionRemove, DTOExtensionAdd),
-    list: list?.replace(DTOExtensionRemove, DTOExtensionAdd),
+    create: create ? getDtoName(create) : undefined,
+    details: details ? getDtoName(details) : undefined,
+    update: update ? getDtoName(update) : undefined,
+    list: list ? getDtoName(list) : undefined,
   };
 };
 
@@ -63,10 +63,10 @@ export const getModelNamesConfigured = (dtoNames: DTONames): ModelNames => {
   const { create, details, update, list } = dtoNames;
 
   const modelNames = {
-    create: create?.replace(DTOExtensionAdd, ModelExtensionAdd),
-    update: update?.replace(DTOExtensionAdd, ModelExtensionAdd),
-    details: details?.replace(DTOExtensionAdd, ModelExtensionAdd),
-    list: list?.replace(DTOExtensionAdd, ModelExtensionAdd),
+    create: create ? getModelNameFromDtoName(create) : undefined,
+    update: update ? getModelNameFromDtoName(update) : undefined,
+    details: details ? getModelNameFromDtoName(details) : undefined,
+    list: list ? getModelNameFromDtoName(list) : undefined,
   };
 
   if (!modelNames.update) modelNames.update = modelNames.create;
@@ -74,4 +74,15 @@ export const getModelNamesConfigured = (dtoNames: DTONames): ModelNames => {
   if (!modelNames.details) modelNames.details = modelNames.create;
 
   return modelNames;
+};
+
+export const getDtoName = (dtoName: string): string => {
+  return dtoName + DTOExtensionAdd;
+};
+
+export const getModelName = (modelName: string): string => {
+  return modelName + ModelExtensionAdd;
+};
+export const getModelNameFromDtoName = (dtoName: string): string => {
+  return dtoName.replace(DTOExtensionAdd, ModelExtensionAdd);
 };

@@ -1,5 +1,8 @@
+import { getDtoName, getModelName } from "../utils/consoleInputUtils";
+
 export interface DTOSchema {
   name: string;
+  modelName: string;
   type: string;
   enum: string[];
   properties: {
@@ -35,21 +38,37 @@ export const getPropertiesFromSchema = (model: DTOSchema): Property[] => {
 export const generateProperties = (model: DTOSchema) => {
   return `${getPropertiesFromSchema(model)
     .map(property => {
-      return `${property.name}${property.nullable ? "?" : ""}: ${getPropertyTypeString(property)};`;
+      return `${property.name}${property.nullable ? "?" : ""}: ${getPropertyTypeString(property, getModelName)};`;
     })
     .join("\n")}`;
 };
 
-export const getPropertyTypeString = (property: Property) => {
+// prettier-ignore
+export const generateDtoProperties = (model: DTOSchema) => {
+  return `${getPropertiesFromSchema(model)
+    .map(property => {
+      return `${property.name}${property.nullable ? "?" : ""}: ${getPropertyTypeString(property, getDtoName)};`;
+    })
+    .join("\n")}`;
+};
+
+export const getPropertyTypeString = (
+  property: Property,
+  nameFormatter: (name: string) => string
+) => {
   if (property.type === "array") {
     if (property.items.$ref) {
-      return `${property.items.$ref.split("/").pop()}[]`;
+      const nameFromRef = property.items.$ref.split("/").pop();
+      if (!nameFromRef) return "any";
+      return `${nameFormatter(nameFromRef)}[]`;
     } else {
       return `${property.items.type}[]`;
     }
   }
   if (property.$ref) {
-    return `${property.$ref.split("/").pop()}`;
+    const nameFromRef = property.$ref.split("/").pop();
+    if (!nameFromRef) return "any";
+    return nameFormatter(nameFromRef);
   }
   if (property.type === "integer") {
     return "number";
@@ -77,8 +96,11 @@ export const getPropertyTypeString = (property: Property) => {
   }
 };
 
-export const getDummyValueForProperty = (property: Property) => {
-  const type = getPropertyTypeString(property);
+export const getDummyValueForProperty = (
+  property: Property,
+  nameFormatter: (name: string) => string
+) => {
+  const type = getPropertyTypeString(property, nameFormatter);
   if (property.nullable) return "undefined";
   if (property.type === "array") return "[]";
   switch (type) {

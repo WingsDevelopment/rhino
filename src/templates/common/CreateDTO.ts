@@ -1,27 +1,25 @@
-import { generateProperties, DTOSchema } from "../../models/DTOSchema";
+import { DTOSchema, generateDtoProperties } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 
 export const GetCreateDTOString = (modelName: string, model: DTOSchema) => {
   return `
-export interface ${pascalCase(modelName)}DTO {
-  ${generateProperties(model)}
+export interface ${pascalCase(modelName)} {
+  ${generateDtoProperties(model)}
 }
 
-export const ${camelCase(modelName)}DtoExtension = (${
+export const ${camelCase(modelName)}Extension = (${
     "model: " +
-    pascalCase(modelName) +
-    "DTO" +
+    pascalCase(model.modelName) +
     "): " +
-    pascalCase(modelName) +
+    pascalCase(model.name) +
     " => ({ ...model })"
   }
   
-export const ${camelCase(modelName)}Extension = (${
+export const model${camelCase(modelName)}Extension = (${
     "dto: " +
-    pascalCase(modelName) +
+    pascalCase(model.name) +
     "): " +
-    pascalCase(modelName) +
-    "DTO" +
+    pascalCase(model.modelName) +
     " => ({ ...dto })"
   };`;
 };
