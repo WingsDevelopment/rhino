@@ -11,8 +11,7 @@ export const CreatePageName = (modelName: string) => {
 
 // prettier-ignore
 export const GetCreatePageString = (
-  modelName: string,
-  model: DTOSchema,
+  dto: DTOSchema,
   title: string,
   links: TLink[],
   breadcrumbsAction?: any
@@ -21,29 +20,29 @@ export const GetCreatePageString = (
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router';
 
-export const Create${pascalCase(modelName)}Page: React.FC = () => {
-    const { create${pascalCase(modelName)}Async, ${isLoading} } = useCreate${pascalCase(modelName)}();
+export const Create${pascalCase(dto.modelName)}Page: React.FC = () => {
+    const { create${pascalCase(dto.modelName)}Async, ${isLoading} } = useCreate${pascalCase(dto.modelName)}();
     const navigate = useNavigate();
-    ${renderDependencyHooks(model)}
+    ${renderDependencyHooks(dto)}
 
-    const ${handleSubmit} = async (${camelCase(modelName)}: ${pascalCase(modelName)}) => {
-        const ${result} = await create${pascalCase(modelName)}Async(${modelName});
-        navigate(${modelName.toUpperCase()}_ROUTES.index);
+    const ${handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
+        const ${result} = await create${pascalCase(dto.modelName)}Async(${dto.modelName});
+        navigate(${dto.modelName.toUpperCase()}_ROUTES.index);
     };
 
     const ${initialData} = useMemo(() => {
-        const ${camelCase(modelName)} = createEmpty${pascalCase(modelName)}();
-        return ${camelCase(modelName)};
+        const ${camelCase(dto.modelName)} = createEmpty${pascalCase(dto.modelName)}();
+        return ${camelCase(dto.modelName)};
     }, []);
 
 
     return (${PageLayout(
-      CreateForm(modelName),
+      CreateForm(dto.modelName),
       title,
       links,
       breadcrumbsAction
     )});
 };
     
-export default Create${pascalCase(modelName)}Page;`;
+export default Create${pascalCase(dto.modelName)}Page;`;
 };

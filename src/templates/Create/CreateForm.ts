@@ -18,23 +18,22 @@ export const CreateForm = (modelName: string) => {
 
 // prettier-ignore
 export const GetCreateFormString = (
-  modelName: string,
-  model: DTOSchema,
+  dto: DTOSchema,
 ) => {
   return `import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface Props {
-    submitHandler: (${camelCase(modelName)}: ${pascalCase(modelName)}) => Promise<void>;
+    submitHandler: (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => Promise<void>;
     ${isLoading}: boolean;
 }
 
-export const Create${pascalCase(modelName)}Form: React.FC<Props> = ({ submitHandler, ${isLoading} }) => {
-    const methods = useForm<${pascalCase(modelName)}>()
+export const Create${pascalCase(dto.modelName)}Form: React.FC<Props> = ({ submitHandler, ${isLoading} }) => {
+    const methods = useForm<${pascalCase(dto.modelName)}>()
     const { ${handleSubmit} } = methods;
     
-    const onSubmit: SubmitHandler<${pascalCase(modelName)}> = async (${camelCase(modelName)}: ${pascalCase(modelName)}) => {
-        await submitHandler(${camelCase(modelName)});
+    const onSubmit: SubmitHandler<${pascalCase(dto.modelName)}> = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
+        await submitHandler(${camelCase(dto.modelName)});
     };
     
     return (
@@ -43,7 +42,7 @@ export const Create${pascalCase(modelName)}Form: React.FC<Props> = ({ submitHand
             onSubmit={${handleSubmit}(onSubmit)}
             ${isLoading}={${isLoading}}
         >
-            ${RenderFormBody(model, modelName)}
+            ${RenderFormBody(dto, dto.modelName)}
         </${MyFormProviderWithCardLayoutTsx}>
     );
 };`;

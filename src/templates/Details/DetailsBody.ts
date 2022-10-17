@@ -19,24 +19,23 @@ export const DetailsBody = (
 }
 // prettier-ignore
 export const GetDetailsBodyString = (
-    modelName: string,
-    model: DTOSchema,
+    dto: DTOSchema,
 ) => {
     return `
 interface Props {
-    ${camelCase(modelName)}: ${pascalCase(modelName)};
+    ${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)};
     ${isLoading}: boolean;
 }
 
-export const Details${pascalCase(modelName)}Body: React.FC<Props> = ({ ${camelCase(modelName)}, ${isLoading} }) => {
+export const Details${pascalCase(dto.modelName)}Body: React.FC<Props> = ({ ${camelCase(dto.modelName)}, ${isLoading} }) => {
     return (
         <${LoadableCardWrapperTsx} ${isLoading}={${isLoading}}>
-            ${RenderDetailsBody(model, modelName)}
+            ${RenderDetailsBody(dto, dto.modelName)}
         </${LoadableCardWrapperTsx}>
     )
 }
 
-export default Details${pascalCase(modelName)}Body;`
+export default Details${pascalCase(dto.modelName)}Body;`
 };
 
 const RenderDetailsBody = (model: DTOSchema, modelName: string) => {

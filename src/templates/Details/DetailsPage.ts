@@ -11,8 +11,7 @@ export const DetailsPageName = (modelName: string) => {
 
 // prettier-ignore
 export const GetDetailsPageString = (
-  modelName: string,
-  model: DTOSchema,
+  dto: DTOSchema,
   title: string,
   links: TLink[],
   breadcrumbsAction?: any
@@ -21,19 +20,19 @@ export const GetDetailsPageString = (
 import React from 'react';
 import { useParams } from 'react-router';
 
-export const Details${pascalCase(modelName)}Page: React.FC = () => {
-    const { ${id} } = useParams<{ id: string }>();
-    const { ${camelCase(modelName)}, ${isLoading} } = useGet${pascalCase(modelName)}();
-    const ${camelCase(modelName)} = get${pascalCase(modelName)}ByIdAsync(${id});
-    ${renderDependencyHooks(model)}
+export const Details${pascalCase(dto.modelName)}Page: React.FC = () => {
+    const { ${id} } = useParams<{ ${id}: string }>();
+    const { ${camelCase(dto.modelName)}, ${isLoading} } = useGet${pascalCase(dto.modelName)}();
+    const ${camelCase(dto.modelName)} = get${pascalCase(dto.modelName)}ByIdAsync(${id});
+    ${renderDependencyHooks(dto)}
 
     return (${PageLayout(
-      DetailsBody(modelName),
+      DetailsBody(dto.modelName),
       title,
       links,
       breadcrumbsAction
     )});
 }
 
-export default Details${pascalCase(modelName)}Page;`;
+export default Details${pascalCase(dto.modelName)}Page;`;
 };

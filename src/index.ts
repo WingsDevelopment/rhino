@@ -10,11 +10,10 @@ import {
   ModelNames,
 } from "./utils/consoleInputUtils";
 import {
-  CreateAllModelsAndDTOsFromDTOSchemas,
-  CreateCreateFeature,
-  CreateDetailsFeature,
+  GenerateAllModelsAndDTOsFromDTOSchemas as GenerateAllModelsAndDTOsFromDTOSchemas,
+  GenerateCreateFeature,
+  GenerateDetailsFeature,
 } from "./FileManager";
-import { DTOSchema } from "./models/DTOSchema";
 let rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
@@ -26,15 +25,16 @@ export enum Commands {
   Update = "update",
   List = "list",
 }
-let commandAndDTONames: { command: string; dtoName: string }[] = [];
-let featureName: string | undefined = "";
 
 rl.question(
+  //example: TestFeatureName create Pet details Category
   "Enter rhino command (featureName command dtoName command dtoName etc...)> ",
   (INPUT) => {
     let inputs = INPUT.split(" ");
-    featureName = inputs.shift();
+    let featureName = inputs.shift();
     if (!featureName) return;
+
+    let commandAndDTONames: { command: string; dtoName: string }[] = [];
 
     //todo: ne mora svaki drugi biti dtoName
     for (let i = 0; i < inputs.length - 1; i++) {
@@ -48,16 +48,13 @@ rl.question(
     const allDTOs = createDTOsWithDependencies(definitions, dtoNames);
     console.log(allDTOs);
 
-    CreateAllModelsAndDTOsFromDTOSchemas(allDTOs, featureName);
+    GenerateAllModelsAndDTOsFromDTOSchemas(allDTOs, featureName);
 
-    if (lcCommands.includes(Commands.Create) && dtoNames.create) {
-      const dto = allDTOs[dtoNames.create];
-      CreateCreateFeature(featureName, dto);
-    }
-    if (lcCommands.includes(Commands.Details) && dtoNames.details) {
-      const schema = allDTOs[dtoNames.details];
-      CreateDetailsFeature(featureName, schema);
-    }
+    if (lcCommands.includes(Commands.Create) && dtoNames.create)
+      GenerateCreateFeature(featureName, allDTOs[dtoNames.create]);
+
+    if (lcCommands.includes(Commands.Details) && dtoNames.details)
+      GenerateDetailsFeature(featureName, allDTOs[dtoNames.details]);
 
     rl.close();
   }

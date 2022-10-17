@@ -1,4 +1,5 @@
 import { mkdirSync, writeFileSync } from "fs";
+import { features } from "process";
 import { DTOSchema } from "./models/DTOSchema";
 import { GetCreateDTOString } from "./templates/common/CreateDTO";
 import { GetCreateModelString } from "./templates/common/CreateModel";
@@ -10,6 +11,10 @@ import {
   CreatePageName,
   GetCreatePageString,
 } from "./templates/Create/CreatePage";
+import {
+  DetailsBodyName,
+  GetDetailsBodyString,
+} from "./templates/Details/DetailsBody";
 import {
   DetailsPageName,
   GetDetailsPageString,
@@ -24,7 +29,7 @@ export const BaseDTOsRoute = (featureName: string) => {
   return `./src/features/${featureName}/infrastracture/DTOs`;
 };
 
-export const CreateAllModelsAndDTOsFromDTOSchemas = (
+export const GenerateAllModelsAndDTOsFromDTOSchemas = (
   DTOs: {
     [key: string]: DTOSchema;
   },
@@ -55,62 +60,55 @@ export const CreateAllModelsAndDTOsFromDTOSchemas = (
 export const CreatePageRoute = (featureName: string) => {
   return `./src/features/${featureName}/pages/Create`;
 };
-
-export const CreateFormRoute = (featureName: string, modelName: string) => {
-  return `./src/features/${featureName}/pages/Create/components/${CreateFormName(
-    modelName
-  )}`;
+export const CreateFormRoute = (featureName: string) => {
+  return `./src/features/${featureName}/pages/Create/components`;
 };
 
-export const CreateCreateFeature = (featureName: string, dto: DTOSchema) => {
-  const createPageString = GetCreatePageString(
-    featureName,
-    dto,
-    `Create ${featureName}`,
-    [
-      {
-        name: `Create ${dto.modelName}`,
-        href: `/${plural(dto.modelName)}`,
-      },
-    ]
-  );
-  const createFormString = GetCreateFormString(dto.modelName, dto);
+export const GenerateCreateFeature = (featureName: string, dto: DTOSchema) => {
+  const createPageString = GetCreatePageString(dto, `Create ${featureName}`, [
+    {
+      name: `Create ${dto.modelName}`,
+      href: `/${plural(dto.modelName)}`,
+    },
+  ]);
+  const createFormString = GetCreateFormString(dto);
   mkdirSync(CreatePageRoute(featureName), { recursive: true });
+  mkdirSync(CreateFormRoute(featureName), { recursive: true });
 
   writeFileSync(
     `${CreatePageRoute(featureName)}/${CreatePageName(dto.modelName)}`,
     createPageString
   );
   writeFileSync(
-    `${CreatePageRoute(featureName)}/${CreateFormName(dto.modelName)}`,
+    `${CreateFormRoute(featureName)}/${CreateFormName(dto.modelName)}`,
     createFormString
   );
 };
 
-export const DetailsPageRoute = (featureName: string, modelName: string) => {
+export const DetailsPageRoute = (featureName: string) => {
   return `./src/features/${featureName}/pages/Details`;
 };
-
-export const DetailsBodyRoute = (featureName: string, modelName: string) => {
+export const DetailsBodyRoute = (featureName: string) => {
   return `./src/features/${featureName}/pages/Details/components`;
 };
 
-export const CreateDetailsFeature = (featureName: string, dto: DTOSchema) => {
-  const detailsBodyRoute = DetailsBodyRoute(featureName, dto.modelName);
-  const detailsPage = GetDetailsPageString(
-    featureName,
-    dto,
-    `Details ${featureName}`,
-    [
-      {
-        name: `Details ${dto.modelName}`,
-        href: `/${plural(dto.modelName)}`,
-      },
-    ]
-  );
-  mkdirSync(detailsBodyRoute, { recursive: true });
+export const GenerateDetailsFeature = (featureName: string, dto: DTOSchema) => {
+  const detailsPageRoute = DetailsPageRoute(featureName);
+  const detailsPage = GetDetailsPageString(dto, `Details ${featureName}`, [
+    {
+      name: `Details ${dto.modelName}`,
+      href: `/${plural(dto.modelName)}`,
+    },
+  ]);
+  const detailsBodyString = GetDetailsBodyString(dto);
+  mkdirSync(detailsPageRoute, { recursive: true });
+  mkdirSync(DetailsBodyRoute(featureName), { recursive: true });
   writeFileSync(
-    `${detailsBodyRoute}/${DetailsPageName(dto.modelName)}`,
+    `${detailsPageRoute}/${DetailsPageName(dto.modelName)}`,
     detailsPage
+  );
+  writeFileSync(
+    `${detailsPageRoute}/components/${DetailsBodyName(dto.modelName)}`,
+    detailsBodyString
   );
 };
