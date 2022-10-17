@@ -7,6 +7,10 @@ import {
 } from "../../components/fields/fieldUtils";
 import { isLoading } from "../common";
 
+export const DetailsBodyName = (modelName: string) => {
+  return `Details${pascalCase(modelName)}Body.tsx`;
+};
+
 // prettier-ignore
 export const DetailsBody = (
     modelName: string,

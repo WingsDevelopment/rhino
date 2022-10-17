@@ -7,6 +7,10 @@ import {
 } from "../../components/fields/fieldUtils";
 import { handleSubmit, isLoading } from "../common";
 
+export const CreateFormName = (modelName: string) => {
+  return `Create${pascalCase(modelName)}Form.tsx`;
+};
+
 // prettier-ignore
 export const CreateForm = (modelName: string) => {
   return `<Create${pascalCase(modelName)}Form submitHandler={${handleSubmit}} ${isLoading}={${isLoading}} />`;

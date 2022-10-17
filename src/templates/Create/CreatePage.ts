@@ -5,6 +5,10 @@ import { PageLayout, TLink } from "../../components/layouts/PageLayout";
 import { CreateForm } from "./CreateForm";
 import { handleSubmit, initialData, isLoading, result } from "../common";
 
+export const CreatePageName = (modelName: string) => {
+  return `Create${pascalCase(modelName)}Page.tsx`;
+};
+
 // prettier-ignore
 export const GetCreatePageString = (
   modelName: string,

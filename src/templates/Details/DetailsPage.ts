@@ -5,6 +5,10 @@ import { PageLayout, TLink } from "../../components/layouts/PageLayout";
 import { DetailsBody } from "./DetailsBody";
 import { id, isLoading } from "../common";
 
+export const DetailsPageName = (modelName: string) => {
+  return `Details${pascalCase(modelName)}Page.tsx`;
+};
+
 // prettier-ignore
 export const GetDetailsPageString = (
   modelName: string,

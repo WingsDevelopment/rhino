@@ -13,6 +13,7 @@ export interface Property {
   format: string;
   $ref: string;
   nullable: boolean;
+  items: Property;
 }
 
 export const getPropertiesFromSchema = (model: DTOSchema): Property[] => {
@@ -24,24 +25,63 @@ export const getPropertiesFromSchema = (model: DTOSchema): Property[] => {
       format: model.properties[key].format,
       type: model.properties[key].type,
       nullable: model.properties[key].nullable,
+      items: model.properties[key].items,
     });
   }
   return properties;
 };
 
+// prettier-ignore
 export const generateProperties = (model: DTOSchema) => {
   return `${getPropertiesFromSchema(model)
-    .map((property) => {
-      return `${property.name}${property.nullable ? "?" : ""}: ${
-        property.type || "any"
-      };`;
+    .map(property => {
+      return `${property.name}${property.nullable ? "?" : ""}: ${getPropertyTypeString(property)};`;
     })
     .join("\n")}`;
 };
 
+export const getPropertyTypeString = (property: Property) => {
+  if (property.type === "array") {
+    if (property.items.$ref) {
+      return `${property.items.$ref.split("/").pop()}[]`;
+    } else {
+      return `${property.items.type}[]`;
+    }
+  }
+  if (property.$ref) {
+    return `${property.$ref.split("/").pop()}`;
+  }
+  if (property.type === "integer") {
+    return "number";
+  }
+  if (property.type === "string") {
+    if (property.format === "date-time") {
+      return "Date";
+    }
+    if (property.format === "date") {
+      return "Date";
+    }
+    if (property.format === "time") {
+      return "Date";
+    }
+    if (property.format === "byte") {
+      return "string";
+    }
+    if (property.format === "binary") {
+      return "string";
+    }
+    if (property.format === "password") {
+      return "string";
+    }
+    return "string";
+  }
+};
+
 export const getDummyValueForProperty = (property: Property) => {
+  const type = getPropertyTypeString(property);
   if (property.nullable) return "undefined";
-  switch (property.type) {
+  if (property.type === "array") return "[]";
+  switch (type) {
     case "string":
       return "''";
     case "number":
