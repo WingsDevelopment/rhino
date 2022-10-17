@@ -11,13 +11,13 @@ export const ${camelCase(modelName)}Extension = (${
     "model: " +
     pascalCase(model.modelName) +
     "): " +
-    pascalCase(model.name) +
+    pascalCase(model.dtoName) +
     " => ({ ...model })"
   }
   
 export const model${camelCase(modelName)}Extension = (${
     "dto: " +
-    pascalCase(model.name) +
+    pascalCase(model.dtoName) +
     "): " +
     pascalCase(model.modelName) +
     " => ({ ...dto })"

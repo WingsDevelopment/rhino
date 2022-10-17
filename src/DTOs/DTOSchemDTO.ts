@@ -12,7 +12,7 @@ export const DTOSchemaDTOExtension = (
   name: string
 ): DTOSchema => {
   return {
-    name,
+    dtoName: name,
     type: dto.type,
     properties: dto.properties,
   };

@@ -49,6 +49,20 @@ export const getDTONamesFromInput = (
   return dtoNames;
 };
 
+export const getCommandsFromInput = (
+  input: {
+    command: string;
+    dtoName: string;
+  }[]
+): string[] => {
+  let commands: string[] = [];
+  input.forEach(({ command }) => {
+    commands.push(command);
+  });
+
+  return commands;
+};
+
 export const getDTONamesConfigured = (dtoNames: DTONames): DTONames => {
   const { create, details, update, list } = dtoNames;
   return {

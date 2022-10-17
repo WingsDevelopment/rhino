@@ -1,6 +1,6 @@
 import { definitions as definitions } from "./openApiSchema.json";
 import * as readline from "readline";
-import { DTOs, fillDTOsFromEveryRef } from "./DTOManager";
+import { createDTOsWithDependencies } from "./DTOManager";
 import {
   DTONames,
   getDtoName,
@@ -14,75 +14,51 @@ import {
   CreateCreateFeature,
   CreateDetailsFeature,
 } from "./FileManager";
+import { DTOSchema } from "./models/DTOSchema";
 let rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
-const commands = ["create", "details", "list", "update"];
-let dtoNames: DTONames = {};
-let modelNames: ModelNames = {};
+export enum Commands {
+  Create = "create",
+  Details = "details",
+  Update = "update",
+  List = "list",
+}
 let commandAndDTONames: { command: string; dtoName: string }[] = [];
-//end of config
 let featureName: string | undefined = "";
 
 rl.question(
   "Enter rhino command (featureName command dtoName command dtoName etc...)> ",
-  commands => {
-    let inputs = commands.split(" ");
+  (INPUT) => {
+    let inputs = INPUT.split(" ");
     featureName = inputs.shift();
+    if (!featureName) return;
 
+    //todo: ne mora svaki drugi biti dtoName
     for (let i = 0; i < inputs.length - 1; i++) {
       commandAndDTONames.push({ command: inputs[i], dtoName: inputs[i + 1] });
       i++;
     }
 
-    dtoNames = getDTONamesFromInput(commandAndDTONames);
-    modelNames = getModelNamesConfigured(dtoNames);
+    const dtoNames = getDTONamesFromInput(commandAndDTONames);
+    const lcCommands = commandAndDTONames.map((c) => c.command.toLowerCase());
 
-    Object.keys(dtoNames).forEach(key => {
-      //todo change names
-      let fullDtoName = (dtoNames as any)[key];
-      const modifiedDtoName = getDtoName(fullDtoName);
-      if (fullDtoName) {
-        let DTO = {
-          ...(definitions as any)[fullDtoName],
-          name: modifiedDtoName,
-          modelName: getModelNameFromDtoName(modifiedDtoName),
-        };
-        if (DTO) {
-          if (DTOs[fullDtoName]) console.log("DTO already exists");
-          else DTOs[fullDtoName] = { ...DTO };
-        }
-      }
-    });
+    const allDTOs = createDTOsWithDependencies(definitions, dtoNames);
+    console.log(allDTOs);
 
-    fillDTOsFromEveryRef(
-      Object.keys(DTOs).map(key => DTOs[key]),
-      definitions
-    );
+    CreateAllModelsAndDTOsFromDTOSchemas(allDTOs, featureName);
 
-    if (!featureName) return;
-    if (modelNames.create && dtoNames.create) {
-      const schema = DTOs[dtoNames.create];
-      CreateCreateFeature(featureName, modelNames.create, schema);
+    if (lcCommands.includes(Commands.Create) && dtoNames.create) {
+      const dto = allDTOs[dtoNames.create];
+      CreateCreateFeature(featureName, dto);
     }
-    // if (modelNames.updateModel && dtoNames.updateDto) {
-    //   const schema = DTOs[dtoNames.updateDto];
-    //   WriteFileUpdatePage(featureName, modelNames.updateModel, schema);
-    // }
-    if (featureName && modelNames.details && dtoNames.details) {
-      const schema = DTOs[dtoNames.details];
-      CreateDetailsFeature(featureName, modelNames.details, schema);
+    if (lcCommands.includes(Commands.Details) && dtoNames.details) {
+      const schema = allDTOs[dtoNames.details];
+      CreateDetailsFeature(featureName, schema);
     }
 
-    CreateAllModelsAndDTOsFromDTOSchemas(DTOs, featureName);
-    // if (modelNames.listModel && dtoNames.listDto) {
-    //   const schema = DTOs[dtoNames.listDto];
-    //   WriteFileListPage(featureName, modelNames.listModel, schema);
-    // }
-    console.log("FINAL ------------ DTOs");
-    console.log(DTOs);
     rl.close();
   }
 );

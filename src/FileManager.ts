@@ -34,20 +34,21 @@ export const CreateAllModelsAndDTOsFromDTOSchemas = (
   mkdirSync(BaseDTOsRoute(featureName), { recursive: true });
   //foreach dto in dtos
   Object.keys(DTOs)
-    .map(key => {
+    .map((key) => {
       return DTOs[key];
     })
-    .forEach(dto => {
-      console.log("dto");
-      console.log(dto);
+    .forEach((dto) => {
       const modelString = GetCreateModelString(dto.modelName, dto);
-      const dtoString = GetCreateDTOString(dto.name, dto);
+      const dtoString = GetCreateDTOString(dto.dtoName, dto);
 
       writeFileSync(
         `${BaseModelsRoute(featureName)}/${dto.modelName}.ts`,
         modelString
       );
-      writeFileSync(`${BaseDTOsRoute(featureName)}/${dto.name}.ts`, dtoString);
+      writeFileSync(
+        `${BaseDTOsRoute(featureName)}/${dto.dtoName}.ts`,
+        dtoString
+      );
     });
 };
 
@@ -61,31 +62,27 @@ export const CreateFormRoute = (featureName: string, modelName: string) => {
   )}`;
 };
 
-export const CreateCreateFeature = (
-  featureName: string,
-  modelName: string,
-  dto: DTOSchema
-) => {
+export const CreateCreateFeature = (featureName: string, dto: DTOSchema) => {
   const createPageString = GetCreatePageString(
     featureName,
     dto,
     `Create ${featureName}`,
     [
       {
-        name: `Create ${modelName}`,
-        href: `/${plural(modelName)}`,
+        name: `Create ${dto.modelName}`,
+        href: `/${plural(dto.modelName)}`,
       },
     ]
   );
-  const createFormString = GetCreateFormString(modelName, dto);
+  const createFormString = GetCreateFormString(dto.modelName, dto);
   mkdirSync(CreatePageRoute(featureName), { recursive: true });
 
   writeFileSync(
-    `${CreatePageRoute(featureName)}/${CreatePageName(modelName)}`,
+    `${CreatePageRoute(featureName)}/${CreatePageName(dto.modelName)}`,
     createPageString
   );
   writeFileSync(
-    `${CreatePageRoute(featureName)}/${CreateFormName(modelName)}`,
+    `${CreatePageRoute(featureName)}/${CreateFormName(dto.modelName)}`,
     createFormString
   );
 };
@@ -98,26 +95,22 @@ export const DetailsBodyRoute = (featureName: string, modelName: string) => {
   return `./src/features/${featureName}/pages/Details/components`;
 };
 
-export const CreateDetailsFeature = (
-  featureName: string,
-  modelName: string,
-  dto: DTOSchema
-) => {
-  const detailsBodyRoute = DetailsBodyRoute(featureName, modelName);
+export const CreateDetailsFeature = (featureName: string, dto: DTOSchema) => {
+  const detailsBodyRoute = DetailsBodyRoute(featureName, dto.modelName);
   const detailsPage = GetDetailsPageString(
     featureName,
     dto,
     `Details ${featureName}`,
     [
       {
-        name: `Details ${modelName}`,
-        href: `/${plural(modelName)}`,
+        name: `Details ${dto.modelName}`,
+        href: `/${plural(dto.modelName)}`,
       },
     ]
   );
   mkdirSync(detailsBodyRoute, { recursive: true });
   writeFileSync(
-    `${detailsBodyRoute}/${DetailsPageName(modelName)}`,
+    `${detailsBodyRoute}/${DetailsPageName(dto.modelName)}`,
     detailsPage
   );
 };
