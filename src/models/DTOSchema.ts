@@ -39,7 +39,7 @@ export const getPropertiesFromSchema = (model: DTOSchema): Property[] => {
 export const generateProperties = (model: DTOSchema) => {
   return `${getPropertiesFromSchema(model)
     .map(property => {
-      return `${property.name}${property.nullable ? "?" : ""}: ${getPropertyTypeString(property, getModelName)};`;
+      return `${property.name}${(property.nullable || !isPropertyPrimitive(property)) ? "?" : ""}: ${getPropertyTypeString(property, getModelName)};`;
     })
     .join("\n")}`;
 };
@@ -48,11 +48,12 @@ export const generateProperties = (model: DTOSchema) => {
 export const generateDtoProperties = (model: DTOSchema) => {
   return `${getPropertiesFromSchema(model)
     .map(property => {
-      return `${property.name}${property.nullable ? "?" : ""}: ${getPropertyTypeString(property, getDtoName)};`;
+      return `${property.name}${(property.nullable || !isPropertyPrimitive(property)) ? "?" : ""}: ${getPropertyTypeString(property, getDtoName)};`;
     })
     .join("\n")}`;
 };
 
+//todo refaktor izbaciti nameFormatter
 export const getPropertyTypeString = (
   property: Property,
   nameFormatter: (name: string) => string
@@ -114,4 +115,15 @@ export const getDummyValueForProperty = (
     default:
       return "undefined";
   }
+};
+
+export const isPropertyPrimitive = (property: Property) => {
+  const type = getPropertyTypeString(property, getModelName);
+
+  if (property.type === "string") return true;
+  if (property.type === "number") return true;
+  if (property.type === "boolean") return true;
+  if (property.type === "integer") return true;
+  if (property.type === "Date") return true;
+  return false;
 };

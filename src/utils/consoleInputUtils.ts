@@ -1,8 +1,4 @@
-import {
-  DTOExtensionRemove,
-  DTOExtensionAdd,
-  ModelExtensionAdd,
-} from "../config";
+import { DTOExtensionAdd, ModelExtensionAdd } from "../config";
 
 export interface DTONames {
   create?: string | undefined;
@@ -65,12 +61,18 @@ export const getCommandsFromInput = (
 
 export const getDTONamesConfigured = (dtoNames: DTONames): DTONames => {
   const { create, details, update, list } = dtoNames;
-  return {
+  const names = {
     create: create ? getDtoName(create) : undefined,
     details: details ? getDtoName(details) : undefined,
     update: update ? getDtoName(update) : undefined,
     list: list ? getDtoName(list) : undefined,
   };
+
+  if (!names.update) names.update = names.create;
+  if (!names.details) names.details = names.create;
+  if (!names.list) names.list = names.create;
+
+  return names;
 };
 
 export const getModelNamesConfigured = (dtoNames: DTONames): ModelNames => {

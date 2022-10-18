@@ -2,37 +2,37 @@ import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";
-import { DetailsBody } from "./DetailsBody";
 import { id, isLoading, useParams } from "../common";
+import { IndexBody } from "./IndexBody";
 
-export const DetailsPageName = (modelName: string) => {
-  return `Details${pascalCase(modelName)}Page.tsx`;
+export const IndexPageName = (modelName: string) => {
+  return `Index${pascalCase(modelName)}Page.tsx`;
 };
 
 // prettier-ignore
-export const GetDetailsPageString = (
-  dto: DTOSchema,
-  title: string,
-  links: TLink[],
-  breadcrumbsAction?: any
-) => {
-  return `
+export const GetIndexPageString = (
+    dto: DTOSchema,
+    title: string,
+    links: TLink[],
+    breadcrumbsAction?: any
+    ) => {
+    return `
 import React from 'react';
 import { ${useParams} } from 'react-router';
 
-export const Details${pascalCase(dto.modelName)}Page: React.FC = () => {
+export const Index${pascalCase(dto.modelName)}Page: React.FC = () => {
     const { ${id} } = ${useParams}<{ ${id}: string }>();
     const { ${camelCase(dto.modelName)}, ${isLoading} } = useGet${pascalCase(dto.modelName)}();
     const ${camelCase(dto.modelName)} = get${pascalCase(dto.modelName)}ByIdAsync(${id});
     ${renderDependencyHooks(dto)}
 
     return (${PageLayout(
-      DetailsBody(dto.modelName),
+      IndexBody(dto.modelName),
       title,
       links,
       breadcrumbsAction
     )});
 }
 
-export default Details${pascalCase(dto.modelName)}Page;`;
+export default Index${pascalCase(dto.modelName)}Page;`
 };

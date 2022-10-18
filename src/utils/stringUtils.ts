@@ -18,6 +18,10 @@ export const pluralCamelCase = (str: string) => {
   return camelCase(str) + "s";
 };
 
+export const pluralPascaleCase = (str: string) => {
+  return pascalCase(str) + "s";
+};
+
 export const plural = (str: string) => {
   return str + "s";
 };
@@ -29,4 +33,10 @@ export const pascalSplitedWithSpaceForEveryCapitalLetter = (str: string) => {
       return str.toUpperCase();
     })
     .trim();
+};
+
+export const pascalSeparatedWithUnderlineForEveryCapitalLetter = (
+  str: string
+) => {
+  return str.replace(/([A-Z])/g, "_$1").toUpperCase();
 };

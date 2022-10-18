@@ -7,46 +7,53 @@ import {
 } from "../../components/fields/fieldUtils";
 import {
   handleSubmit,
+  initialData,
   isLoading,
   methods,
   onSubmit,
-  submitHandler,
+  reset,
   SubmitHandler,
+  submitHandler,
   useForm,
 } from "../common";
 
-export const CreateFormName = (modelName: string) => {
-  return `Create${pascalCase(modelName)}Form.tsx`;
+export const UpdateFormName = (modelName: string) => {
+  return `Update${pascalCase(modelName)}Form.tsx`;
 };
 
 // prettier-ignore
-export const CreateForm = (modelName: string) => {
-  return `<Create${pascalCase(modelName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading}} />`;
+export const UpdateForm = (modelName: string) => {
+    return `<Update${pascalCase(modelName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading}} ${initialData}={${initialData}} />`;
 }
 
 // prettier-ignore
-export const GetCreateFormString = (
-  dto: DTOSchema,
+export const GetUpdateFormString = (
+    dto: DTOSchema,
 ) => {
-  return `import { useEffect } from 'react';
+    return `import { useEffect } from 'react';
 import { ${SubmitHandler}, ${useForm} } from 'react-hook-form';
 
 interface Props {
     ${submitHandler}: (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => Promise<void>;
     ${isLoading}: boolean;
+    ${initialData}: ${pascalCase(dto.modelName)};
 }
 
-export const Create${pascalCase(dto.modelName)}Form: React.FC<Props> = ({ ${submitHandler}, ${isLoading} }) => {
+export const Update${pascalCase(dto.modelName)}Form: React.FC<Props> = ({ ${submitHandler}, ${isLoading}, ${initialData} }) => {
     const ${methods} = ${useForm}<${pascalCase(dto.modelName)}>()
     const { ${handleSubmit} } = ${methods};
     
-    const ${onSubmit}: SubmitHandler<${pascalCase(dto.modelName)}> = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
+    useEffect(() => {
+        ${methods}.${reset}(${initialData});
+    }, [${initialData}]);
+
+    const ${onSubmit}: ${SubmitHandler}<${pascalCase(dto.modelName)}> = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
         await ${submitHandler}(${camelCase(dto.modelName)});
-    };
-    
+    }
+
     return (
         <${MyFormProviderWithCardLayoutTsx}
-          ${methods}={${methods}}
+            ${methods}={${methods}}
             ${onSubmit}={${handleSubmit}(${onSubmit})}
             ${isLoading}={${isLoading}}
         >

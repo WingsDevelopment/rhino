@@ -1,29 +1,25 @@
-import { definitions as definitions } from "./openApiSchema.json";
 import * as readline from "readline";
 import { createDTOsWithDependencies } from "./DTOManager";
 import {
-  DTONames,
-  getDtoName,
-  getDTONamesFromInput,
-  getModelNameFromDtoName,
-  getModelNamesConfigured,
-  ModelNames,
-} from "./utils/consoleInputUtils";
-import {
-  GenerateAllModelsAndDTOsFromDTOSchemas as GenerateAllModelsAndDTOsFromDTOSchemas,
   GenerateCreateFeature,
   GenerateDetailsFeature,
+  GenerateFeatureBase,
+  GenerateIndexFeature,
+  GenerateUpdateFeature,
 } from "./FileManager";
+import { definitions } from "./openApiSchema.json";
+import { getDTONamesFromInput } from "./utils/consoleInputUtils";
 let rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
 export enum Commands {
-  Create = "create",
-  Details = "details",
-  Update = "update",
-  List = "list",
+  create = "create",
+  details = "details",
+  update = "update",
+  list = "list",
+  delete = "delete",
 }
 
 rl.question(
@@ -31,8 +27,9 @@ rl.question(
   "Enter rhino command (featureName command dtoName command dtoName etc...)> ",
   (INPUT) => {
     let inputs = INPUT.split(" ");
+    const basePath = inputs.shift();
     let featureName = inputs.shift();
-    if (!featureName) return;
+    if (!featureName || !basePath) return;
 
     let commandAndDTONames: { command: string; dtoName: string }[] = [];
 
@@ -48,13 +45,25 @@ rl.question(
     const allDTOs = createDTOsWithDependencies(definitions, dtoNames);
     console.log(allDTOs);
 
-    GenerateAllModelsAndDTOsFromDTOSchemas(allDTOs, featureName);
+    GenerateFeatureBase(
+      allDTOs,
+      featureName,
+      lcCommands.map((c) => Commands[c as keyof typeof Commands]),
+      dtoNames,
+      basePath
+    );
 
-    if (lcCommands.includes(Commands.Create) && dtoNames.create)
-      GenerateCreateFeature(featureName, allDTOs[dtoNames.create]);
+    if (lcCommands.includes(Commands.create) && dtoNames.create)
+      GenerateCreateFeature(featureName, allDTOs[dtoNames.create], basePath);
 
-    if (lcCommands.includes(Commands.Details) && dtoNames.details)
-      GenerateDetailsFeature(featureName, allDTOs[dtoNames.details]);
+    if (lcCommands.includes(Commands.details) && dtoNames.details)
+      GenerateDetailsFeature(featureName, allDTOs[dtoNames.details], basePath);
+
+    if (lcCommands.includes(Commands.update) && dtoNames.update)
+      GenerateUpdateFeature(featureName, allDTOs[dtoNames.update], basePath);
+
+    if (lcCommands.includes(Commands.list) && dtoNames.list)
+      GenerateIndexFeature(featureName, allDTOs[dtoNames.list], basePath);
 
     rl.close();
   }

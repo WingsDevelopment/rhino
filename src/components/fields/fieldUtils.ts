@@ -1,6 +1,10 @@
 import { SingleColumnBoxTsx, TwoColumnBoxTsx } from "../boxes";
 import { DefaultReadOnlyTextField } from "./DefaultReadOnlyTextField";
-import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
+import {
+  DTOSchema,
+  getPropertiesFromSchema,
+  isPropertyPrimitive,
+} from "../../models/DTOSchema";
 import {
   pascalSplitedWithSpaceForEveryCapitalLetter,
   camelCase,
@@ -27,12 +31,13 @@ export const RenderFields = (model: DTOSchema, modelName: string) => {
   ${getPropertiesFromSchema(model)
     .filter((model) => model.type !== undefined)
     .map((property) => {
-      return GetFieldByKeyType(
-        property.type,
-        property.name,
-        pascalSplitedWithSpaceForEveryCapitalLetter(property.name),
-        property.nullable
-      );
+      if (isPropertyPrimitive(property))
+        return GetFieldByKeyType(
+          property.type,
+          property.name,
+          pascalSplitedWithSpaceForEveryCapitalLetter(property.name),
+          property.nullable
+        );
     })
     .join("\n")}`;
 };
@@ -59,12 +64,13 @@ export const RenderReadonlyFields = (model: DTOSchema, modelName: string) => {
       ${getPropertiesFromSchema(model)
         .filter((model) => model.type !== undefined)
         .map((property) => {
-          return DefaultReadOnlyTextField({
-            label: pascalSplitedWithSpaceForEveryCapitalLetter(property.name),
-            propertyName: `${camelCase(modelName)}?.${
-              property.name
-            }?.toString()`,
-          });
+          if (isPropertyPrimitive(property))
+            return DefaultReadOnlyTextField({
+              label: pascalSplitedWithSpaceForEveryCapitalLetter(property.name),
+              propertyName: `${camelCase(modelName)}?.${
+                property.name
+              }?.toString()`,
+            });
         })
         .join("\n")}`;
 };
