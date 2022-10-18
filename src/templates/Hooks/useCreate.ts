@@ -17,6 +17,7 @@ import {
   useQueryClient,
 } from "../common";
 import { GetDIContextName } from "../context/DIContext";
+import { CreateFuncName, GetRepositoryName } from "../Repository/Repository";
 
 export const useCreateName = (modelName: string) => {
   return `useCreate${pascalCase(modelName)}`;
@@ -34,7 +35,7 @@ export const ${useCreateName(dto.modelName)} = () => {
 
     const { ${isLoading}, ${error}, ${mutateAsync} } = ${useMutation}(
         async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
-            const ${response} = await ${GetDIContextName()}.${pascalCase(featureName)}Repository.Create${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)}DTOExtension(${camelCase(dto.modelName)}));
+            const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${CreateFuncName(featureName)}(${camelCase(dto.modelName)}DTOExtension(${camelCase(dto.modelName)}));
             return ${response};
         },
         {

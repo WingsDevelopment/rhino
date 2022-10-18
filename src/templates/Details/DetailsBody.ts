@@ -1,10 +1,10 @@
-import { getPropertiesFromSchema, DTOSchema } from "../../models/DTOSchema";
-import { camelCase, pascalCase } from "../../utils/stringUtils";
-import { LoadableCardWrapperTsx } from "../../components/loadable";
 import {
   SingleColumnReadonlyBody,
   TwoColumnReadonlyBody,
 } from "../../components/fields/fieldUtils";
+import { LoadableCardWrapperTsx } from "../../components/loadable";
+import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
+import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { isLoading } from "../common";
 
 export const DetailsBodyName = (modelName: string) => {
@@ -23,7 +23,7 @@ export const GetDetailsBodyString = (
 ) => {
     return `
 interface Props {
-    ${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)};
+    ${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)} | undefined;
     ${isLoading}: boolean;
 }
 

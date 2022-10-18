@@ -9,6 +9,26 @@ export const GetRepositoryName = (featureName: string) => {
   return `${pascalCase(featureName)}Repository`;
 };
 
+export const GetByIdFuncName = (featureName: string): string => {
+  return `Get${pascalCase(featureName)}ByIdAsync`;
+};
+
+export const DeleteFuncName = (featureName: string): string => {
+  return `Delete${pascalCase(featureName)}Async`;
+};
+
+export const UpdateFuncName = (featureName: string): string => {
+  return `Update${pascalCase(featureName)}Async`;
+};
+
+export const CreateFuncName = (featureName: string): string => {
+  return `Create${pascalCase(featureName)}Async`;
+};
+
+export const GetAllFuncName = (featureName: string): string => {
+  return `GetAll${pascalCase(featureName)}Async`;
+};
+
 //prettier-ignore
 export const GetRepositoryString = (
   featureName: string,
@@ -24,8 +44,8 @@ export const GetRepositoryString = (
 
     ${
         commands.find((c) => c === Commands.create) ?
-        `const Create${pascalCase(featureName)}Async = async (dto: ${createDTO?.dtoName} ): Promise<string | undefined> => {
-            const response: AxiosResponse<{ id: string }> = await axios.post(
+        `const ${CreateFuncName(featureName)} = async (dto: ${createDTO?.dtoName} ): Promise<string | undefined> => {
+            const response: AxiosResponse<string> = await axios.post(
                 \`\${baseUrl}/create\`,
                 dto
             );
@@ -36,8 +56,8 @@ export const GetRepositoryString = (
 
     ${
         commands.find((c) => c === Commands.update) ?
-        `const Update${pascalCase(featureName)}Async = async (dto: ${updateDTO?.dtoName} ): Promise<string | undefined> => {
-            const response: AxiosResponse<{ id: string }> = await axios.post(
+        `const ${UpdateFuncName(featureName)} = async (dto: ${updateDTO?.dtoName} ): Promise<string | undefined> => {
+            const response: AxiosResponse<string> = await axios.post(
                 \`\${baseUrl}/update\`,
                 dto
             );
@@ -48,8 +68,8 @@ export const GetRepositoryString = (
 
     ${
         commands.find((c) => c === Commands.delete) ?
-        `const Delete${pascalCase(featureName)}Async = async (id: string): Promise<string | undefined> => {
-            const response: AxiosResponse<{ id: string }> = await axios.delete(
+        `const ${DeleteFuncName(featureName)} = async (id: string): Promise<string | undefined> => {
+            const response: AxiosResponse<string> = await axios.delete(
                 \`\${baseUrl}/\${id}\`
             );
 
@@ -59,7 +79,7 @@ export const GetRepositoryString = (
 
     ${
         commands.find((c) => c === Commands.details) ?
-        `const Get${pascalCase(featureName)}ByIdAsync = async (id: string): Promise<${detailsDTO?.dtoName} | undefined> => {
+        `const ${GetByIdFuncName(featureName)} = async (id: string): Promise<${detailsDTO?.dtoName} | undefined> => {
             const response: AxiosResponse<${detailsDTO?.dtoName}> = await axios.get(
                 \`\${baseUrl}/\${id}\`
             );
@@ -70,9 +90,9 @@ export const GetRepositoryString = (
 
     ${
         commands.find((c) => c === Commands.list) ?
-        `const GetAll${pascalCase(featureName)}Async = async (): Promise<${listDTO?.dtoName}[] | undefined> => {
+        `const ${GetAllFuncName(featureName)} = async (): Promise<${listDTO?.dtoName}[] | undefined> => {
             const response: AxiosResponse<${listDTO?.dtoName}[]> = await axios.get(
-                \`\${baseUrl}\`/getAll
+                \`\${baseUrl}/getAll\`
             );
 
             return response.data;

@@ -9,7 +9,7 @@ export const GetDIContextName = () => {
 export const GetDIContextTemplateString = (featureName: string) => {
     return `
     interface I${GetDIContextName()} {
-        ${GetRepositoryIntefaceName(featureName)}: ${GetRepositoryName(featureName)};
+        ${GetRepositoryName(featureName)}: ${GetRepositoryIntefaceName(featureName)};
     }
 
     export const ${GetDIContextName()}: I${GetDIContextName()} = {

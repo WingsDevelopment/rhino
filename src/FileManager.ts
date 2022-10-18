@@ -20,7 +20,17 @@ import {
   DetailsPageName,
   GetDetailsPageString,
 } from "./templates/Details/DetailsPage";
-import { GetUseCreateString } from "./templates/Hooks/useCreate";
+import { GetUseCreateString, useCreateName } from "./templates/Hooks/useCreate";
+import { GetUseDeleteString, useDeleteName } from "./templates/Hooks/useDelete";
+import {
+  GetUseFetchAllString,
+  useFetchAllName,
+} from "./templates/Hooks/useFetchAll";
+import {
+  GetUseFetchByIdString,
+  useFetchByIdName,
+} from "./templates/Hooks/useFetchById";
+import { GetUseUpdateString, useUpdateName } from "./templates/Hooks/useUpdate";
 import { GetRepositoryString } from "./templates/Repository/Repository";
 import { GetRepositoryInterfaceString } from "./templates/Repository/RepositoryInterface";
 import { GetRoutesString } from "./templates/routes/routes";
@@ -44,6 +54,13 @@ export const BaseModelsRoute = (featureName: string, baseRoute: string) => {
 };
 export const BaseDTOsRoute = (featureName: string, baseRoute: string) => {
   return `${baseRoute}/${featureName}/infrastracture/DTOs`;
+};
+
+export const useMutationRoute = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}/state/mutations`;
+};
+export const useQueriesRoute = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}/state/queries`;
 };
 
 export const repositoryRoute = (featureName: string, baseRoute: string) => {
@@ -100,6 +117,8 @@ export const GenerateFeatureBase = (
     listDTO
   );
 
+  mkdirSync(useMutationRoute(featureName, baseRoute), { recursive: true });
+  mkdirSync(useQueriesRoute(featureName, baseRoute), { recursive: true });
   GenerateAllModelsAndDTOsFromDTOSchemas(DTOs, featureName, baseRoute);
 
   mkdirSync(repositoryRoute(featureName, baseRoute), { recursive: true });
@@ -131,6 +150,31 @@ export const GenerateFeatureBase = (
     `${RoutesRoute(featureName, baseRoute)}/index.ts`,
     GetRoutesString(featureName, commands)
   );
+
+  if (listDTO) {
+    writeFileSync(
+      `${useQueriesRoute(featureName, baseRoute)}/${useFetchAllName(
+        listDTO.modelName
+      )}.ts`,
+      GetUseFetchAllString(listDTO, featureName)
+    );
+  }
+  if (detailsDTO) {
+    writeFileSync(
+      `${useQueriesRoute(featureName, baseRoute)}/${useFetchByIdName(
+        detailsDTO.modelName
+      )}.ts`,
+      GetUseFetchByIdString(detailsDTO, featureName)
+    );
+  }
+  if (commands.includes(Commands.delete)) {
+    writeFileSync(
+      `${useMutationRoute(featureName, baseRoute)}/${useDeleteName(
+        createDTO.modelName
+      )}.ts`,
+      GetUseDeleteString(createDTO, featureName)
+    );
+  }
 };
 
 export const GenerateAllModelsAndDTOsFromDTOSchemas = (
@@ -168,26 +212,27 @@ export const CreatePageRoute = (featureName: string, baseRoute: string) => {
 export const CreateFormRoute = (featureName: string, baseRoute: string) => {
   return `${baseRoute}/${featureName}/pages/Create/components`;
 };
-export const useCreateRoute = (featureName: string, baseRoute: string) => {
-  return `${baseRoute}/${featureName}/state/mutations`;
-};
 
 export const GenerateCreateFeature = (
   featureName: string,
   dto: DTOSchema,
   baseRoute: string
 ) => {
-  const createPageString = GetCreatePageString(dto, `Create ${featureName}`, [
-    {
-      name: `Create ${dto.modelName}`,
-      href: `/${plural(dto.modelName)}`,
-    },
-  ]);
+  const createPageString = GetCreatePageString(
+    dto,
+    `Create ${featureName}`,
+    featureName,
+    [
+      {
+        name: `Create ${dto.modelName}`,
+        href: `/${plural(dto.modelName)}`,
+      },
+    ]
+  );
   const createFormString = GetCreateFormString(dto);
   const useCreateString = GetUseCreateString(dto, featureName);
   mkdirSync(CreatePageRoute(featureName, baseRoute), { recursive: true });
   mkdirSync(CreateFormRoute(featureName, baseRoute), { recursive: true });
-  mkdirSync(useCreateRoute(featureName, baseRoute), { recursive: true });
 
   writeFileSync(
     `${CreatePageRoute(featureName, baseRoute)}/${CreatePageName(
@@ -202,7 +247,9 @@ export const GenerateCreateFeature = (
     createFormString
   );
   writeFileSync(
-    `${useCreateRoute(featureName, baseRoute)}/useCreate${dto.modelName}.ts`,
+    `${useMutationRoute(featureName, baseRoute)}/${useCreateName(
+      dto.modelName
+    )}.ts`,
     useCreateString
   );
 };
@@ -259,7 +306,7 @@ export const GenerateUpdateFeature = (
 
   writeFileSync(
     `${updatePageRoute}/${UpdatePageName(dto.modelName)}`,
-    GetUpdatePageString(dto, `Update ${featureName}`, [
+    GetUpdatePageString(dto, `Update ${featureName}`, featureName, [
       {
         name: `Update ${dto.modelName}`,
         href: `/${plural(dto.modelName)}`,
@@ -269,6 +316,12 @@ export const GenerateUpdateFeature = (
   writeFileSync(
     `${updateFormRoute}/${UpdateFormName(dto.modelName)}`,
     GetUpdateFormString(dto)
+  );
+  writeFileSync(
+    `${useMutationRoute(featureName, baseRoute)}/${useUpdateName(
+      dto.modelName
+    )}.ts`,
+    GetUseUpdateString(dto, featureName)
   );
 };
 

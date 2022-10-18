@@ -1,5 +1,5 @@
 import { DTOSchema } from "../../models/DTOSchema";
-import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
+import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
   config,
   EnqueueMessage,
@@ -17,6 +17,8 @@ import {
   useQueryClient,
 } from "../common";
 import { GetDIContextName } from "../context/DIContext";
+import { GetRepositoryName, UpdateFuncName } from "../Repository/Repository";
+import { FETCH_ALL } from "./useFetchAll";
 
 export const useUpdateName = (modelName: string) => {
   return `useUpdate${pascalCase(modelName)}`;
@@ -34,13 +36,13 @@ export const GetUseUpdateString = (dto: DTOSchema, featureName: string) => {
   
       const { ${isLoading}, ${error}, ${mutateAsync} } = ${useMutation}(
           async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
-              const ${response} = await ${GetDIContextName()}.${pascalCase(featureName)}Repository.Update${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)}DTOExtension(${camelCase(dto.modelName)}));
+              const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${UpdateFuncName(featureName)}(${camelCase(dto.modelName)}DTOExtension(${camelCase(dto.modelName)}));
               return ${response};
           },
           {
               ...${config},
               onSuccess: () => {
-                  ${queryClient}.${invalidateQueries}([FETCH_ALL_${plural(dto.modelName).toUpperCase()}]);
+                  ${queryClient}.${invalidateQueries}([${FETCH_ALL(dto.modelName)}]);
                   ${EnqueueMessage}('${dto.modelName} is successfully updated', 'success');
               },
           }

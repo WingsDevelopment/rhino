@@ -2,8 +2,16 @@ import { PageLayout, TLink } from "../../components/layouts/PageLayout";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
-import { handleSubmit, id, isLoading, navigate, useNavigate } from "../common";
+import {
+  details,
+  handleSubmit,
+  id,
+  isLoading,
+  navigate,
+  useNavigate,
+} from "../common";
 import { useCreateName } from "../Hooks/useCreate";
+import { GetRoutesName } from "../routes/routes";
 import { CreateForm } from "./CreateForm";
 
 export const CreatePageName = (modelName: string) => {
@@ -14,8 +22,9 @@ export const CreatePageName = (modelName: string) => {
 export const GetCreatePageString = (
   dto: DTOSchema,
   title: string,
+  featureName: string,
   links: TLink[],
-  breadcrumbsAction?: any
+  breadcrumbsAction?: any,
 ) => {
   return `
 import React, { useMemo } from 'react';
@@ -28,7 +37,7 @@ export const Create${pascalCase(dto.modelName)}Page: React.FC = () => {
 
     const ${handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
         const ${id} = await create${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)});
-        ${navigate}(${dto.modelName.toUpperCase()}_ROUTES.details + "/" + ${id});
+        ${navigate}(${GetRoutesName(featureName)}.${details} + "/" + ${id});
     };
 
     return (${PageLayout(

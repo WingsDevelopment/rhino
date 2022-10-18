@@ -1,6 +1,6 @@
 import {
-  getPropertiesFromSchema,
   DTOSchema,
+  getPropertiesFromSchema,
   isPropertyPrimitive,
 } from "../../models/DTOSchema";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
@@ -29,17 +29,18 @@ export const IndexBody = (modelName: string) => {
 export const GetIndexBodyString = (dto: DTOSchema) => {
     return `
 interface Props {
-    ${pluralCamelCase(dto.modelName)}: ${pascalCase(dto.modelName)}[];
+    ${pluralCamelCase(dto.modelName)}: ${pascalCase(dto.modelName)}[] | undefined;
     ${isLoading}: boolean;
 }
 
 export const Index${pascalCase(dto.modelName)}Body: React.FC<Props> = ({ ${pluralCamelCase(dto.modelName)}, ${isLoading} }) => {
     const { ${dataToShow}, ${page}, ${setPage}, ${rowsPerPage}, ${setRowsPerPage}, ${setSortBy} } =
-     ${usePaginableSortedData}(${pluralCamelCase(dto.modelName)}); 
+     ${usePaginableSortedData}(${pluralCamelCase(dto.modelName)}, ''); 
 
      const ${tableLabels} = useMemo(
         () => [
             ${RenderTableLabels(dto)}
+            { id: '#', label: '#' },
         ],
         []
     );
@@ -48,7 +49,7 @@ export const Index${pascalCase(dto.modelName)}Body: React.FC<Props> = ({ ${plura
         <GenericPaginableTable
             subheader="Tabela ${dto.modelName}"
             ${isLoading}={${isLoading}}
-            totalCount={${pluralCamelCase(dto.modelName)}.length}
+            totalCount={${pluralCamelCase(dto.modelName)}?.length}
             currentPage={${page}}
             onPageChangeHandler={${setPage}}
             onChangeItemsPerPageHandler={${setRowsPerPage}}

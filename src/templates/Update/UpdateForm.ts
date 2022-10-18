@@ -1,14 +1,15 @@
-import { MyFormProviderWithCardLayoutTsx } from "../../components/layouts";
-import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
-import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
   SingleColumnBody,
   TwoColumnBody,
 } from "../../components/fields/fieldUtils";
+import { MyFormProviderWithCardLayoutTsx } from "../../components/layouts";
+import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
+import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
   handleSubmit,
   initialData,
   isLoading,
+  isSubmitting,
   methods,
   onSubmit,
   reset,
@@ -23,7 +24,7 @@ export const UpdateFormName = (modelName: string) => {
 
 // prettier-ignore
 export const UpdateForm = (modelName: string) => {
-    return `<Update${pascalCase(modelName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading}} ${initialData}={${initialData}} />`;
+    return `<Update${pascalCase(modelName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading} | ${isSubmitting}} ${initialData}={${initialData}} />`;
 }
 
 // prettier-ignore
@@ -45,7 +46,7 @@ export const Update${pascalCase(dto.modelName)}Form: React.FC<Props> = ({ ${subm
     
     useEffect(() => {
         ${methods}.${reset}(${initialData});
-    }, [${initialData}]);
+    }, [${initialData}, ${methods}]);
 
     const ${onSubmit}: ${SubmitHandler}<${pascalCase(dto.modelName)}> = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
         await ${submitHandler}(${camelCase(dto.modelName)});

@@ -1,53 +1,55 @@
 import { DTOSchema } from "../../models/DTOSchema";
-import { pascalCase, plural } from "../../utils/stringUtils";
+import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
   config,
-  EnqueueMessage,
+  data,
+  enabled,
   error,
   errorMessage,
   getServerErrorMessage,
-  invalidateQueries,
+  id,
   isLoading,
-  mutateAsync,
-  NotificationAdapter,
-  queryClient,
   response,
   useDefaultRQConfig,
-  useMutation,
+  useQuery,
   useQueryClient,
 } from "../common";
+import { ModelExtensionName } from "../common/CreateDTO";
 import { GetDIContextName } from "../context/DIContext";
+import { GetByIdFuncName, GetRepositoryName } from "../Repository/Repository";
 
 export const useFetchByIdName = (modelName: string) => {
   return `useFetch${pascalCase(modelName)}ById`;
 };
 
+export const FETCH_BY_ID = (modelName: string) => {
+  return `FETCH_BY_${modelName.toUpperCase()}_ID`;
+};
+
 // prettier-ignore
 export const GetUseFetchByIdString = (dto: DTOSchema, featureName: string) => {
       return `
-  import { ${useMutation}, ${useQueryClient} } from 'react-query';
+  import { ${useQuery}, ${useQueryClient} } from 'react-query';
   
-  export const ${useFetchByIdName(dto.modelName)} = () => {
-      const ${EnqueueMessage} = ${NotificationAdapter}();
-      const ${queryClient} = ${useQueryClient}();
+  export const ${FETCH_BY_ID(dto.modelName)} = "${FETCH_BY_ID(dto.modelName)}";
+  
+  export const ${useFetchByIdName(dto.modelName)} = (${id}: string | undefined) => {
       const ${config} = ${useDefaultRQConfig}('useFetch${dto.modelName}ById');
   
-      const { ${isLoading}, ${error}, ${mutateAsync} } = ${useMutation}(
-          async (id: number) => {
-              const ${response} = await ${GetDIContextName()}.${pascalCase(featureName)}Repository.Fetch${pascalCase(dto.modelName)}ByIdAsync(id);
-              return ${response};
+      const { ${isLoading}, ${error}, ${data} } = ${useQuery}(
+            [${FETCH_BY_ID(dto.modelName)}, ${id}],
+          async () => {
+              const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${GetByIdFuncName(featureName)}(${id}!);
+              return ${response} ? ${ModelExtensionName(dto.modelName)}(${response}) : undefined;
           },
           {
               ...${config},
-              onSuccess: () => {
-                  ${queryClient}.${invalidateQueries}([FETCH_ALL_${plural(dto.modelName).toUpperCase()}]);
-                  ${EnqueueMessage}('${dto.modelName} is successfully fetched', 'success');
-              },
+              ${enabled}: !!${id},
           }
       );
   
       return {
-          fetch${dto.modelName}ByIdAsync: ${mutateAsync},
+          ${camelCase(dto.modelName)}: ${data},
           ${errorMessage}: ${error} ? ${getServerErrorMessage}(${error}) : undefined,
           ${isLoading},
       };

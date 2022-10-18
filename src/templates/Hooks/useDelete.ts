@@ -17,6 +17,7 @@ import {
   useQueryClient,
 } from "../common";
 import { GetDIContextName } from "../context/DIContext";
+import { DeleteFuncName, GetRepositoryName } from "../Repository/Repository";
 
 export const useDeleteName = (modelName: string) => {
   return `useDelete${pascalCase(modelName)}`;
@@ -33,8 +34,8 @@ export const GetUseDeleteString = (dto: DTOSchema, featureName: string) => {
       const ${config} = ${useDefaultRQConfig}('useDelete${dto.modelName}');
   
       const { ${isLoading}, ${error}, ${mutateAsync} } = ${useMutation}(
-          async (id: number) => {
-              const ${response} = await ${GetDIContextName()}.${pascalCase(featureName)}Repository.Delete${pascalCase(dto.modelName)}Async(id);
+          async (id: string) => {
+              const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${DeleteFuncName(featureName)}(id);
               return ${response};
           },
           {

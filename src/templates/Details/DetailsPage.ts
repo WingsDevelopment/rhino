@@ -1,9 +1,10 @@
+import { PageLayout, TLink } from "../../components/layouts/PageLayout";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
-import { PageLayout, TLink } from "../../components/layouts/PageLayout";
-import { DetailsBody } from "./DetailsBody";
 import { id, isLoading, useParams } from "../common";
+import { useFetchByIdName } from "../Hooks/useFetchById";
+import { DetailsBody } from "./DetailsBody";
 
 export const DetailsPageName = (modelName: string) => {
   return `Details${pascalCase(modelName)}Page.tsx`;
@@ -22,8 +23,7 @@ import { ${useParams} } from 'react-router';
 
 export const Details${pascalCase(dto.modelName)}Page: React.FC = () => {
     const { ${id} } = ${useParams}<{ ${id}: string }>();
-    const { ${camelCase(dto.modelName)}, ${isLoading} } = useGet${pascalCase(dto.modelName)}();
-    const ${camelCase(dto.modelName)} = get${pascalCase(dto.modelName)}ByIdAsync(${id});
+    const { ${camelCase(dto.modelName)}, ${isLoading} } = ${useFetchByIdName(dto.modelName)}(${id});
     ${renderDependencyHooks(dto)}
 
     return (${PageLayout(

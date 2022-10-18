@@ -1,9 +1,8 @@
 import {
+  DTOSchema,
   generateProperties,
   getDummyValueForProperty,
   getPropertiesFromSchema,
-  Property,
-  DTOSchema,
 } from "../../models/DTOSchema";
 import { getModelName } from "../../utils/consoleInputUtils";
 import { pascalCase } from "../../utils/stringUtils";
@@ -17,11 +16,12 @@ export interface ${pascalCase(modelName)} {
 export const createEmpty${pascalCase(modelName)} = (): ${pascalCase(
     modelName
   )} => ({
-    ${getPropertiesFromSchema(model).map(property => {
+    ${getPropertiesFromSchema(model).map((property) => {
       return `${property.name} : ${getDummyValueForProperty(
         property,
         getModelName
       )}`;
     })}
-});`;
+});
+`;
 };

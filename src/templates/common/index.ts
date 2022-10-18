@@ -1,5 +1,6 @@
 export const handleSubmit = "handleSubmit";
 export const isLoading = "isLoading";
+export const isSubmitting = "isSubmitting";
 export const initialData = "initialData";
 export const result = "result";
 export const id = "id";
@@ -25,27 +26,25 @@ export const tableLabels = "tableLabels";
 
 //hooks
 export const EnqueueMessage = "EnqueueMessage";
-//NotificationAdapter
 export const NotificationAdapter = "NotificationAdapter";
-//queryClient
 export const queryClient = "queryClient";
-//useQueryClient
 export const useQueryClient = "useQueryClient";
-//useDefaultRQConfig
 export const useDefaultRQConfig = "useDefaultRQConfig";
-//config
 export const config = "config";
-//error
+export const enabled = "enabled";
+export const onSuccess = "onSuccess";
 export const error = "error";
-//mutateAsync
 export const mutateAsync = "mutateAsync";
-//useMutation
 export const useMutation = "useMutation";
-//response
+export const useQuery = "useQuery";
 export const response = "response";
-//invalidateQueries
 export const invalidateQueries = "invalidateQueries";
-//errorMessage
 export const errorMessage = "errorMessage";
-//getServerErrorMessage
 export const getServerErrorMessage = "getServerErrorMessage";
+export const data = "data";
+
+//routes
+export const details = "details";
+export const update = "update";
+export const create = "create";
+export const index = "index";

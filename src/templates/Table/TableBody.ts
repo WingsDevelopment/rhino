@@ -1,6 +1,6 @@
 import {
-  getPropertiesFromSchema,
   DTOSchema,
+  getPropertiesFromSchema,
   isPropertyPrimitive,
 } from "../../models/DTOSchema";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
@@ -23,7 +23,7 @@ export const GetTableBodyString = (
 ) => {
     return `
 interface Props {
-    ${pluralCamelCase(dto.modelName)}: ${pascalCase(dto.modelName)}[];
+    ${pluralCamelCase(dto.modelName)}: ${pascalCase(dto.modelName)}[] | undefined;
     ${isLoading}: boolean;
 }
 
@@ -39,13 +39,6 @@ export const ${pascalCase(dto.modelName)}TableBody: React.FC<Props> = ({ ${plura
                         <TableButtonWithDetailsIcon
                             label="Detalji"
                             onClick={() => navigate(${pascalCase(dto.modelName)}Routes.details + '/' + item.id)}
-                        />
-                    </TableCell>
-                    <TableCell align="right">
-                        <TableButtonWithDeleteIcon
-                            label="Obriši"
-                            onClick={() => delete${pascalCase(dto.modelName)}Async(item.id)}
-                            isDeleting={isDeleting}
                         />
                     </TableCell>
                 </TableRow>
