@@ -4,14 +4,11 @@ import { DTOSchema } from "./models/DTOSchema";
 import { GetCreateDTOString } from "./templates/common/CreateDTO";
 import { GetCreateModelString } from "./templates/common/CreateModel";
 import { GetDIContextTemplateString } from "./templates/context/DIContext";
+import { CreatePageName, GetCreatePageString } from "./templates/Create";
 import {
   CreateFormName,
   GetCreateFormString,
 } from "./templates/Create/CreateForm";
-import {
-  CreatePageName,
-  GetCreatePageString,
-} from "./templates/Create/CreatePage";
 import {
   DetailsBodyName,
   GetDetailsBodyString,

@@ -1,8 +1,8 @@
+import { LoadableCardWrapperTsx } from "../../components";
 import {
   SingleColumnReadonlyBody,
   TwoColumnReadonlyBody,
 } from "../../components/fields/fieldUtils";
-import { LoadableCardWrapperTsx } from "../../components/loadable";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { isLoading } from "../common";

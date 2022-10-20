@@ -1,4 +1,4 @@
-import { DefaultReadOnlyTextFieldTsx } from ".";
+import { DefaultReadOnlyTextFieldTsx } from "..";
 
 interface Props {
   propertyName: string;

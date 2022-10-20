@@ -1,14 +1,14 @@
-import { SingleColumnBoxTsx, TwoColumnBoxTsx } from "../boxes";
-import { DefaultReadOnlyTextField } from "./DefaultReadOnlyTextField";
+import { SingleColumnBoxTsx, TwoColumnBoxTsx } from "..";
 import {
   DTOSchema,
   getPropertiesFromSchema,
   isPropertyPrimitive,
 } from "../../models/DTOSchema";
 import {
-  pascalSplitedWithSpaceForEveryCapitalLetter,
   camelCase,
+  pascalSplitedWithSpaceForEveryCapitalLetter,
 } from "../../utils/stringUtils";
+import { DefaultReadOnlyTextField } from "./DefaultReadOnlyTextField";
 import { RHFNumberField } from "./RHFNumberField";
 import { RHFTextField } from "./RHFTextField";
 

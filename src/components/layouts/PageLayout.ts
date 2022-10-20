@@ -1,4 +1,4 @@
-import { DefaultPageWithBreadcrumbsTsx } from "../pages";
+import { DefaultPageWithBreadcrumbsTsx } from "..";
 
 export interface TLink {
   name: string;

@@ -1,8 +1,8 @@
+import { MyFormProviderWithCardLayoutTsx } from "../../components";
 import {
   SingleColumnBody,
   TwoColumnBody,
 } from "../../components/fields/fieldUtils";
-import { MyFormProviderWithCardLayoutTsx } from "../../components/layouts";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {

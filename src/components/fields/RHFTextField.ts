@@ -1,4 +1,4 @@
-import { RHFTextFieldTsx } from ".";
+import { RHFTextFieldTsx } from "..";
 import { getRequired } from "./utils";
 
 interface Props {

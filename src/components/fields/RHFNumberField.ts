@@ -1,4 +1,4 @@
-import { RHFNumberFieldTsx } from ".";
+import { RHFNumberFieldTsx } from "..";
 import { getRequired } from "./utils";
 
 interface Props {
