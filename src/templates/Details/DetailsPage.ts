@@ -6,12 +6,13 @@ import { id, isLoading, useParams } from "../common";
 import { useFetchByIdName } from "../Hooks/useFetchById";
 import { DetailsBody } from "./DetailsBody";
 
-export const DetailsPageName = (modelName: string) => {
-  return `Details${pascalCase(modelName)}Page.tsx`;
+export const DetailsPageName = (featureName: string) => {
+  return `Details${pascalCase(featureName)}Page`;
 };
 
 // prettier-ignore
 export const GetDetailsPageString = (
+  featureName: string,
   dto: DTOSchema,
   title: string,
   links: TLink[],
@@ -21,13 +22,13 @@ export const GetDetailsPageString = (
 import React from 'react';
 import { ${useParams} } from 'react-router';
 
-export const Details${pascalCase(dto.modelName)}Page: React.FC = () => {
+export const ${DetailsPageName(featureName)}: React.FC = () => {
     const { ${id} } = ${useParams}<{ ${id}: string }>();
-    const { ${camelCase(dto.modelName)}, ${isLoading} } = ${useFetchByIdName(dto.modelName)}(${id});
+    const { ${camelCase(dto.modelName)}, ${isLoading} } = ${useFetchByIdName(featureName)}(${id});
     ${renderDependencyHooks(dto)}
 
     return (${PageLayout(
-      DetailsBody(dto.modelName),
+      DetailsBody(dto.modelName, featureName),
       title,
       links,
       breadcrumbsAction

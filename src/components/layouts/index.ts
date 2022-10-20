@@ -1,1 +1,1 @@
-export const MyFormProviderWithCardLayoutTsx = "MyFormProviderWithCardLayout";
+export const MyFormProviderWithCardLayoutTsx = "DefaultSingleColumnFormCard";

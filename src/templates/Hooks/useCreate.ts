@@ -19,8 +19,8 @@ import {
 import { GetDIContextName } from "../context/DIContext";
 import { CreateFuncName, GetRepositoryName } from "../Repository/Repository";
 
-export const useCreateName = (modelName: string) => {
-  return `useCreate${pascalCase(modelName)}`;
+export const useCreateName = (featureName: string) => {
+  return `useCreate${pascalCase(featureName)}`;
 };
 
 // prettier-ignore
@@ -28,7 +28,7 @@ export const GetUseCreateString = (dto: DTOSchema, featureName: string) => {
     return `
 import { ${useMutation}, ${useQueryClient} } from 'react-query';
 
-export const ${useCreateName(dto.modelName)} = () => {
+export const ${useCreateName(featureName)} = () => {
     const ${EnqueueMessage} = ${NotificationAdapter}();
     const ${queryClient} = ${useQueryClient}();
     const ${config} = ${useDefaultRQConfig}('useCreate${dto.modelName}');

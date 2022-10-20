@@ -45,7 +45,7 @@ import {
   GetUpdatePageString,
   UpdatePageName,
 } from "./templates/Update/UpdatePage";
-import { DTONames, getModelNamesConfigured } from "./utils/consoleInputUtils";
+import { DTONames } from "./utils/consoleInputUtils";
 import { pascalCase, plural } from "./utils/stringUtils";
 
 //todo config?
@@ -91,7 +91,7 @@ export const GenerateFeatureBase = (
   dtoNames: DTONames,
   baseRoute: string
 ) => {
-  const { create, details, list, update } = getModelNamesConfigured(dtoNames);
+  const { create, details, list, update } = dtoNames;
 
   const createDTO = create ? DTOs[create] : undefined;
   const updateDTO = details ? DTOs[details] : undefined;
@@ -154,7 +154,7 @@ export const GenerateFeatureBase = (
   if (listDTO) {
     writeFileSync(
       `${useQueriesRoute(featureName, baseRoute)}/${useFetchAllName(
-        listDTO.modelName
+        featureName
       )}.ts`,
       GetUseFetchAllString(listDTO, featureName)
     );
@@ -162,7 +162,7 @@ export const GenerateFeatureBase = (
   if (detailsDTO) {
     writeFileSync(
       `${useQueriesRoute(featureName, baseRoute)}/${useFetchByIdName(
-        detailsDTO.modelName
+        featureName
       )}.ts`,
       GetUseFetchByIdString(detailsDTO, featureName)
     );
@@ -170,7 +170,7 @@ export const GenerateFeatureBase = (
   if (commands.includes(Commands.delete)) {
     writeFileSync(
       `${useMutationRoute(featureName, baseRoute)}/${useDeleteName(
-        createDTO.modelName
+        featureName
       )}.ts`,
       GetUseDeleteString(createDTO, featureName)
     );
@@ -229,26 +229,26 @@ export const GenerateCreateFeature = (
       },
     ]
   );
-  const createFormString = GetCreateFormString(dto);
+  const createFormString = GetCreateFormString(featureName, dto);
   const useCreateString = GetUseCreateString(dto, featureName);
   mkdirSync(CreatePageRoute(featureName, baseRoute), { recursive: true });
   mkdirSync(CreateFormRoute(featureName, baseRoute), { recursive: true });
 
   writeFileSync(
     `${CreatePageRoute(featureName, baseRoute)}/${CreatePageName(
-      dto.modelName
-    )}`,
+      featureName
+    )}.tsx`,
     createPageString
   );
   writeFileSync(
     `${CreateFormRoute(featureName, baseRoute)}/${CreateFormName(
-      dto.modelName
-    )}`,
+      featureName
+    )}.tsx`,
     createFormString
   );
   writeFileSync(
     `${useMutationRoute(featureName, baseRoute)}/${useCreateName(
-      dto.modelName
+      featureName
     )}.ts`,
     useCreateString
   );
@@ -267,21 +267,26 @@ export const GenerateDetailsFeature = (
   baseRoute: string
 ) => {
   const detailsPageRoute = DetailsPageRoute(featureName, baseRoute);
-  const detailsPage = GetDetailsPageString(dto, `Details ${featureName}`, [
-    {
-      name: `Details ${dto.modelName}`,
-      href: `/${plural(dto.modelName)}`,
-    },
-  ]);
-  const detailsBodyString = GetDetailsBodyString(dto);
+  const detailsPage = GetDetailsPageString(
+    featureName,
+    dto,
+    `Details ${featureName}`,
+    [
+      {
+        name: `Details ${dto.modelName}`,
+        href: `/${plural(dto.modelName)}`,
+      },
+    ]
+  );
+  const detailsBodyString = GetDetailsBodyString(dto, featureName);
   mkdirSync(detailsPageRoute, { recursive: true });
   mkdirSync(DetailsBodyRoute(featureName, baseRoute), { recursive: true });
   writeFileSync(
-    `${detailsPageRoute}/${DetailsPageName(dto.modelName)}`,
+    `${detailsPageRoute}/${DetailsPageName(featureName)}.tsx`,
     detailsPage
   );
   writeFileSync(
-    `${detailsPageRoute}/components/${DetailsBodyName(dto.modelName)}`,
+    `${detailsPageRoute}/components/${DetailsBodyName(dto.modelName)}.tsx`,
     detailsBodyString
   );
 };
@@ -305,7 +310,7 @@ export const GenerateUpdateFeature = (
   mkdirSync(updateFormRoute, { recursive: true });
 
   writeFileSync(
-    `${updatePageRoute}/${UpdatePageName(dto.modelName)}`,
+    `${updatePageRoute}/${UpdatePageName(featureName)}.tsx`,
     GetUpdatePageString(dto, `Update ${featureName}`, featureName, [
       {
         name: `Update ${dto.modelName}`,

@@ -16,8 +16,8 @@ import {
 import { GetRoutesName } from "../routes/routes";
 import { UpdateForm } from "./UpdateForm";
 
-export const UpdatePageName = (modelName: string) => {
-  return `Update${pascalCase(modelName)}Page.tsx`;
+export const UpdatePageName = (featureName: string) => {
+  return `Update${pascalCase(featureName)}Page`;
 };
 
 // prettier-ignore
@@ -32,7 +32,7 @@ export const GetUpdatePageString = (
 import React, { useMemo } from 'react';
 import { ${useParams}, ${useNavigate} } from 'react-router';
 
-export const Update${pascalCase(dto.modelName)}Page: React.FC = () => {
+export const ${UpdatePageName(featureName)}: React.FC = () => {
     const { ${id} } = ${useParams}<{ ${id}: string }>();
     const ${navigate} = ${useNavigate}();
     const { update${pascalCase(dto.modelName)}Async, ${isLoading}: ${isSubmitting} } = useUpdate${pascalCase(dto.modelName)}();

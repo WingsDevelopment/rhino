@@ -1,4 +1,8 @@
-import { DTOExtensionAdd, ModelExtensionAdd } from "../config";
+import {
+  DTOExtensionAdd,
+  ModelExtensionAdd,
+  ModelExtensionRemove,
+} from "../config";
 
 export interface DTONames {
   create?: string | undefined;
@@ -100,5 +104,6 @@ export const getModelName = (modelName: string): string => {
   return modelName + ModelExtensionAdd;
 };
 export const getModelNameFromDtoName = (dtoName: string): string => {
-  return dtoName.replace(DTOExtensionAdd, ModelExtensionAdd);
+  const name = dtoName.replace(ModelExtensionRemove, ModelExtensionAdd);
+  return name;
 };

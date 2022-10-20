@@ -1,10 +1,10 @@
-import { MyFormProviderWithCardLayoutTsx } from "../../components/layouts";
-import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
-import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
   SingleColumnBody,
   TwoColumnBody,
 } from "../../components/fields/fieldUtils";
+import { MyFormProviderWithCardLayoutTsx } from "../../components/layouts";
+import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
+import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
   handleSubmit,
   isLoading,
@@ -15,17 +15,18 @@ import {
   useForm,
 } from "../common";
 
-export const CreateFormName = (modelName: string) => {
-  return `Create${pascalCase(modelName)}Form.tsx`;
+export const CreateFormName = (featureName: string) => {
+  return `Create${pascalCase(featureName)}Form`;
 };
 
 // prettier-ignore
-export const CreateForm = (modelName: string) => {
-  return `<Create${pascalCase(modelName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading}} />`;
+export const CreateForm = (featureName: string) => {
+  return `<${CreateFormName(featureName)} ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading}} />`;
 }
 
 // prettier-ignore
 export const GetCreateFormString = (
+  featureName: string,
   dto: DTOSchema,
 ) => {
   return `import { useEffect } from 'react';
@@ -36,7 +37,7 @@ interface Props {
     ${isLoading}: boolean;
 }
 
-export const Create${pascalCase(dto.modelName)}Form: React.FC<Props> = ({ ${submitHandler}, ${isLoading} }) => {
+export const ${CreateFormName(featureName)}: React.FC<Props> = ({ ${submitHandler}, ${isLoading} }) => {
     const ${methods} = ${useForm}<${pascalCase(dto.modelName)}>()
     const { ${handleSubmit} } = ${methods};
     

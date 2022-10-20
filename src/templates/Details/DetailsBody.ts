@@ -7,19 +7,21 @@ import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { isLoading } from "../common";
 
-export const DetailsBodyName = (modelName: string) => {
-  return `Details${pascalCase(modelName)}Body.tsx`;
+export const DetailsBodyName = (featureName: string) => {
+  return `Details${pascalCase(featureName)}Body`;
 };
 
 // prettier-ignore
 export const DetailsBody = (
     modelName: string,
+    featureName: string,
 ) => {
-    return `<Details${pascalCase(modelName)}Body ${camelCase(modelName)}={${camelCase(modelName)}} ${isLoading}={${isLoading}} />`;
+    return `<${DetailsBodyName(featureName)} ${camelCase(modelName)}={${camelCase(modelName)}} ${isLoading}={${isLoading}} />`;
 }
 // prettier-ignore
 export const GetDetailsBodyString = (
     dto: DTOSchema,
+    featureName: string,
 ) => {
     return `
 interface Props {
@@ -27,15 +29,14 @@ interface Props {
     ${isLoading}: boolean;
 }
 
-export const Details${pascalCase(dto.modelName)}Body: React.FC<Props> = ({ ${camelCase(dto.modelName)}, ${isLoading} }) => {
+export const ${DetailsBodyName(featureName)}: React.FC<Props> = ({ ${camelCase(dto.modelName)}, ${isLoading} }) => {
     return (
         <${LoadableCardWrapperTsx} ${isLoading}={${isLoading}}>
             ${RenderDetailsBody(dto, dto.modelName)}
         </${LoadableCardWrapperTsx}>
     )
 }
-
-export default Details${pascalCase(dto.modelName)}Body;`
+`
 };
 
 const RenderDetailsBody = (model: DTOSchema, modelName: string) => {

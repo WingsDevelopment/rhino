@@ -17,12 +17,12 @@ import { ModelExtensionName } from "../common/CreateDTO";
 import { GetDIContextName } from "../context/DIContext";
 import { GetAllFuncName, GetRepositoryName } from "../Repository/Repository";
 
-export const useFetchAllName = (modelName: string) => {
-  return `useFetchAll${pascalCase(modelName)}`;
+export const useFetchAllName = (featureName: string) => {
+  return `useFetchAll${pascalCase(featureName)}`;
 };
 
-export const FETCH_ALL = (modelName: string) => {
-  return `FETCH_ALL_${modelName.toUpperCase()}S`;
+export const FETCH_ALL = (featureName: string) => {
+  return `FETCH_ALL_${featureName.toUpperCase()}S`;
 };
 
 // prettier-ignore
@@ -32,8 +32,8 @@ export const GetUseFetchAllString = (dto: DTOSchema, featureName: string) => {
 
     export const ${FETCH_ALL(dto.modelName)} = "${FETCH_ALL(dto.modelName)}";
   
-  export const ${useFetchAllName(dto.modelName)} = () => {
-      const ${config} = ${useDefaultRQConfig}('useFetchAll${dto.modelName}');
+  export const ${useFetchAllName(featureName)} = () => {
+      const ${config} = ${useDefaultRQConfig}('${useFetchAllName(featureName)}');
   
       const { ${isLoading}, ${error}, ${data} } = ${useQuery}(
           [${FETCH_ALL(dto.modelName)}],

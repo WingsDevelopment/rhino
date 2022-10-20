@@ -1,5 +1,5 @@
 //config
 export const DTOExtensionRemove = "";
-export const DTOExtensionAdd = "DTO";
-export const ModelExtensionRemove = "";
+export const DTOExtensionAdd = "";
+export const ModelExtensionRemove = "Dto";
 export const ModelExtensionAdd = "";

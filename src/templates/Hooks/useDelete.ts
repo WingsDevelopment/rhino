@@ -19,8 +19,8 @@ import {
 import { GetDIContextName } from "../context/DIContext";
 import { DeleteFuncName, GetRepositoryName } from "../Repository/Repository";
 
-export const useDeleteName = (modelName: string) => {
-  return `useDelete${pascalCase(modelName)}`;
+export const useDeleteName = (featureName: string) => {
+  return `useDelete${pascalCase(featureName)}`;
 };
 
 // prettier-ignore
@@ -28,7 +28,7 @@ export const GetUseDeleteString = (dto: DTOSchema, featureName: string) => {
       return `
   import { ${useMutation}, ${useQueryClient} } from 'react-query';
   
-  export const ${useDeleteName(dto.modelName)} = () => {
+  export const ${useDeleteName(featureName)} = () => {
       const ${EnqueueMessage} = ${NotificationAdapter}();
       const ${queryClient} = ${useQueryClient}();
       const ${config} = ${useDefaultRQConfig}('useDelete${dto.modelName}');

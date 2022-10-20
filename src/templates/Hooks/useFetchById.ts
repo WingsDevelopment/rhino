@@ -18,12 +18,12 @@ import { ModelExtensionName } from "../common/CreateDTO";
 import { GetDIContextName } from "../context/DIContext";
 import { GetByIdFuncName, GetRepositoryName } from "../Repository/Repository";
 
-export const useFetchByIdName = (modelName: string) => {
-  return `useFetch${pascalCase(modelName)}ById`;
+export const useFetchByIdName = (featureName: string) => {
+  return `useFetch${pascalCase(featureName)}ById`;
 };
 
-export const FETCH_BY_ID = (modelName: string) => {
-  return `FETCH_BY_${modelName.toUpperCase()}_ID`;
+export const FETCH_BY_ID = (featureName: string) => {
+  return `FETCH_BY_${featureName.toUpperCase()}_ID`;
 };
 
 // prettier-ignore
@@ -31,13 +31,13 @@ export const GetUseFetchByIdString = (dto: DTOSchema, featureName: string) => {
       return `
   import { ${useQuery}, ${useQueryClient} } from 'react-query';
   
-  export const ${FETCH_BY_ID(dto.modelName)} = "${FETCH_BY_ID(dto.modelName)}";
+  export const ${FETCH_BY_ID(featureName)} = "${FETCH_BY_ID(featureName)}";
   
-  export const ${useFetchByIdName(dto.modelName)} = (${id}: string | undefined) => {
-      const ${config} = ${useDefaultRQConfig}('useFetch${dto.modelName}ById');
+  export const ${useFetchByIdName(featureName)} = (${id}: string | undefined) => {
+      const ${config} = ${useDefaultRQConfig}('${useFetchByIdName(featureName)}');
   
       const { ${isLoading}, ${error}, ${data} } = ${useQuery}(
-            [${FETCH_BY_ID(dto.modelName)}, ${id}],
+            [${FETCH_BY_ID(featureName)}, ${id}],
           async () => {
               const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${GetByIdFuncName(featureName)}(${id}!);
               return ${response} ? ${ModelExtensionName(dto.modelName)}(${response}) : undefined;

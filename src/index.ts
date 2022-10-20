@@ -7,8 +7,9 @@ import {
   GenerateIndexFeature,
   GenerateUpdateFeature,
 } from "./FileManager";
-import { definitions } from "./openApiSchema.json";
+import { components } from "./openApiSchema.json";
 import { getDTONamesFromInput } from "./utils/consoleInputUtils";
+const definitions = components.schemas;
 let rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,

@@ -14,8 +14,8 @@ import { useCreateName } from "../Hooks/useCreate";
 import { GetRoutesName } from "../routes/routes";
 import { CreateForm } from "./CreateForm";
 
-export const CreatePageName = (modelName: string) => {
-  return `Create${pascalCase(modelName)}Page.tsx`;
+export const CreatePageName = (featureName: string) => {
+  return `Create${pascalCase(featureName)}Page`;
 };
 
 // prettier-ignore
@@ -30,8 +30,8 @@ export const GetCreatePageString = (
 import React, { useMemo } from 'react';
 import { ${useNavigate} } from 'react-router';
 
-export const Create${pascalCase(dto.modelName)}Page: React.FC = () => {
-    const { create${pascalCase(dto.modelName)}Async, ${isLoading} } = ${useCreateName(camelCase(dto.modelName))}();
+export const ${CreatePageName(featureName)}: React.FC = () => {
+    const { create${pascalCase(dto.modelName)}Async, ${isLoading} } = ${useCreateName(featureName)}();
     const ${navigate} = ${useNavigate}();
     ${renderDependencyHooks(dto)}
 
@@ -41,12 +41,12 @@ export const Create${pascalCase(dto.modelName)}Page: React.FC = () => {
     };
 
     return (${PageLayout(
-      CreateForm(dto.modelName),
+      CreateForm(featureName),
       title,
       links,
       breadcrumbsAction
     )});
 };
     
-export default Create${pascalCase(dto.modelName)}Page;`;
+export default ${CreatePageName(featureName)};`;
 };
