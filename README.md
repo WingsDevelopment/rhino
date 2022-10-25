@@ -26,14 +26,15 @@ C:\repos\clean-code-poc\clean-code-poc\src\backoffice-app-code\features Retailer
 
 Command exlanation
 C:\repos\clean-code-poc\clean-code-poc\src\backoffice-app-code\features - path to the features folder <br />
-Retailer details - name of the feature <br />
-RetailerDto - name of the dto <br />
+Retailer - name of the feature <br />
+details - name of the command <br />
+RetailerDto - name of the dto for details <br />
 create - name of the command <br />
-NewRetailerDto - name of the dto <br />
+NewRetailerDto - name of the dto for create <br />
 update - name of the command <br />
-NewRetailerDto - name of the dto <br />
+NewRetailerDto - name of the dto for update <br />
 list - name of the command <br />
-RetailerDto - name of the dto <br />
+RetailerDto - name of the dto for list <br />
 
 Command pattern <br />
 path featureName command dtoName command dtoName command dtoName command dtoName
