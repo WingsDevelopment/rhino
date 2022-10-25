@@ -1,49 +1,67 @@
 import { mkdirSync, writeFileSync } from "fs";
-import { Commands } from ".";
-import { DTOSchema } from "./models/DTOSchema";
-import { GetCreateDTOString } from "./templates/common/CreateDTO";
-import { GetCreateModelString } from "./templates/common/CreateModel";
-import { GetDIContextTemplateString } from "./templates/context/DIContext";
-import { CreatePageName, GetCreatePageString } from "./templates/Create";
+import { Commands } from "..";
+import { DTOSchema } from "../models/DTOSchema";
+import { GetCreateDTOString } from "../templates/common/CreateDTO";
+import { GetCreateModelString } from "../templates/common/CreateModel";
+import { GetDIContextTemplateString } from "../templates/context/DIContext";
+import { CreatePageName, GetCreatePageString } from "../templates/Create";
 import {
   CreateFormName,
   GetCreateFormString,
-} from "./templates/Create/CreateForm";
+} from "../templates/Create/CreateForm";
 import {
   DetailsBodyName,
   GetDetailsBodyString,
-} from "./templates/Details/DetailsBody";
+} from "../templates/Details/DetailsBody";
 import {
   DetailsPageName,
   GetDetailsPageString,
-} from "./templates/Details/DetailsPage";
-import { GetUseCreateString, useCreateName } from "./templates/Hooks/useCreate";
-import { GetUseDeleteString, useDeleteName } from "./templates/Hooks/useDelete";
+} from "../templates/Details/DetailsPage";
+import {
+  GetUseCreateString,
+  useCreateName,
+} from "../templates/Hooks/useCreate";
+import {
+  GetUseDeleteString,
+  useDeleteName,
+} from "../templates/Hooks/useDelete";
 import {
   GetUseFetchAllString,
   useFetchAllName,
-} from "./templates/Hooks/useFetchAll";
+} from "../templates/Hooks/useFetchAll";
 import {
   GetUseFetchByIdString,
   useFetchByIdName,
-} from "./templates/Hooks/useFetchById";
-import { GetUseUpdateString, useUpdateName } from "./templates/Hooks/useUpdate";
-import { GetRepositoryString } from "./templates/Repository/Repository";
-import { GetRepositoryInterfaceString } from "./templates/Repository/RepositoryInterface";
-import { GetRoutesString } from "./templates/routes/routes";
-import { GetIndexBodyString, IndexBodyName } from "./templates/Table/IndexBody";
-import { GetIndexPageString, IndexPageName } from "./templates/Table/IndexPage";
-import { GetTableBodyString, TableBodyName } from "./templates/Table/TableBody";
+} from "../templates/Hooks/useFetchById";
+import {
+  GetUseUpdateString,
+  useUpdateName,
+} from "../templates/Hooks/useUpdate";
+import { GetRepositoryString } from "../templates/Repository/Repository";
+import { GetRepositoryInterfaceString } from "../templates/Repository/RepositoryInterface";
+import { GetRoutesString } from "../templates/routes/routes";
+import {
+  GetIndexBodyString,
+  IndexBodyName,
+} from "../templates/Table/IndexBody";
+import {
+  GetIndexPageString,
+  IndexPageName,
+} from "../templates/Table/IndexPage";
+import {
+  GetTableBodyString,
+  TableBodyName,
+} from "../templates/Table/TableBody";
 import {
   GetUpdateFormString,
   UpdateFormName,
-} from "./templates/Update/UpdateForm";
+} from "../templates/Update/UpdateForm";
 import {
   GetUpdatePageString,
   UpdatePageName,
-} from "./templates/Update/UpdatePage";
-import { DTONames } from "./utils/consoleInputUtils";
-import { pascalCase, plural } from "./utils/stringUtils";
+} from "../templates/Update/UpdatePage";
+import { DTONames } from "../utils/consoleInputUtils";
+import { pascalCase, plural } from "../utils/stringUtils";
 
 //todo config?
 export const BaseModelsRoute = (featureName: string, baseRoute: string) => {

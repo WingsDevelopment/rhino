@@ -1,9 +1,9 @@
-import { DTOSchema } from "./models/DTOSchema";
+import { DTOSchema } from "../models/DTOSchema";
 import {
   DTONames,
   getDtoName,
   getModelNameFromDtoName,
-} from "./utils/consoleInputUtils";
+} from "../utils/consoleInputUtils";
 
 export const createDTOsWithDependencies = (
   definitions: any,

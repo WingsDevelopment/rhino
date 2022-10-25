@@ -1,15 +1,19 @@
 import * as readline from "readline";
-import { createDTOsWithDependencies } from "./DTOManager";
 import {
   GenerateCreateFeature,
   GenerateDetailsFeature,
   GenerateFeatureBase,
   GenerateIndexFeature,
   GenerateUpdateFeature,
-} from "./FileManager";
-import { components } from "./openApiSchema.json";
+} from "./managers/FileManager";
+import { createDTOsWithDependencies } from "./managers/DTOManager";
+import schema from "./openApiSchema.json";
 import { getDTONamesFromInput } from "./utils/consoleInputUtils";
-const definitions = components.schemas;
+import { config } from "./config";
+import { getPropByString } from "./utils/objectUtils";
+
+const definitions = getPropByString(schema, config.chemaDTOPath);
+
 let rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
