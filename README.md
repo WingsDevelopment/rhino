@@ -22,20 +22,20 @@ rename things from "rhino" to your project needs:
 # Usage
 
 Command example:
-C:\repos\clean-code-poc\clean-code-poc\src\backoffice-app-code\features Retailer details RetailerDto create NewRetailerDto update NewRetailerDto list RetailerDto
+C:\repos\clean-code-poc\clean-code-poc\src\backoffice-app-code\features Retailer details RetailerDto create NewRetailerDto update NewRetailerDto list RetailerDto <br />
 
-Command exlanatio
-C:\repos\clean-code-poc\clean-code-poc\src\backoffice-app-code\features - path to the features folder
-Retailer details - name of the feature
-RetailerDto - name of the dto
-create - name of the command
-NewRetailerDto - name of the dto
-update - name of the command
-NewRetailerDto - name of the dto
-list - name of the command
-RetailerDto - name of the dto
+Command exlanation
+C:\repos\clean-code-poc\clean-code-poc\src\backoffice-app-code\features - path to the features folder <br />
+Retailer details - name of the feature <br />
+RetailerDto - name of the dto <br />
+create - name of the command <br />
+NewRetailerDto - name of the dto <br />
+update - name of the command <br />
+NewRetailerDto - name of the dto <br />
+list - name of the command <br />
+RetailerDto - name of the dto <br />
 
-Command pattern
+Command pattern <br />
 path featureName command dtoName command dtoName command dtoName command dtoName
 
 # More on configuring the project
