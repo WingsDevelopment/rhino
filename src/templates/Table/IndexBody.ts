@@ -1,3 +1,4 @@
+import { IInvokableTemplate } from "../../interfaces/ITemplate";
 import {
   DTOSchema,
   getPropertiesFromSchema,
@@ -8,32 +9,36 @@ import {
   dataToShow,
   isLoading,
   page,
+  reactComponentExtension,
   rowsPerPage,
   setPage,
   setRowsPerPage,
   setSortBy,
   tableLabels,
   usePaginableSortedData,
-} from "../common";
+} from "../../stringConfig";
+import { RQUpdatePage } from "../Update/UpdatePage";
+import { RQIndexPage } from "./IndexPage";
+import { RQTableBody } from "./TableBody";
 
-export const IndexBodyName = (modelName: string) => {
-  return `Index${pascalCase(modelName)}Body.tsx`;
+const IndexBodyName = (modelName: string) => {
+  return `Index${pascalCase(modelName)}Body`;
 };
 
 // prettier-ignore
-export const IndexBody = (modelName: string) => {
+const IndexBody = (modelName: string) => {
     return `<Index${pascalCase(modelName)}Body ${pluralCamelCase(modelName)}={${pluralCamelCase(modelName)}} ${isLoading}={${isLoading}} />`;
 }
 
 // prettier-ignore
-export const GetIndexBodyString = (dto: DTOSchema) => {
+const GetIndexBodyString = (featureName: string, dto: DTOSchema) => {
     return `
 interface Props {
     ${pluralCamelCase(dto.modelName)}: ${pascalCase(dto.modelName)}[] | undefined;
     ${isLoading}: boolean;
 }
 
-export const Index${pascalCase(dto.modelName)}Body: React.FC<Props> = ({ ${pluralCamelCase(dto.modelName)}, ${isLoading} }) => {
+export const ${IndexBodyName(dto.modelName)}: React.FC<Props> = ({ ${pluralCamelCase(dto.modelName)}, ${isLoading} }) => {
     const { ${dataToShow}, ${page}, ${setPage}, ${rowsPerPage}, ${setRowsPerPage}, ${setSortBy} } =
      ${usePaginableSortedData}(${pluralCamelCase(dto.modelName)}, ''); 
 
@@ -56,14 +61,14 @@ export const Index${pascalCase(dto.modelName)}Body: React.FC<Props> = ({ ${plura
             sortByHandler={${setSortBy}}
             itemsPerPage={${rowsPerPage}}
             tableBodyComponent={
-                <${pascalCase(dto.modelName)}TableBody ${pluralCamelCase(dto.modelName)}={${dataToShow} as ${pascalCase(dto.modelName)}[] | undefined} ${isLoading}={${isLoading}} />
+                <${RQTableBody.invoke(featureName, dto.modelName)}/>
             }
             tableLabels={${tableLabels}}
         />
     )
 }
 
-export default Index${pascalCase(dto.modelName)}Body;`
+export default ${IndexBodyName(dto.modelName)};`
 }
 
 export const RenderTableLabels = (model: DTOSchema) => {
@@ -73,4 +78,17 @@ export const RenderTableLabels = (model: DTOSchema) => {
       return `{ id: '${p.name}', label: '${p.name}', sortable: true },`;
     })
     .join("\n");
+};
+
+const GetIndexBodyRoute = (featureName: string, baseRoute: string) => {
+  const basePath = RQIndexPage.getRoute(featureName, baseRoute);
+  return `${basePath}/components`;
+};
+
+export const RQIndexBody: IInvokableTemplate = {
+  getName: IndexBodyName,
+  getBody: GetIndexBodyString,
+  getRoute: GetIndexBodyRoute,
+  invoke: IndexBody,
+  extension: reactComponentExtension,
 };

@@ -1,22 +1,26 @@
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";
+import { rhinoConfig } from "../../config";
+import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
-import { camelCase, pascalCase } from "../../utils/stringUtils";
-import { id, isLoading, useParams } from "../common";
+import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
+import {
+  id,
+  isLoading,
+  reactComponentExtension,
+  useParams,
+} from "../../stringConfig";
 import { useFetchByIdName } from "../Hooks/useFetchById";
-import { DetailsBody } from "./DetailsBody";
+import { RQDetailsBody } from "./DetailsBody";
 
-export const DetailsPageName = (featureName: string) => {
+const DetailsPageName = (featureName: string) => {
   return `Details${pascalCase(featureName)}Page`;
 };
 
 // prettier-ignore
-export const GetDetailsPageString = (
+const GetDetailsPageString = (
   featureName: string,
   dto: DTOSchema,
-  title: string,
-  links: TLink[],
-  breadcrumbsAction?: any
 ) => {
   return `
 import React from 'react';
@@ -28,12 +32,27 @@ export const ${DetailsPageName(featureName)}: React.FC = () => {
     ${renderDependencyHooks(dto)}
 
     return (${PageLayout(
-      DetailsBody(dto.modelName, featureName),
-      title,
-      links,
-      breadcrumbsAction
+      RQDetailsBody.invoke(featureName, dto.modelName),
+      `Details ${featureName}`,
+      [
+        {
+          name: `Details ${dto.modelName}`,
+          href: `/${plural(dto.modelName)}`,
+        },
+      ]
     )});
 }
 
-export default Details${pascalCase(dto.modelName)}Page;`;
+export default ${DetailsPageName(featureName)}`;
+};
+
+const DetailsPageRoute = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}${rhinoConfig.detailsPath}`;
+};
+
+export const RQDetailsPage: ITemplate = {
+  getName: DetailsPageName,
+  getBody: GetDetailsPageString,
+  getRoute: DetailsPageRoute,
+  extension: reactComponentExtension,
 };

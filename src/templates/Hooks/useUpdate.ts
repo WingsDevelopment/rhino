@@ -1,7 +1,10 @@
+import { rhinoConfig } from "../../config";
+import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
   config,
+  defaultFileExtension,
   EnqueueMessage,
   error,
   errorMessage,
@@ -15,7 +18,7 @@ import {
   useDefaultRQConfig,
   useMutation,
   useQueryClient,
-} from "../common";
+} from "../../stringConfig";
 import { GetDIContextName } from "../context/DIContext";
 import { GetRepositoryName, UpdateFuncName } from "../Repository/Repository";
 import { FETCH_ALL } from "./useFetchAll";
@@ -25,7 +28,7 @@ export const useUpdateName = (modelName: string) => {
 };
 
 // prettier-ignore
-export const GetUseUpdateString = (dto: DTOSchema, featureName: string) => {
+export const GetUseUpdateString = (featureName: string, dto: DTOSchema) => {
       return `
   import { ${useMutation}, ${useQueryClient} } from 'react-query';
   
@@ -42,7 +45,7 @@ export const GetUseUpdateString = (dto: DTOSchema, featureName: string) => {
           {
               ...${config},
               onSuccess: () => {
-                  ${queryClient}.${invalidateQueries}([${FETCH_ALL(dto.modelName)}]);
+                  ${queryClient}.${invalidateQueries}([${FETCH_ALL(featureName)}]);
                   ${EnqueueMessage}('${dto.modelName} is successfully updated', 'success');
               },
           }
@@ -55,3 +58,14 @@ export const GetUseUpdateString = (dto: DTOSchema, featureName: string) => {
       };
   };`
   }
+
+const useUpdatePath = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}${rhinoConfig.stateMutationsPath}`;
+};
+
+export const RQUpdateHook: ITemplate = {
+  getName: useUpdateName,
+  getBody: GetUseUpdateString,
+  getRoute: useUpdatePath,
+  extension: defaultFileExtension,
+};

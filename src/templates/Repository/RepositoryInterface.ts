@@ -1,5 +1,8 @@
 import { Commands } from "../..";
+import { rhinoConfig } from "../../config";
+import { IRepositoryTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
+import { reactComponentExtension } from "../../stringConfig";
 import { pascalCase } from "../../utils/stringUtils";
 import { GetRepositoryName } from "./Repository";
 
@@ -10,9 +13,9 @@ export const GetRepositoryIntefaceName = (featureName: string) => {
 //prettier-ignore
 export const GetRepositoryInterfaceString = (
   featureName: string,
-  DTO: DTOSchema,
   commands: Commands[],
   createDTO?: DTOSchema,
+  detailsDTO?: DTOSchema,
   updateDTO?: DTOSchema,
   listDTO?: DTOSchema,
 ) => {
@@ -35,7 +38,7 @@ export const GetRepositoryInterfaceString = (
         }
         ${
           commands.find((c) => c === Commands.details)
-            ? `Get${pascalCase(featureName)}ByIdAsync: (id: string) => Promise<${DTO.dtoName} | undefined>;`
+            ? `Get${pascalCase(featureName)}ByIdAsync: (id: string) => Promise<${detailsDTO?.dtoName} | undefined>;`
             : ""
         }
         ${
@@ -45,4 +48,15 @@ export const GetRepositoryInterfaceString = (
         }
     }
     `;
+};
+
+const RepositoryInterfacePath = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}${rhinoConfig.repositoryInterfacePath}`;
+};
+
+export const RepositoryInterface: IRepositoryTemplate = {
+  getName: GetRepositoryIntefaceName,
+  getBody: GetRepositoryInterfaceString,
+  getRoute: RepositoryInterfacePath,
+  extension: reactComponentExtension,
 };

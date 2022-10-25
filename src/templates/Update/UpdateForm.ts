@@ -3,6 +3,7 @@ import {
   SingleColumnBody,
   TwoColumnBody,
 } from "../../components/fields/fieldUtils";
+import { IInvokableTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
@@ -12,23 +13,26 @@ import {
   isSubmitting,
   methods,
   onSubmit,
+  reactComponentExtension,
   reset,
   SubmitHandler,
   submitHandler,
   useForm,
-} from "../common";
+} from "../../stringConfig";
+import { RQUpdatePage } from "./UpdatePage";
 
-export const UpdateFormName = (modelName: string) => {
-  return `Update${pascalCase(modelName)}Form.tsx`;
+const UpdateFormName = (modelName: string) => {
+  return `Update${pascalCase(modelName)}Form`;
 };
 
 // prettier-ignore
-export const UpdateForm = (modelName: string) => {
-    return `<Update${pascalCase(modelName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading} | ${isSubmitting}} ${initialData}={${initialData}} />`;
+const UpdateForm = (featureName: string, modelName: string) => {
+    return `<Update${pascalCase(featureName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading} | ${isSubmitting}} ${initialData}={${initialData}} />`;
 }
 
 // prettier-ignore
-export const GetUpdateFormString = (
+const GetUpdateFormString = (
+    featureName: string,
     dto: DTOSchema,
 ) => {
     return `import { useEffect } from 'react';
@@ -40,7 +44,7 @@ interface Props {
     ${initialData}: ${pascalCase(dto.modelName)};
 }
 
-export const Update${pascalCase(dto.modelName)}Form: React.FC<Props> = ({ ${submitHandler}, ${isLoading}, ${initialData} }) => {
+export const ${UpdateFormName(featureName)}: React.FC<Props> = ({ ${submitHandler}, ${isLoading}, ${initialData} }) => {
     const ${methods} = ${useForm}<${pascalCase(dto.modelName)}>()
     const { ${handleSubmit} } = ${methods};
     
@@ -70,4 +74,17 @@ const RenderFormBody = (model: DTOSchema, modelName: string) => {
   return numberOfKeys > 5
     ? SingleColumnBody(model, modelName)
     : TwoColumnBody(model, modelName);
+};
+
+const GetUpdateFormRoute = (featureName: string, baseRoute: string) => {
+  const basePath = RQUpdatePage.getRoute(featureName, baseRoute);
+  return `${basePath}/components`;
+};
+
+export const RQUpdateForm: IInvokableTemplate = {
+  getName: UpdateFormName,
+  getBody: GetUpdateFormString,
+  getRoute: GetUpdateFormRoute,
+  invoke: UpdateForm,
+  extension: reactComponentExtension,
 };

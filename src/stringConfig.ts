@@ -48,3 +48,15 @@ export const details = "details";
 export const update = "update";
 export const create = "create";
 export const index = "index";
+
+//axios todo(not implemented)
+export const axios = "axios";
+export const axiosInstance = "axiosInstance";
+export const post = "post";
+export const get = "get";
+export const put = "put";
+export const _delete = "delete";
+export const patch = "patch";
+//extension
+export const reactComponentExtension = ".tsx";
+export const defaultFileExtension = ".ts";

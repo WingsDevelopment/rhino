@@ -96,6 +96,16 @@ export const getPropertyTypeString = (
     }
     return "string";
   }
+  if (property.type === "boolean") {
+    return "boolean";
+  }
+  if (property.type === "number") {
+    return "number";
+  }
+  if (property.type === "object") {
+    return "any";
+  }
+  return "any";
 };
 
 export const getDummyValueForProperty = (

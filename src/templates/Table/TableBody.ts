@@ -1,24 +1,27 @@
+import { IInvokableTemplate } from "../../interfaces/ITemplate";
 import {
   DTOSchema,
   getPropertiesFromSchema,
   isPropertyPrimitive,
 } from "../../models/DTOSchema";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
-import { isLoading } from "../common";
+import { isLoading, reactComponentExtension } from "../../stringConfig";
+import { RQIndexPage } from "./IndexPage";
 
 export const TableBodyName = (modelName: string) => {
-  return `${pascalCase(modelName)}TableBody.tsx`;
+  return `${pascalCase(modelName)}TableBody`;
 };
 
 // prettier-ignore
-export const TableBody = (
+const TableBody = (
     modelName: string,
 ) => {
-    return `<${pascalCase(modelName)}TableBody ${pluralCamelCase(modelName)}={${pluralCamelCase(modelName)}} ${isLoading}={${isLoading}} />`;
+    return `<${TableBodyName(modelName)} ${pluralCamelCase(modelName)}={${pluralCamelCase(modelName)}} ${isLoading}={${isLoading}} />`;
 }
 
 // prettier-ignore
-export const GetTableBodyString = (
+const GetTableBodyString = (
+    featureName: string,
     dto: DTOSchema,
 ) => {
     return `
@@ -60,11 +63,24 @@ export const ${pascalCase(dto.modelName)}TableBody: React.FC<Props> = ({ ${plura
 export default ${pascalCase(dto.modelName)}TableBody;`;
 }
 
-export const RenderTableBody = (model: DTOSchema) => {
+const RenderTableBody = (model: DTOSchema) => {
   return getPropertiesFromSchema(model)
     .filter((x) => isPropertyPrimitive(x))
     .map((p) => {
       return `<TableCell>{item.${p.name}}</TableCell>`;
     })
     .join("\n");
+};
+
+const GetTableBodyRoute = (featureName: string, baseRoute: string) => {
+  const basePath = RQIndexPage.getRoute(featureName, baseRoute);
+  return `${basePath}/components`;
+};
+
+export const RQTableBody: IInvokableTemplate = {
+  getName: TableBodyName,
+  getBody: GetTableBodyString,
+  getRoute: GetTableBodyRoute,
+  invoke: TableBody,
+  extension: reactComponentExtension,
 };

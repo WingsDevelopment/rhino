@@ -56,9 +56,6 @@ export const createDTOsWithDependencies = (
     definitions
   );
 
-  console.log("localDTOs");
-  console.log(localDTOs);
-  console.log("localDTOs");
   return localDTOs;
 };
 

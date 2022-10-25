@@ -3,25 +3,27 @@ import {
   SingleColumnReadonlyBody,
   TwoColumnReadonlyBody,
 } from "../../components/fields/fieldUtils";
+import { IInvokableTemplate, ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
-import { isLoading } from "../common";
+import { isLoading, reactComponentExtension } from "../../stringConfig";
+import { RQDetailsPage } from "./DetailsPage";
 
-export const DetailsBodyName = (featureName: string) => {
+const DetailsBodyName = (featureName: string) => {
   return `Details${pascalCase(featureName)}Body`;
 };
 
 // prettier-ignore
-export const DetailsBody = (
-    modelName: string,
-    featureName: string,
+const DetailsBody = (
+  featureName: string,
+  modelName: string,
 ) => {
     return `<${DetailsBodyName(featureName)} ${camelCase(modelName)}={${camelCase(modelName)}} ${isLoading}={${isLoading}} />`;
 }
 // prettier-ignore
-export const GetDetailsBodyString = (
-    dto: DTOSchema,
+const GetDetailsBodyString = (
     featureName: string,
+    dto: DTOSchema,
 ) => {
     return `
 interface Props {
@@ -45,4 +47,17 @@ const RenderDetailsBody = (model: DTOSchema, modelName: string) => {
   return numberOfKeys > 5
     ? SingleColumnReadonlyBody(model, modelName)
     : TwoColumnReadonlyBody(model, modelName);
+};
+
+const GetDetailsBodyRoute = (featureName: string, baseRoute: string) => {
+  const basePath = RQDetailsPage.getRoute(featureName, baseRoute);
+  return `${basePath}/components`;
+};
+
+export const RQDetailsBody: IInvokableTemplate = {
+  getName: DetailsBodyName,
+  getBody: GetDetailsBodyString,
+  getRoute: GetDetailsBodyRoute,
+  invoke: DetailsBody,
+  extension: reactComponentExtension,
 };

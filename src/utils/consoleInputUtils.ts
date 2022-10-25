@@ -9,12 +9,14 @@ export interface DTONames {
   details?: string | undefined;
   update?: string | undefined;
   list?: string | undefined;
+  delete?: string | undefined;
 }
 export interface ModelNames {
   create?: string | undefined;
   details?: string | undefined;
   update?: string | undefined;
   list?: string | undefined;
+  delete?: string | undefined;
 }
 
 export const getDTONamesFromInput = (
@@ -72,10 +74,6 @@ export const getDTONamesConfigured = (dtoNames: DTONames): DTONames => {
     list: list ? getDtoName(list) : undefined,
   };
 
-  if (!names.update) names.update = names.create;
-  if (!names.details) names.details = names.create;
-  if (!names.list) names.list = names.create;
-
   return names;
 };
 
@@ -88,10 +86,6 @@ export const getModelNamesConfigured = (dtoNames: DTONames): ModelNames => {
     details: details ? getModelNameFromDtoName(details) : undefined,
     list: list ? getModelNameFromDtoName(list) : undefined,
   };
-
-  if (!modelNames.update) modelNames.update = modelNames.create;
-  if (!modelNames.list) modelNames.list = modelNames.create;
-  if (!modelNames.details) modelNames.details = modelNames.create;
 
   return modelNames;
 };

@@ -1,18 +1,12 @@
 import * as readline from "readline";
-import {
-  GenerateCreateFeature,
-  GenerateDetailsFeature,
-  GenerateFeatureBase,
-  GenerateIndexFeature,
-  GenerateUpdateFeature,
-} from "./managers/FileManager";
 import { createDTOsWithDependencies } from "./managers/DTOManager";
 import schema from "./openApiSchema.json";
 import { getDTONamesFromInput } from "./utils/consoleInputUtils";
-import { config } from "./config";
+import { rhinoConfig } from "./config";
 import { getPropByString } from "./utils/objectUtils";
+import { GenerateFiles } from "./managers/FileManager";
 
-const definitions = getPropByString(schema, config.chemaDTOPath);
+const definitions = getPropByString(schema, rhinoConfig.chemaDTOPath);
 
 let rl = readline.createInterface({
   input: process.stdin,
@@ -29,7 +23,7 @@ export enum Commands {
 
 rl.question(
   //example: TestFeatureName create Pet details Category
-  "Enter rhino command (featureName command dtoName command dtoName etc...)> ",
+  "Rhino (path|f|comm|dto|comm|dto|comm|dto..) (create/details/update/list available currently)> ",
   (INPUT) => {
     let inputs = INPUT.split(" ");
     const basePath = inputs.shift();
@@ -48,28 +42,15 @@ rl.question(
     const lcCommands = commandAndDTONames.map((c) => c.command.toLowerCase());
 
     const allDTOs = createDTOsWithDependencies(definitions, dtoNames);
-    console.log(allDTOs);
 
-    GenerateFeatureBase(
-      allDTOs,
-      featureName,
-      lcCommands.map((c) => Commands[c as keyof typeof Commands]),
-      dtoNames,
-      basePath
+    //convert lcCommands to Commands enum
+    const commands: Commands[] = lcCommands.map(
+      (c) => Commands[c as keyof typeof Commands]
     );
 
-    if (lcCommands.includes(Commands.create) && dtoNames.create)
-      GenerateCreateFeature(featureName, allDTOs[dtoNames.create], basePath);
+    GenerateFiles(allDTOs, featureName, commands, dtoNames, basePath);
 
-    if (lcCommands.includes(Commands.details) && dtoNames.details)
-      GenerateDetailsFeature(featureName, allDTOs[dtoNames.details], basePath);
-
-    if (lcCommands.includes(Commands.update) && dtoNames.update)
-      GenerateUpdateFeature(featureName, allDTOs[dtoNames.update], basePath);
-
-    if (lcCommands.includes(Commands.list) && dtoNames.list)
-      GenerateIndexFeature(featureName, allDTOs[dtoNames.list], basePath);
-
+    console.log("happy hacking :)");
     rl.close();
   }
 );

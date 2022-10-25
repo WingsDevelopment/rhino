@@ -1,6 +1,14 @@
 import { Commands } from "../..";
+import { rhinoConfig } from "../../config";
+import { IRoutesTemplate, ITemplate } from "../../interfaces/ITemplate";
 import { pascalCase } from "../../utils/stringUtils";
-import { create, details, index, update } from "../common";
+import {
+  create,
+  details,
+  index,
+  reactComponentExtension,
+  update,
+} from "../../stringConfig";
 
 export const GetRoutesName = (featureName: string) => {
   return `${pascalCase(featureName)}Routes`;
@@ -31,7 +39,17 @@ export const GetRoutesString = (featureName: string, commands: Commands[]) => {
             ? `${index}: \`\${${pascalCase(featureName)}Root}/index\`,`
             : ""
         }
-
     };
 `;
+};
+
+const RoutesPath = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}${rhinoConfig.routesPath}`;
+};
+
+export const Routes: IRoutesTemplate = {
+  getName: GetRoutesName,
+  getBody: GetRoutesString,
+  getRoute: RoutesPath,
+  extension: reactComponentExtension,
 };

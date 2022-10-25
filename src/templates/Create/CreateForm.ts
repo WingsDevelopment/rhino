@@ -3,6 +3,7 @@ import {
   SingleColumnBody,
   TwoColumnBody,
 } from "../../components/fields/fieldUtils";
+import { IInvokableTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import {
@@ -10,22 +11,24 @@ import {
   isLoading,
   methods,
   onSubmit,
+  reactComponentExtension,
   submitHandler,
   SubmitHandler,
   useForm,
-} from "../common";
+} from "../../stringConfig";
+import { RQCreatePage } from "./CreatePage";
 
-export const CreateFormName = (featureName: string) => {
+const CreateFormName = (featureName: string) => {
   return `Create${pascalCase(featureName)}Form`;
 };
 
 // prettier-ignore
-export const CreateForm = (featureName: string) => {
+const CreateForm = (featureName: string) => {
   return `<${CreateFormName(featureName)} ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading}} />`;
 }
 
 // prettier-ignore
-export const GetCreateFormString = (
+const GetCreateFormString = (
   featureName: string,
   dto: DTOSchema,
 ) => {
@@ -63,4 +66,17 @@ const RenderFormBody = (model: DTOSchema, modelName: string) => {
   return numberOfKeys > 5
     ? SingleColumnBody(model, modelName)
     : TwoColumnBody(model, modelName);
+};
+
+const GetCreateFormRoute = (featureName: string, baseRoute: string) => {
+  const basePath = RQCreatePage.getRoute(featureName, baseRoute);
+  return `${basePath}/components`;
+};
+
+export const RQCreateForm: IInvokableTemplate = {
+  getRoute: GetCreateFormRoute,
+  getBody: GetCreateFormString,
+  getName: CreateFormName,
+  invoke: CreateForm,
+  extension: reactComponentExtension,
 };

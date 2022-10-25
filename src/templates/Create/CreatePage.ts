@@ -1,37 +1,37 @@
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";
+import { rhinoConfig } from "../../config";
+import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
-import { camelCase, pascalCase } from "../../utils/stringUtils";
+import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
 import {
   details,
   handleSubmit,
   id,
   isLoading,
   navigate,
+  reactComponentExtension,
   useNavigate,
-} from "../common";
-import { useCreateName } from "../Hooks/useCreate";
+} from "../../stringConfig";
+import { RQCreateHook } from "../Hooks/useCreate";
 import { GetRoutesName } from "../routes/routes";
-import { CreateForm } from "./CreateForm";
+import { RQCreateForm } from "./CreateForm";
 
-export const CreatePageName = (featureName: string) => {
+const CreatePageName = (featureName: string) => {
   return `Create${pascalCase(featureName)}Page`;
 };
 
 // prettier-ignore
-export const GetCreatePageString = (
-  dto: DTOSchema,
-  title: string,
+const GetCreatePageString = (
   featureName: string,
-  links: TLink[],
-  breadcrumbsAction?: any,
+  dto: DTOSchema,
 ) => {
   return `
 import React, { useMemo } from 'react';
 import { ${useNavigate} } from 'react-router';
 
 export const ${CreatePageName(featureName)}: React.FC = () => {
-    const { create${pascalCase(dto.modelName)}Async, ${isLoading} } = ${useCreateName(featureName)}();
+    const { create${pascalCase(dto.modelName)}Async, ${isLoading} } = ${RQCreateHook.getName(featureName)}();
     const ${navigate} = ${useNavigate}();
     ${renderDependencyHooks(dto)}
 
@@ -41,12 +41,27 @@ export const ${CreatePageName(featureName)}: React.FC = () => {
     };
 
     return (${PageLayout(
-      CreateForm(featureName),
-      title,
-      links,
-      breadcrumbsAction
+      RQCreateForm.invoke(featureName, ""),
+      `Create ${featureName}`,
+        [
+          {
+            name: `Create ${dto.modelName}`,
+            href: `/${plural(dto.modelName)}`,
+          },
+        ]
     )});
 };
     
 export default ${CreatePageName(featureName)};`;
+};
+
+const GetCreatePageRoute = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}${rhinoConfig.createPath}`;
+};
+
+export const RQCreatePage: ITemplate = {
+  getName: CreatePageName,
+  getBody: GetCreatePageString,
+  getRoute: GetCreatePageRoute,
+  extension: reactComponentExtension,
 };

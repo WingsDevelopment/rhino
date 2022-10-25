@@ -1,8 +1,11 @@
+import { rhinoConfig } from "../../config";
+import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
 import {
   config,
   data,
+  defaultFileExtension,
   error,
   errorMessage,
   getServerErrorMessage,
@@ -12,8 +15,8 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-} from "../common";
-import { ModelExtensionName } from "../common/CreateDTO";
+} from "../../stringConfig";
+import { ModelExtensionName } from "../common/DTOTemplate";
 import { GetDIContextName } from "../context/DIContext";
 import { GetAllFuncName, GetRepositoryName } from "../Repository/Repository";
 
@@ -26,7 +29,7 @@ export const FETCH_ALL = (featureName: string) => {
 };
 
 // prettier-ignore
-export const GetUseFetchAllString = (dto: DTOSchema, featureName: string) => {
+export const GetUseFetchAllString = (featureName: string, dto: DTOSchema) => {
       return `
   import { ${useMutation}, ${useQueryClient} } from 'react-query';
 
@@ -53,3 +56,14 @@ export const GetUseFetchAllString = (dto: DTOSchema, featureName: string) => {
       };
   };`
   }
+
+const useFetchAllPath = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}${rhinoConfig.stateQueriesPath}`;
+};
+
+export const RQFetchAllHook: ITemplate = {
+  getName: useFetchAllName,
+  getBody: GetUseFetchAllString,
+  getRoute: useFetchAllPath,
+  extension: defaultFileExtension,
+};

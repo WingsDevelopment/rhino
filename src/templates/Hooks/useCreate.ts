@@ -1,7 +1,10 @@
+import { rhinoConfig } from "../../config";
+import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
 import {
   config,
+  defaultFileExtension,
   EnqueueMessage,
   error,
   errorMessage,
@@ -15,16 +18,17 @@ import {
   useDefaultRQConfig,
   useMutation,
   useQueryClient,
-} from "../common";
+} from "../../stringConfig";
 import { GetDIContextName } from "../context/DIContext";
 import { CreateFuncName, GetRepositoryName } from "../Repository/Repository";
+import { FETCH_ALL } from "./useFetchAll";
 
-export const useCreateName = (featureName: string) => {
+const useCreateName = (featureName: string) => {
   return `useCreate${pascalCase(featureName)}`;
 };
 
 // prettier-ignore
-export const GetUseCreateString = (dto: DTOSchema, featureName: string) => {
+const GetUseCreateString = (featureName: string, dto: DTOSchema) => {
     return `
 import { ${useMutation}, ${useQueryClient} } from 'react-query';
 
@@ -41,7 +45,7 @@ export const ${useCreateName(featureName)} = () => {
         {
             ...${config},
             onSuccess: () => {
-                ${queryClient}.${invalidateQueries}([FETCH_ALL_${plural(dto.modelName).toUpperCase()}]);
+                ${queryClient}.${invalidateQueries}([${FETCH_ALL(featureName)}]);
                 ${EnqueueMessage}('${dto.modelName} is successfully created', 'success');
             },
         }
@@ -54,3 +58,14 @@ export const ${useCreateName(featureName)} = () => {
     };
 };`
 }
+
+const useCreatePath = (featureName: string, baseRoute: string) => {
+  return `${baseRoute}/${featureName}${rhinoConfig.stateMutationsPath}`;
+};
+
+export const RQCreateHook: ITemplate = {
+  getName: useCreateName,
+  getBody: GetUseCreateString,
+  getRoute: useCreatePath,
+  extension: defaultFileExtension,
+};
