@@ -1,4 +1,4 @@
-# rhino
+# WELCOME TO RHINO
 
 # Installation
 
