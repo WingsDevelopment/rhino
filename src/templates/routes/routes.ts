@@ -1,13 +1,13 @@
 import { Commands } from "../..";
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { IRoutesTemplate, ITemplate } from "../../interfaces/ITemplate";
 import { pascalCase } from "../../utils/stringUtils";
 import {
-  create,
-  details,
-  index,
+  createRoute,
+  detailsRoute,
+  indexRoute,
   reactComponentExtension,
-  update,
+  updateRoute,
 } from "../../stringConfig";
 
 export const GetRoutesName = (featureName: string) => {
@@ -21,22 +21,22 @@ export const GetRoutesString = (featureName: string, commands: Commands[]) => {
         root: ${pascalCase(featureName)}Root,
         ${
           commands.find((c) => c === Commands.create)
-            ? `${create}: \`\${${pascalCase(featureName)}Root}/create\`,`
+            ? `${createRoute}: \`\${${pascalCase(featureName)}Root}/create\`,`
             : ""
         }
         ${
           commands.find((c) => c === Commands.update)
-            ? `${update}: \`\${${pascalCase(featureName)}Root}/update\`,`
+            ? `${updateRoute}: \`\${${pascalCase(featureName)}Root}/update\`,`
             : ""
         }
         ${
           commands.find((c) => c === Commands.details)
-            ? `${details}: \`\${${pascalCase(featureName)}Root}/details\`,`
+            ? `${detailsRoute}: \`\${${pascalCase(featureName)}Root}/details\`,`
             : ""
         }
         ${
           commands.find((c) => c === Commands.list)
-            ? `${index}: \`\${${pascalCase(featureName)}Root}/index\`,`
+            ? `${indexRoute}: \`\${${pascalCase(featureName)}Root}/index\`,`
             : ""
         }
     };

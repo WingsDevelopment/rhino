@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, generateDtoProperties } from "../../models/DTOSchema";
 import { defaultFileExtension } from "../../stringConfig";

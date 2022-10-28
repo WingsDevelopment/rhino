@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
@@ -20,6 +20,7 @@ import {
 import { ModelExtensionName } from "../common/DTOTemplate";
 import { GetDIContextName } from "../context/DIContext";
 import { GetByIdFuncName, GetRepositoryName } from "../Repository/Repository";
+import { ApiManager } from ".";
 
 export const useFetchByIdName = (featureName: string) => {
   return `useFetch${pascalCase(featureName)}ById`;
@@ -42,8 +43,7 @@ export const GetUseFetchByIdString = (featureName: string, dto: DTOSchema) => {
       const { ${isLoading}, ${error}, ${data} } = ${useQuery}(
             [${FETCH_BY_ID(featureName)}, ${id}],
           async () => {
-              const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${GetByIdFuncName(featureName)}(${id}!);
-              return ${response} ? ${ModelExtensionName(dto.modelName)}(${response}) : undefined;
+            ${ApiManager.getFetchByIdApiFunction(featureName, dto)}
           },
           {
               ...${config},

@@ -2,7 +2,7 @@ import {
   DTOExtensionAdd,
   ModelExtensionAdd,
   ModelExtensionRemove,
-} from "../config";
+} from "../rhinoConfig";
 
 export interface DTONames {
   create?: string | undefined;

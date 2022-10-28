@@ -1,4 +1,5 @@
 import { Commands } from "../..";
+import { rhinoConfig } from "../../rhinoConfig";
 import {
   INesto,
   ITemplate,
@@ -22,38 +23,55 @@ export const GetBaseFeatureTemplates = (
   listDTO?: DTOSchema
 ): INesto[] => {
   const templates: INesto[] = [];
-  templates.push({
-    name: Repository.getName(featureName),
-    body: Repository.getBody(
-      featureName,
-      commands,
-      createDTO,
-      detailsDTO,
-      updateDTO,
-      listDTO
-    ),
-    route: Repository.getRoute(featureName, basePath),
-    extension: Repository.extension,
-  });
-  templates.push({
-    name: RepositoryInterface.getName(featureName),
-    body: RepositoryInterface.getBody(
-      featureName,
-      commands,
-      createDTO,
-      detailsDTO,
-      updateDTO,
-      listDTO
-    ),
-    route: RepositoryInterface.getRoute(featureName, basePath),
-    extension: RepositoryInterface.extension,
-  });
-  templates.push({
-    name: DIContext.getName(featureName),
-    body: DIContext.getBody(featureName),
-    route: DIContext.getRoute(featureName, basePath),
-    extension: DIContext.extension,
-  });
+
+  if (rhinoConfig.generateRepository) {
+    templates.push({
+      name: Repository.getName(featureName),
+      body: Repository.getBody(
+        featureName,
+        commands,
+        createDTO,
+        detailsDTO,
+        updateDTO,
+        listDTO
+      ),
+      route: Repository.getRoute(featureName, basePath),
+      extension: Repository.extension,
+    });
+  }
+
+  if (
+    rhinoConfig.generateRepository &&
+    rhinoConfig.generateRepositoryInterface
+  ) {
+    templates.push({
+      name: RepositoryInterface.getName(featureName),
+      body: RepositoryInterface.getBody(
+        featureName,
+        commands,
+        createDTO,
+        detailsDTO,
+        updateDTO,
+        listDTO
+      ),
+      route: RepositoryInterface.getRoute(featureName, basePath),
+      extension: RepositoryInterface.extension,
+    });
+  }
+
+  if (
+    rhinoConfig.generateContext &&
+    rhinoConfig.generateRepositoryInterface &&
+    rhinoConfig.generateRepository
+  ) {
+    templates.push({
+      name: DIContext.getName(featureName),
+      body: DIContext.getBody(featureName),
+      route: DIContext.getRoute(featureName, basePath),
+      extension: DIContext.extension,
+    });
+  }
+
   templates.push({
     name: Routes.getName(featureName),
     body: Routes.getBody(featureName, commands),

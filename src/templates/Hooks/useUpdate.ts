@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
@@ -12,7 +12,7 @@ import {
   invalidateQueries,
   isLoading,
   mutateAsync,
-  NotificationAdapter,
+  NotificationAdapterInvoke,
   queryClient,
   response,
   useDefaultRQConfig,
@@ -22,6 +22,7 @@ import {
 import { GetDIContextName } from "../context/DIContext";
 import { GetRepositoryName, UpdateFuncName } from "../Repository/Repository";
 import { FETCH_ALL } from "./useFetchAll";
+import { ApiManager } from ".";
 
 export const useUpdateName = (modelName: string) => {
   return `useUpdate${pascalCase(modelName)}`;
@@ -33,14 +34,13 @@ export const GetUseUpdateString = (featureName: string, dto: DTOSchema) => {
   import { ${useMutation}, ${useQueryClient} } from 'react-query';
   
   export const ${useUpdateName(dto.modelName)} = () => {
-      const ${EnqueueMessage} = ${NotificationAdapter}();
+      const ${EnqueueMessage} = ${NotificationAdapterInvoke};
       const ${queryClient} = ${useQueryClient}();
       const ${config} = ${useDefaultRQConfig}('useUpdate${dto.modelName}');
   
       const { ${isLoading}, ${error}, ${mutateAsync} } = ${useMutation}(
           async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
-              const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${UpdateFuncName(featureName)}(${camelCase(dto.modelName)}DTOExtension(${camelCase(dto.modelName)}));
-              return ${response};
+            ${ApiManager.getUpdateApiFunction(featureName, dto)}
           },
           {
               ...${config},

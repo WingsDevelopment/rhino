@@ -1,5 +1,5 @@
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
@@ -21,7 +21,7 @@ export const GetIndexPageString = (
 import React from 'react';
 
 export const ${IndexPageName(dto.modelName)}: React.FC = () => {
-    const { ${pluralCamelCase(dto.modelName)}, ${isLoading} } = ${useFetchAllName(dto.modelName)}();
+    const { ${pluralCamelCase(dto.modelName)}, ${isLoading} } = ${useFetchAllName(featureName)}();
     ${renderDependencyHooks(dto)}
 
     return (${PageLayout(

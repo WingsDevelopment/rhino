@@ -26,7 +26,7 @@ export const tableLabels = "tableLabels";
 
 //hooks
 export const EnqueueMessage = "EnqueueMessage";
-export const NotificationAdapter = "NotificationAdapter";
+export const NotificationAdapterInvoke = "NotificationAdapter()";
 export const queryClient = "queryClient";
 export const useQueryClient = "useQueryClient";
 export const useDefaultRQConfig = "useDefaultRQConfig";
@@ -44,19 +44,22 @@ export const getServerErrorMessage = "getServerErrorMessage";
 export const data = "data";
 
 //routes
-export const details = "details";
-export const update = "update";
-export const create = "create";
-export const index = "index";
+export const detailsRoute = "details";
+export const updateRoute = "update";
+export const createRoute = "create";
+export const indexRoute = "index";
 
-//axios todo(not implemented)
+//axios
 export const axios = "axios";
 export const axiosInstance = "axiosInstance";
-export const post = "post";
-export const get = "get";
-export const put = "put";
-export const _delete = "delete";
+export const axiosPost = "post";
+export const axiosGet = "get";
+export const axiosPut = "put";
+export const axiosDelete = "delete";
 export const patch = "patch";
+export const baseUrl = "baseUrl";
+export const requestDTO = "requestDTO";
+
 //extension
 export const reactComponentExtension = ".tsx";
 export const defaultFileExtension = ".ts";

@@ -1,11 +1,11 @@
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
 import {
-  details,
+  detailsRoute,
   handleSubmit,
   id,
   isLoading,
@@ -37,7 +37,7 @@ export const ${CreatePageName(featureName)}: React.FC = () => {
 
     const ${handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
         const ${id} = await create${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)});
-        ${navigate}(${GetRoutesName(featureName)}.${details} + "/" + ${id});
+        ${navigate}(${GetRoutesName(featureName)}.${detailsRoute} + "/" + ${id});
     };
 
     return (${PageLayout(

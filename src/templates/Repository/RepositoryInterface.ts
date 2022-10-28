@@ -1,9 +1,9 @@
 import { Commands } from "../..";
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { IRepositoryTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { reactComponentExtension } from "../../stringConfig";
-import { pascalCase } from "../../utils/stringUtils";
+import { AxiosTemplate } from "../dataFetching/axios";
 import { GetRepositoryName } from "./Repository";
 
 export const GetRepositoryIntefaceName = (featureName: string) => {
@@ -23,27 +23,27 @@ export const GetRepositoryInterfaceString = (
     export interface I${GetRepositoryName(featureName)} {
         ${
           commands.find((c) => c === Commands.create)
-            ? `Create${pascalCase(featureName)}Async: (dto: ${createDTO?.dtoName}) => Promise<string | undefined>;`
+            ? `${AxiosTemplate.getCreateFuncName(featureName)}: (dto: ${createDTO?.dtoName}) => Promise<string | undefined>;`
             : ""
         }
         ${
           commands.find((c) => c === Commands.update)
-            ? `Update${pascalCase(featureName)}Async: (dto: ${updateDTO?.dtoName}) => Promise<string | undefined>;`
+            ? `${AxiosTemplate.getUpdateFuncName(featureName)}: (dto: ${updateDTO?.dtoName}) => Promise<string | undefined>;`
             : ""
         }
         ${
           commands.find((c) => c === Commands.delete)
-            ? `Delete${pascalCase(featureName)}Async: (id: string) => Promise<string | undefined>;`
+            ? `${AxiosTemplate.getDeleteFuncName(featureName)}: (id: string) => Promise<string | undefined>;`
             : ""
         }
         ${
           commands.find((c) => c === Commands.details)
-            ? `Get${pascalCase(featureName)}ByIdAsync: (id: string) => Promise<${detailsDTO?.dtoName} | undefined>;`
+            ? `${AxiosTemplate.getGetByIdFuncName(featureName)}: (id: string) => Promise<${detailsDTO?.dtoName} | undefined>;`
             : ""
         }
         ${
           commands.find((c) => c === Commands.list)
-            ? `GetAll${pascalCase(featureName)}Async: () => Promise<${listDTO?.dtoName}[] | undefined>;`
+            ? `${AxiosTemplate.getGetAllFuncName(featureName)}: () => Promise<${listDTO?.dtoName}[] | undefined>;`
             : ""
         }
     }

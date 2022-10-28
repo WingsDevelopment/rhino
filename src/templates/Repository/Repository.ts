@@ -1,12 +1,14 @@
 import { Commands } from "../..";
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { IRepositoryTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
-import { reactComponentExtension } from "../../stringConfig";
 import {
-  pascalCase,
-  pascalSeparatedWithUnderlineForEveryCapitalLetter,
-} from "../../utils/stringUtils";
+  baseUrl,
+  reactComponentExtension,
+  requestDTO,
+} from "../../stringConfig";
+import { pascalCase } from "../../utils/stringUtils";
+import { AxiosTemplate } from "../dataFetching/axios";
 import { RepositoryInterface } from "./RepositoryInterface";
 
 export const GetRepositoryName = (featureName: string) => {
@@ -43,86 +45,53 @@ export const GetRepositoryString = (
   listDTO?: DTOSchema,
 ) => {
   return `
-    //TODO: add api to environment? or delete this...
-    const baseUrl = process.env.REACT_APP_${pascalSeparatedWithUnderlineForEveryCapitalLetter(featureName.toUpperCase())};
+    const ${baseUrl} = process.env.${rhinoConfig.envApiUrl};
 
     ${
-        commands.find((c) => c === Commands.create) ?
-        `const ${CreateFuncName(featureName)} = async (dto: ${createDTO?.dtoName} ): Promise<string | undefined> => {
-            const response: AxiosResponse<string> = await axios.post(
-                \`\${baseUrl}/create\`,
-                dto
-            );
-
-            return response.data;
-        };` : ''
+        commands.find((c) => c === Commands.create) && createDTO ?
+        `${AxiosTemplate.getCreateFuncString(featureName, createDTO, requestDTO)}` : ''
     }
 
     ${
-        commands.find((c) => c === Commands.update) ?
-        `const ${UpdateFuncName(featureName)} = async (dto: ${updateDTO?.dtoName} ): Promise<string | undefined> => {
-            const response: AxiosResponse<string> = await axios.post(
-                \`\${baseUrl}/update\`,
-                dto
-            );
-
-            return response.data;
-        };` : ''
+        commands.find((c) => c === Commands.update) && updateDTO ?
+        `${AxiosTemplate.getUpdateFuncString(featureName, updateDTO, requestDTO)}` : ''
     }
 
     ${
         commands.find((c) => c === Commands.delete) ?
-        `const ${DeleteFuncName(featureName)} = async (id: string): Promise<string | undefined> => {
-            const response: AxiosResponse<string> = await axios.delete(
-                \`\${baseUrl}/\${id}\`
-            );
-
-            return response.data;
-        };` : ''
+        `${AxiosTemplate.getDeleteFuncString(featureName)}` : ''
     }
 
     ${
-        commands.find((c) => c === Commands.details) ?
-        `const ${GetByIdFuncName(featureName)} = async (id: string): Promise<${detailsDTO?.dtoName} | undefined> => {
-            const response: AxiosResponse<${detailsDTO?.dtoName}> = await axios.get(
-                \`\${baseUrl}/\${id}\`
-            );
-
-            return response.data;
-        };` : ''
+        commands.find((c) => c === Commands.details) && detailsDTO ?
+        `${AxiosTemplate.getGetByIdFuncString(featureName, detailsDTO)}` : ''
     }
 
     ${
-        commands.find((c) => c === Commands.list) ?
-        `const ${GetAllFuncName(featureName)} = async (): Promise<${listDTO?.dtoName}[] | undefined> => {
-            const response: AxiosResponse<${listDTO?.dtoName}[]> = await axios.get(
-                \`\${baseUrl}/getAll\`
-            );
-
-            return response.data;
-        };` : ''
+        commands.find((c) => c === Commands.list) && listDTO ?
+        `${AxiosTemplate.getGetAllFuncString(featureName, listDTO)}` : ''
     }
 
     export const ${GetRepositoryName(featureName)}: ${RepositoryInterface.getName(featureName)} = {
         ${
             commands.find((c) => c === Commands.create) ?
-            `Create${pascalCase(featureName)}Async,` : ''
+            `${AxiosTemplate.getCreateFuncName(featureName)},` : ''
         }
         ${
             commands.find((c) => c === Commands.update) ?
-            `Update${pascalCase(featureName)}Async,` : ''
+            `${AxiosTemplate.getUpdateFuncName(featureName)},` : ''
         }
         ${
             commands.find((c) => c === Commands.delete) ?
-            `Delete${pascalCase(featureName)}Async,` : ''
+            `${AxiosTemplate.getDeleteFuncName(featureName)},` : ''
         }
         ${
             commands.find((c) => c === Commands.details) ?
-            `Get${pascalCase(featureName)}ByIdAsync,` : ''
+            `${AxiosTemplate.getGetByIdFuncName(featureName)},` : ''
         }
         ${
             commands.find((c) => c === Commands.list) ?
-            `GetAll${pascalCase(featureName)}Async,` : ''
+            `${AxiosTemplate.getGetAllFuncName(featureName)},` : ''
         }
     };
 `;

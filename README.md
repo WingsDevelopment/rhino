@@ -43,5 +43,6 @@ path featureName command dtoName command dtoName command dtoName command dtoName
 
 inside config.ts you must set chemaDTOPath
 correct chemaDTOPath value can be simply by following path to 'schemas'
+correct value example from picture would be: "components.schemas"
 
 ![alt text](./rhino%20instructio.png)

@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../../config";
+import { rhinoConfig } from "../../rhinoConfig";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { pascalCase, plural } from "../../utils/stringUtils";
@@ -12,7 +12,7 @@ import {
   invalidateQueries,
   isLoading,
   mutateAsync,
-  NotificationAdapter,
+  NotificationAdapterInvoke,
   queryClient,
   response,
   useDefaultRQConfig,
@@ -22,6 +22,7 @@ import {
 import { GetDIContextName } from "../context/DIContext";
 import { DeleteFuncName, GetRepositoryName } from "../Repository/Repository";
 import { FETCH_ALL } from "./useFetchAll";
+import { ApiManager } from ".";
 
 export const useDeleteName = (featureName: string) => {
   return `useDelete${pascalCase(featureName)}`;
@@ -33,14 +34,13 @@ export const GetUseDeleteString = (featureName: string, dto: DTOSchema) => {
   import { ${useMutation}, ${useQueryClient} } from 'react-query';
   
   export const ${useDeleteName(featureName)} = () => {
-      const ${EnqueueMessage} = ${NotificationAdapter}();
+      const ${EnqueueMessage} = ${NotificationAdapterInvoke};
       const ${queryClient} = ${useQueryClient}();
       const ${config} = ${useDefaultRQConfig}('useDelete${dto.modelName}');
   
       const { ${isLoading}, ${error}, ${mutateAsync} } = ${useMutation}(
           async (id: string) => {
-              const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${DeleteFuncName(featureName)}(id);
-              return ${response};
+              ${ApiManager.getDeleteApiFunction(featureName, dto)}
           },
           {
               ...${config},
