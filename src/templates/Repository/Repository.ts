@@ -44,6 +44,7 @@ export const GetRepositoryString = (
   updateDTO?: DTOSchema,
   listDTO?: DTOSchema,
 ) => {
+
   return `
     const ${baseUrl} = process.env.${rhinoConfig.envApiUrl};
 

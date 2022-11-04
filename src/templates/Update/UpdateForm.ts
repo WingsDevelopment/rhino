@@ -27,7 +27,7 @@ const UpdateFormName = (modelName: string) => {
 
 // prettier-ignore
 const UpdateForm = (featureName: string, modelName: string) => {
-    return `<Update${pascalCase(featureName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading} | ${isSubmitting}} ${initialData}={${initialData}} />`;
+    return `<Update${pascalCase(featureName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading} || ${isSubmitting}} ${initialData}={${initialData}} />`;
 }
 
 // prettier-ignore

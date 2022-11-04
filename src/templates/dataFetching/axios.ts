@@ -55,7 +55,7 @@ export const DeleteFuncName = (featureName: string): string => {
 
 //prettier-ignore
 const GetDeleteFuncString = (featureName: string) => {
-    `const ${DeleteFuncName(featureName)} = async (id: string): Promise<string | undefined> => {
+    return `const ${DeleteFuncName(featureName)} = async (id: string): Promise<string | undefined> => {
         ${GetDeleteImplString()}
     };`
 }
@@ -75,7 +75,7 @@ const UpdateFuncName = (featureName: string): string => {
 
 //prettier-ignore
 const GetUpdateFuncString = (featureName: string, updateDTO: DTOSchema, paramsName: string) => {
-  `const ${UpdateFuncName(featureName)} = async (${paramsName}: ${updateDTO?.dtoName} ): Promise<string | undefined> => {
+  return `const ${UpdateFuncName(featureName)} = async (${paramsName}: ${updateDTO?.dtoName} ): Promise<string | undefined> => {
         ${GetUpdateImplString(updateDTO, paramsName)}
     };`;
 };

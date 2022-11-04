@@ -1,13 +1,13 @@
 //config
 export const DTOExtensionRemove = "";
-export const DTOExtensionAdd = "";
-export const ModelExtensionRemove = "Dto";
+export const DTOExtensionAdd = "DTO";
+export const ModelExtensionRemove = "DTO";
 export const ModelExtensionAdd = "";
 
 export const rhinoConfig = {
   //main config
   //specify the path to the DTOs in the schema from swagger
-  chemaDTOPath: "components.schemas",
+  chemaDTOPath: "definitions",
   envApiUrl: "REACT_APP_YOUR_API_URL",
   //state
   stateQueriesPath: "/state/queries",
