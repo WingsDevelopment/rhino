@@ -1,4 +1,4 @@
-import { Commands } from "..";
+import { RhinoCommand } from "../enums/command";
 import {
   ITemplate,
   INesto,
@@ -25,7 +25,7 @@ export const createFeatureDataFromITemplates = (
 export const createFeatureDataFromIRepositoryTemplates = (
   templates: IRepositoryTemplate[],
   createDTO: DTOSchema,
-  commands: Commands[],
+  commands: RhinoCommand[],
   featureName: string,
   baseRoute: string,
   detailsDTO?: DTOSchema,
@@ -63,7 +63,7 @@ export const createFeatureDataFromIInvokableTemplates = (
 
 export const createFeatureDataFromIRoutesTemplates = (
   templates: IRoutesTemplate[],
-  commands: Commands[],
+  commands: RhinoCommand[],
   featureName: string,
   baseRoute: string
 ): INesto[] => {

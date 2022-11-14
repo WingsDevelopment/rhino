@@ -3,7 +3,7 @@ import {
   GetDTOTemplatesDataFromDTOs,
   GetModelTemplatesDataFromDTOs,
 } from ".";
-import { Commands } from "../..";
+import { RhinoCommand } from "../../enums/command";
 import { INesto } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { DTONames } from "../../utils/consoleInputUtils";
@@ -17,7 +17,7 @@ export const GetFinalTemplateData = (
     [key: string]: DTOSchema;
   },
   featureName: string,
-  commands: Commands[],
+  commands: RhinoCommand[],
   dtoNames: DTONames,
   basePath: string
 ) => {
@@ -27,7 +27,7 @@ export const GetFinalTemplateData = (
   let updateDTO = undefined;
   let listDTO = undefined;
 
-  if (commands.includes(Commands.create) && dtoNames.create) {
+  if (commands.includes(RhinoCommand.create) && dtoNames.create) {
     createDTO = allDTOs[dtoNames.create];
     if (createDTO) {
       const result = CreateCreateFeatureData(featureName, basePath, createDTO);
@@ -35,7 +35,7 @@ export const GetFinalTemplateData = (
     }
   }
 
-  if (commands.includes(Commands.details) && dtoNames.details) {
+  if (commands.includes(RhinoCommand.details) && dtoNames.details) {
     detailsDTO = allDTOs[dtoNames.details];
     if (detailsDTO) {
       const result = CreateDetailsFeatureData(
@@ -47,7 +47,7 @@ export const GetFinalTemplateData = (
     }
   }
 
-  if (commands.includes(Commands.update) && dtoNames.update) {
+  if (commands.includes(RhinoCommand.update) && dtoNames.update) {
     updateDTO = allDTOs[dtoNames.update];
     if (updateDTO) {
       const result = CreateUpdateFeatureData(featureName, basePath, updateDTO);
@@ -55,7 +55,7 @@ export const GetFinalTemplateData = (
     }
   }
 
-  if (commands.includes(Commands.list) && dtoNames.list) {
+  if (commands.includes(RhinoCommand.list) && dtoNames.list) {
     listDTO = allDTOs[dtoNames.list];
     if (listDTO) {
       const result = CreateListFeatureData(featureName, basePath, listDTO);
@@ -69,7 +69,7 @@ export const GetFinalTemplateData = (
 
   const result = GetBaseFeatureTemplates(
     featureName,
-    commands.map((c) => Commands[c as keyof typeof Commands]),
+    commands.map((c) => RhinoCommand[c as keyof typeof RhinoCommand]),
     basePath,
     createDTO,
     detailsDTO,

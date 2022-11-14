@@ -14,8 +14,8 @@ import {
   useNavigate,
 } from "../../stringConfig";
 import { RQCreateHook } from "../Hooks/useCreate";
-import { GetRoutesName } from "../routes/routes";
 import { RQCreateForm } from "./CreateForm";
+import { GetRoutesName } from "../routes";
 
 const CreatePageName = (featureName: string) => {
   return `Create${pascalCase(featureName)}Page`;

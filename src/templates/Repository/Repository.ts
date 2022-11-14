@@ -1,4 +1,3 @@
-import { Commands } from "../..";
 import { rhinoConfig } from "../../rhinoConfig";
 import { IRepositoryTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
@@ -10,6 +9,7 @@ import {
 import { pascalCase } from "../../utils/stringUtils";
 import { AxiosTemplate } from "../dataFetching/axios";
 import { RepositoryInterface } from "./RepositoryInterface";
+import { RhinoCommand } from "../../enums/command";
 
 export const GetRepositoryName = (featureName: string) => {
   return `${pascalCase(featureName)}Repository`;
@@ -38,7 +38,7 @@ export const GetAllFuncName = (featureName: string): string => {
 //prettier-ignore
 export const GetRepositoryString = (
   featureName: string,
-  commands: Commands[],
+  commands: RhinoCommand[],
   createDTO?: DTOSchema,
   detailsDTO?: DTOSchema,
   updateDTO?: DTOSchema,
@@ -49,49 +49,49 @@ export const GetRepositoryString = (
     const ${baseUrl} = process.env.${rhinoConfig.envApiUrl};
 
     ${
-        commands.find((c) => c === Commands.create) && createDTO ?
+        commands.find((c) => c === RhinoCommand.create) && createDTO ?
         `${AxiosTemplate.getCreateFuncString(featureName, createDTO, requestDTO)}` : ''
     }
 
     ${
-        commands.find((c) => c === Commands.update) && updateDTO ?
+        commands.find((c) => c === RhinoCommand.update) && updateDTO ?
         `${AxiosTemplate.getUpdateFuncString(featureName, updateDTO, requestDTO)}` : ''
     }
 
     ${
-        commands.find((c) => c === Commands.delete) ?
+        commands.find((c) => c === RhinoCommand.delete) ?
         `${AxiosTemplate.getDeleteFuncString(featureName)}` : ''
     }
 
     ${
-        commands.find((c) => c === Commands.details) && detailsDTO ?
+        commands.find((c) => c === RhinoCommand.details) && detailsDTO ?
         `${AxiosTemplate.getGetByIdFuncString(featureName, detailsDTO)}` : ''
     }
 
     ${
-        commands.find((c) => c === Commands.list) && listDTO ?
+        commands.find((c) => c === RhinoCommand.list) && listDTO ?
         `${AxiosTemplate.getGetAllFuncString(featureName, listDTO)}` : ''
     }
 
     export const ${GetRepositoryName(featureName)}: ${RepositoryInterface.getName(featureName)} = {
         ${
-            commands.find((c) => c === Commands.create) ?
+            commands.find((c) => c === RhinoCommand.create) ?
             `${AxiosTemplate.getCreateFuncName(featureName)},` : ''
         }
         ${
-            commands.find((c) => c === Commands.update) ?
+            commands.find((c) => c === RhinoCommand.update) ?
             `${AxiosTemplate.getUpdateFuncName(featureName)},` : ''
         }
         ${
-            commands.find((c) => c === Commands.delete) ?
+            commands.find((c) => c === RhinoCommand.delete) ?
             `${AxiosTemplate.getDeleteFuncName(featureName)},` : ''
         }
         ${
-            commands.find((c) => c === Commands.details) ?
+            commands.find((c) => c === RhinoCommand.details) ?
             `${AxiosTemplate.getGetByIdFuncName(featureName)},` : ''
         }
         ${
-            commands.find((c) => c === Commands.list) ?
+            commands.find((c) => c === RhinoCommand.list) ?
             `${AxiosTemplate.getGetAllFuncName(featureName)},` : ''
         }
     };

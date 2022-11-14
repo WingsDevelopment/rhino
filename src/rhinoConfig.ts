@@ -7,7 +7,7 @@ export const ModelExtensionAdd = "";
 export const rhinoConfig = {
   //main config
   //specify the path to the DTOs in the schema from swagger
-  chemaDTOPath: "definitions",
+  chemaDTOPath: "components",
   envApiUrl: "REACT_APP_YOUR_API_URL",
   //state
   stateQueriesPath: "/state/queries",
@@ -30,4 +30,5 @@ export const rhinoConfig = {
   generateRepository: true,
   generateContext: true,
   generateRepositoryInterface: true,
+  generateOnlyFolderStructure: false,
 };

@@ -1,4 +1,4 @@
-import { PageLayout, TLink } from "../../components/layouts/PageLayout";
+import { PageLayout } from "../../components/layouts/PageLayout";
 import { rhinoConfig } from "../../rhinoConfig";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
@@ -8,8 +8,8 @@ import { isLoading, reactComponentExtension } from "../../stringConfig";
 import { useFetchAllName } from "../Hooks/useFetchAll";
 import { RQIndexBody } from "./IndexBody";
 
-export const IndexPageName = (modelName: string) => {
-  return `Index${pascalCase(modelName)}Page`;
+export const IndexPageName = (featureName: string) => {
+  return `${pascalCase(featureName)}IndexPage`;
 };
 
 // prettier-ignore
@@ -20,7 +20,7 @@ export const GetIndexPageString = (
     return `
 import React from 'react';
 
-export const ${IndexPageName(dto.modelName)}: React.FC = () => {
+export const ${IndexPageName(featureName)}: React.FC = () => {
     const { ${pluralCamelCase(dto.modelName)}, ${isLoading} } = ${useFetchAllName(featureName)}();
     ${renderDependencyHooks(dto)}
 
@@ -36,7 +36,7 @@ export const ${IndexPageName(dto.modelName)}: React.FC = () => {
     )});
 }
 
-export default ${IndexPageName(dto.modelName)};`
+export default ${IndexPageName(featureName)};`
 };
 
 const IndexPageRoute = (featureName: string, baseRoute: string) => {

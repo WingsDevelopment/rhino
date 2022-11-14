@@ -41,7 +41,7 @@ const getUpdateApiFunction = (featureName: string, dto: DTOSchema) => {
 //prettier-ignore
 const getFetchAllApiFunction = (featureName: string, dto: DTOSchema) => {
     if (rhinoConfig.generateRepository && rhinoConfig.generateContext) {
-        return `const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${FETCH_ALL(featureName)}();
+        return `const ${response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${CreateFuncName(featureName)}();
         return ${response};`;
     } else if (rhinoConfig.generateRepository && !rhinoConfig.generateContext) {
         return `const ${response} = await ${GetRepositoryName(featureName)}.${FETCH_ALL(featureName)}();

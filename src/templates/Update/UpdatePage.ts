@@ -16,8 +16,8 @@ import {
   useNavigate,
   useParams,
 } from "../../stringConfig";
-import { GetRoutesName } from "../routes/routes";
 import { RQUpdateForm } from "./UpdateForm";
+import { GetRoutesName } from "../routes";
 
 const UpdatePageName = (featureName: string) => {
   return `Update${pascalCase(featureName)}Page`;

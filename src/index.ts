@@ -5,6 +5,7 @@ import { getDTONamesFromInput } from "./utils/consoleInputUtils";
 import { rhinoConfig } from "./rhinoConfig";
 import { getPropByString } from "./utils/objectUtils";
 import { GenerateFiles } from "./managers/FileManager";
+import { RhinoCommand } from "./enums/command";
 
 const definitions = getPropByString(schema, rhinoConfig.chemaDTOPath);
 
@@ -17,14 +18,6 @@ let rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-
-export enum Commands {
-  create = "create",
-  details = "details",
-  update = "update",
-  list = "list",
-  delete = "delete",
-}
 
 rl.question("Rhino>", (INPUT) => {
   let inputs = INPUT.split(" ");
@@ -46,8 +39,8 @@ rl.question("Rhino>", (INPUT) => {
   const allDTOs = createDTOsWithDependencies(definitions, dtoNames);
 
   //convert lcCommands to Commands enum
-  const commands: Commands[] = lcCommands.map(
-    (c) => Commands[c as keyof typeof Commands]
+  const commands: RhinoCommand[] = lcCommands.map(
+    (c) => RhinoCommand[c as keyof typeof RhinoCommand]
   );
 
   GenerateFiles(allDTOs, featureName, commands, dtoNames, basePath);

@@ -1,6 +1,7 @@
 import { mkdirSync, writeFileSync } from "fs";
-import { Commands } from "..";
+import { RhinoCommand } from "../enums/command";
 import { DTOSchema } from "../models/DTOSchema";
+import { rhinoConfig } from "../rhinoConfig";
 import { DTONames } from "../utils/consoleInputUtils";
 import { GetFinalTemplateData } from "./features/FeatureManager";
 
@@ -9,7 +10,7 @@ export const GenerateFiles = (
     [key: string]: DTOSchema;
   },
   featureName: string,
-  commands: Commands[],
+  commands: RhinoCommand[],
   dtoNames: DTONames,
   basePath: string
 ) => {
@@ -24,6 +25,8 @@ export const GenerateFiles = (
   finalTemplateData.forEach((templateData) => {
     const { body, name, route, extension } = templateData;
     mkdirSync(route, { recursive: true });
-    writeFileSync(`${route}/${name}${extension}`, body);
+    if (!rhinoConfig.generateOnlyFolderStructure) {
+      writeFileSync(`${route}/${name}${extension}`, body);
+    }
   });
 };

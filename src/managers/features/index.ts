@@ -1,4 +1,3 @@
-import { Commands } from "../..";
 import { rhinoConfig } from "../../rhinoConfig";
 import {
   INesto,
@@ -11,11 +10,12 @@ import { ModelTemplate } from "../../templates/common/ModelTemplate";
 import { DIContext } from "../../templates/context/DIContext";
 import { Repository } from "../../templates/Repository/Repository";
 import { RepositoryInterface } from "../../templates/Repository/RepositoryInterface";
-import { Routes } from "../../templates/routes/routes";
+import { Routes } from "../../templates/routes";
+import { RhinoCommand } from "../../enums/command";
 
 export const GetBaseFeatureTemplates = (
   featureName: string,
-  commands: Commands[],
+  commands: RhinoCommand[],
   basePath: string,
   createDTO?: DTOSchema,
   detailsDTO?: DTOSchema,
