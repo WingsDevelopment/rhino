@@ -13,9 +13,9 @@ export const rhinoConfig = {
   stateQueriesPath: "/state/queries",
   stateMutationsPath: "/state/mutations",
   //data
-  repositoryPath: "/infrastracture/repositories",
-  repositoryInterfacePath: "/infrastracture/interfaces",
-  dtosPath: "/infrastracture/DTOs",
+  repositoryPath: "/infrastructure/repositories",
+  repositoryInterfacePath: "/infrastructure/interfaces",
+  dtosPath: "/infrastructure/DTOs",
   modelsPath: "/models",
   //pages
   detailsPath: "/pages/Details",
