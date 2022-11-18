@@ -1,4 +1,4 @@
-import { DTOSchemaDTO, DTOSchemaDTOExtension } from "./DTOSchemDTO";
+import { DTOSchemaDTO } from "./DTOSchemDTO";
 import { DTOSchema } from "../models/DTOSchema";
 
 export interface OpenApiSchemaDTO {
@@ -8,11 +8,3 @@ export interface OpenApiSchemaDTO {
     };
   };
 }
-
-export const getDTOsFromSchema = (schema: OpenApiSchemaDTO): DTOSchema[] => {
-  let dtos: DTOSchema[] = [];
-  for (let key in schema.components.schemas) {
-    dtos.push(DTOSchemaDTOExtension(schema.components.schemas[key], key));
-  }
-  return dtos;
-};

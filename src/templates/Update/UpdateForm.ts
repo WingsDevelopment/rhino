@@ -5,20 +5,8 @@ import {
 } from "../../components/fields/fieldUtils";
 import { IInvokableTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
+import { rsc } from "../../rhinoStringConfig";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
-import {
-  handleSubmit,
-  initialData,
-  isLoading,
-  isSubmitting,
-  methods,
-  onSubmit,
-  reactComponentExtension,
-  reset,
-  SubmitHandler,
-  submitHandler,
-  useForm,
-} from "../../stringConfig";
 import { RQUpdatePage } from "./UpdatePage";
 
 const UpdateFormName = (modelName: string) => {
@@ -27,7 +15,7 @@ const UpdateFormName = (modelName: string) => {
 
 // prettier-ignore
 const UpdateForm = (featureName: string, modelName: string) => {
-    return `<Update${pascalCase(featureName)}Form ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading} || ${isSubmitting}} ${initialData}={${initialData}} />`;
+    return `<Update${pascalCase(featureName)}Form ${rsc.submitHandler}={${rsc.handleSubmit}} ${rsc.isLoading}={${rsc.isLoading} || ${rsc.isSubmitting}} ${rsc.initialData}={${rsc.initialData}} />`;
 }
 
 // prettier-ignore
@@ -36,31 +24,31 @@ const GetUpdateFormString = (
     dto: DTOSchema,
 ) => {
     return `import { useEffect } from 'react';
-import { ${SubmitHandler}, ${useForm} } from 'react-hook-form';
+import { ${rsc.SubmitHandler}, ${rsc.useForm} } from 'react-hook-form';
 
 interface Props {
-    ${submitHandler}: (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => Promise<void>;
-    ${isLoading}: boolean;
-    ${initialData}: ${pascalCase(dto.modelName)};
+    ${rsc.submitHandler}: (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => Promise<void>;
+    ${rsc.isLoading}: boolean;
+    ${rsc.initialData}: ${pascalCase(dto.modelName)};
 }
 
-export const ${UpdateFormName(featureName)}: React.FC<Props> = ({ ${submitHandler}, ${isLoading}, ${initialData} }) => {
-    const ${methods} = ${useForm}<${pascalCase(dto.modelName)}>()
-    const { ${handleSubmit} } = ${methods};
+export const ${UpdateFormName(featureName)}: React.FC<Props> = ({ ${rsc.submitHandler}, ${rsc.isLoading}, ${rsc.initialData} }) => {
+    const ${rsc.methods} = ${rsc.useForm}<${pascalCase(dto.modelName)}>()
+    const { ${rsc.handleSubmit} } = ${rsc.methods};
     
     useEffect(() => {
-        ${methods}.${reset}(${initialData});
-    }, [${initialData}, ${methods}]);
+        ${rsc.methods}.${rsc.reset}(${rsc.initialData});
+    }, [${rsc.initialData}, ${rsc.methods}]);
 
-    const ${onSubmit}: ${SubmitHandler}<${pascalCase(dto.modelName)}> = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
-        await ${submitHandler}(${camelCase(dto.modelName)});
+    const ${rsc.onSubmit}: ${rsc.SubmitHandler}<${pascalCase(dto.modelName)}> = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
+        await ${rsc.submitHandler}(${camelCase(dto.modelName)});
     }
 
     return (
         <${MyFormProviderWithCardLayoutTsx}
-            ${methods}={${methods}}
-            ${onSubmit}={${handleSubmit}(${onSubmit})}
-            ${isLoading}={${isLoading}}
+            ${rsc.methods}={${rsc.methods}}
+            ${rsc.onSubmit}={${rsc.handleSubmit}(${rsc.onSubmit})}
+            ${rsc.isLoading}={${rsc.isLoading}}
         >
             ${RenderFormBody(dto, dto.modelName)}
         </${MyFormProviderWithCardLayoutTsx}>
@@ -86,5 +74,5 @@ export const RQUpdateForm: IInvokableTemplate = {
   getBody: GetUpdateFormString,
   getRoute: GetUpdateFormRoute,
   invoke: UpdateForm,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

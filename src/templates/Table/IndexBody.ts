@@ -4,19 +4,8 @@ import {
   getPropertiesFromSchema,
   isPropertyPrimitive,
 } from "../../models/DTOSchema";
+import { rsc } from "../../rhinoStringConfig";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
-import {
-  dataToShow,
-  isLoading,
-  page,
-  reactComponentExtension,
-  rowsPerPage,
-  setPage,
-  setRowsPerPage,
-  setSortBy,
-  tableLabels,
-  usePaginableSortedData,
-} from "../../stringConfig";
 import { RQUpdatePage } from "../Update/UpdatePage";
 import { RQIndexPage } from "./IndexPage";
 import { RQTableBody } from "./TableBody";
@@ -27,7 +16,7 @@ const IndexBodyName = (modelName: string) => {
 
 // prettier-ignore
 const IndexBody = (modelName: string) => {
-    return `<Index${pascalCase(modelName)}Body ${pluralCamelCase(modelName)}={${pluralCamelCase(modelName)}} ${isLoading}={${isLoading}} />`;
+    return `<Index${pascalCase(modelName)}Body ${pluralCamelCase(modelName)}={${pluralCamelCase(modelName)}} ${rsc.isLoading}={${rsc.isLoading}} />`;
 }
 
 // prettier-ignore
@@ -35,14 +24,14 @@ const GetIndexBodyString = (featureName: string, dto: DTOSchema) => {
     return `
 interface Props {
     ${pluralCamelCase(dto.modelName)}: ${pascalCase(dto.modelName)}[] | undefined;
-    ${isLoading}: boolean;
+    ${rsc.isLoading}: boolean;
 }
 
-export const ${IndexBodyName(dto.modelName)}: React.FC<Props> = ({ ${pluralCamelCase(dto.modelName)}, ${isLoading} }) => {
-    const { ${dataToShow}, ${page}, ${setPage}, ${rowsPerPage}, ${setRowsPerPage}, ${setSortBy} } =
-     ${usePaginableSortedData}(${pluralCamelCase(dto.modelName)}, ''); 
+export const ${IndexBodyName(dto.modelName)}: React.FC<Props> = ({ ${pluralCamelCase(dto.modelName)}, ${rsc.isLoading} }) => {
+    const { ${rsc.dataToShow}, ${rsc.page}, ${rsc.setPage}, ${rsc.rowsPerPage}, ${rsc.setRowsPerPage}, ${rsc.setSortBy} } =
+     ${rsc.usePaginableSortedData}(${pluralCamelCase(dto.modelName)}, ''); 
 
-     const ${tableLabels} = useMemo(
+     const ${rsc.tableLabels} = useMemo(
         () => [
             ${RenderTableLabels(dto)}
             { id: '#', label: '#' },
@@ -53,17 +42,17 @@ export const ${IndexBodyName(dto.modelName)}: React.FC<Props> = ({ ${pluralCamel
     return (
         <GenericPaginableTable
             subheader="Tabela ${dto.modelName}"
-            ${isLoading}={${isLoading}}
+            ${rsc.isLoading}={${rsc.isLoading}}
             totalCount={${pluralCamelCase(dto.modelName)}?.length}
-            currentPage={${page}}
-            onPageChangeHandler={${setPage}}
-            onChangeItemsPerPageHandler={${setRowsPerPage}}
-            sortByHandler={${setSortBy}}
-            itemsPerPage={${rowsPerPage}}
+            currentPage={${rsc.page}}
+            onPageChangeHandler={${rsc.setPage}}
+            onChangeItemsPerPageHandler={${rsc.setRowsPerPage}}
+            sortByHandler={${rsc.setSortBy}}
+            itemsPerPage={${rsc.rowsPerPage}}
             tableBodyComponent={
                 <${RQTableBody.invoke(featureName, dto.modelName)}/>
             }
-            tableLabels={${tableLabels}}
+            tableLabels={${rsc.tableLabels}}
         />
     )
 }
@@ -90,5 +79,5 @@ export const RQIndexBody: IInvokableTemplate = {
   getBody: GetIndexBodyString,
   getRoute: GetIndexBodyRoute,
   invoke: IndexBody,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

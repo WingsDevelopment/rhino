@@ -1,10 +1,10 @@
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { IRepositoryTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
-import { reactComponentExtension } from "../../stringConfig";
 import { AxiosTemplate } from "../dataFetching/axios";
 import { GetRepositoryName } from "./Repository";
 import { RhinoCommand } from "../../enums/command";
+import { rsc } from "../../rhinoStringConfig";
 
 export const GetRepositoryIntefaceName = (featureName: string) => {
   return `I${GetRepositoryName(featureName)}`;
@@ -58,5 +58,5 @@ export const RepositoryInterface: IRepositoryTemplate = {
   getName: GetRepositoryIntefaceName,
   getBody: GetRepositoryInterfaceString,
   getRoute: RepositoryInterfacePath,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

@@ -1,12 +1,5 @@
 import { DTOSchema } from "../../models/DTOSchema";
-import {
-  axios,
-  axiosDelete,
-  axiosGet,
-  axiosPost,
-  axiosPut,
-  baseUrl,
-} from "../../stringConfig";
+import { rsc } from "../../rhinoStringConfig";
 import { pascalCase } from "../../utils/stringUtils";
 
 const CreateFuncName = (featureName: string): string => {
@@ -22,8 +15,8 @@ const GetCreateFuncString = (featureName: string, createDTO: DTOSchema, paramsNa
 
 //prettier-ignore
 const GetCreateImplString = (createDTO: DTOSchema, paramsName: string) => {
-  return `const response: AxiosResponse<string> = await ${axios}.${axiosPost}(
-      \`\${${baseUrl}}/create\`,
+  return `const response: AxiosResponse<string> = await ${rsc.axios}.${rsc.axiosPost}(
+      \`\${${rsc.baseUrl}}/create\`,
       ${paramsName}
   );
 
@@ -42,8 +35,8 @@ const GetGetByIdFuncString = (featureName: string, detailsDTO: DTOSchema) => {
 }
 
 const GetGetByIdImplString = (detailsDTO: DTOSchema) => {
-  return `const response: AxiosResponse<${detailsDTO?.dtoName}> = await ${axios}.${axiosGet}(
-        \`\${${baseUrl}}/\${id}\`
+  return `const response: AxiosResponse<${detailsDTO?.dtoName}> = await ${rsc.axios}.${rsc.axiosGet}(
+        \`\${${rsc.baseUrl}}/\${id}\`
     );
 
     return response.data;`;
@@ -62,8 +55,8 @@ const GetDeleteFuncString = (featureName: string) => {
 
 //prettier-ignore
 const GetDeleteImplString = () => {
-  return `const response: AxiosResponse<string> = await ${axios}.${axiosDelete}(
-        \`\${${baseUrl}}/\${id}\`
+  return `const response: AxiosResponse<string> = await ${rsc.axios}.${rsc.axiosDelete}(
+        \`\${${rsc.baseUrl}}/\${id}\`
     );
 
     return response.data;`;
@@ -82,8 +75,8 @@ const GetUpdateFuncString = (featureName: string, updateDTO: DTOSchema, paramsNa
 
 //prettier-ignore
 const GetUpdateImplString = (updateDTO: DTOSchema, paramsName: string) => {
-    return `const response: AxiosResponse<string> = await ${axios}.${axiosPut}(
-        \`\${${baseUrl}}/update\`,
+    return `const response: AxiosResponse<string> = await ${rsc.axios}.${rsc.axiosPut}(
+        \`\${${rsc.baseUrl}}/update\`,
         ${paramsName}
     );
 
@@ -104,8 +97,8 @@ const GetGetAllFuncString = (featureName: string, listDTO: DTOSchema) => {
 
 //prettier-ignore
 const GetGetAllImplString = (listDTO: DTOSchema) => {
-    return `const response: AxiosResponse<${listDTO?.dtoName}[]> = await ${axios}.${axiosGet}(
-        \`\${${baseUrl}}/getAll\`
+    return `const response: AxiosResponse<${listDTO?.dtoName}[]> = await ${rsc.axios}.${rsc.axiosGet}(
+        \`\${${rsc.baseUrl}}/getAll\`
     );
 
     return response.data;`;

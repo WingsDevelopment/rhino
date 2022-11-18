@@ -5,17 +5,8 @@ import {
 } from "../../components/fields/fieldUtils";
 import { IInvokableTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
+import { rsc } from "../../rhinoStringConfig";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
-import {
-  handleSubmit,
-  isLoading,
-  methods,
-  onSubmit,
-  reactComponentExtension,
-  submitHandler,
-  SubmitHandler,
-  useForm,
-} from "../../stringConfig";
 import { RQCreatePage } from "./CreatePage";
 
 const CreateFormName = (featureName: string) => {
@@ -24,7 +15,7 @@ const CreateFormName = (featureName: string) => {
 
 // prettier-ignore
 const CreateForm = (featureName: string) => {
-  return `<${CreateFormName(featureName)} ${submitHandler}={${handleSubmit}} ${isLoading}={${isLoading}} />`;
+  return `<${CreateFormName(featureName)} ${rsc.submitHandler}={${rsc.handleSubmit}} ${rsc.isLoading}={${rsc.isLoading}} />`;
 }
 
 // prettier-ignore
@@ -33,26 +24,26 @@ const GetCreateFormString = (
   dto: DTOSchema,
 ) => {
   return `import { useEffect } from 'react';
-import { ${SubmitHandler}, ${useForm} } from 'react-hook-form';
+import { ${rsc.SubmitHandler}, ${rsc.useForm} } from 'react-hook-form';
 
 interface Props {
-    ${submitHandler}: (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => Promise<void>;
-    ${isLoading}: boolean;
+    ${rsc.submitHandler}: (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => Promise<void>;
+    ${rsc.isLoading}: boolean;
 }
 
-export const ${CreateFormName(featureName)}: React.FC<Props> = ({ ${submitHandler}, ${isLoading} }) => {
-    const ${methods} = ${useForm}<${pascalCase(dto.modelName)}>()
-    const { ${handleSubmit} } = ${methods};
+export const ${CreateFormName(featureName)}: React.FC<Props> = ({ ${rsc.submitHandler}, ${rsc.isLoading} }) => {
+    const ${rsc.methods} = ${rsc.useForm}<${pascalCase(dto.modelName)}>()
+    const { ${rsc.handleSubmit} } = ${rsc.methods};
     
-    const ${onSubmit}: SubmitHandler<${pascalCase(dto.modelName)}> = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
-        await ${submitHandler}(${camelCase(dto.modelName)});
+    const ${rsc.onSubmit}: SubmitHandler<${pascalCase(dto.modelName)}> = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
+        await ${rsc.submitHandler}(${camelCase(dto.modelName)});
     };
     
     return (
         <${MyFormProviderWithCardLayoutTsx}
-          ${methods}={${methods}}
-            ${onSubmit}={${handleSubmit}(${onSubmit})}
-            ${isLoading}={${isLoading}}
+          ${rsc.methods}={${rsc.methods}}
+            ${rsc.onSubmit}={${rsc.handleSubmit}(${rsc.onSubmit})}
+            ${rsc.isLoading}={${rsc.isLoading}}
         >
             ${RenderFormBody(dto, dto.modelName)}
         </${MyFormProviderWithCardLayoutTsx}>
@@ -78,5 +69,5 @@ export const RQCreateForm: IInvokableTemplate = {
   getBody: GetCreateFormString,
   getName: CreateFormName,
   invoke: CreateForm,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

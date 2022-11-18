@@ -1,28 +1,12 @@
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
-import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
-import {
-  config,
-  defaultFileExtension,
-  EnqueueMessage,
-  error,
-  errorMessage,
-  getServerErrorMessage,
-  invalidateQueries,
-  isLoading,
-  mutateAsync,
-  NotificationAdapterInvoke,
-  queryClient,
-  response,
-  useDefaultRQConfig,
-  useMutation,
-  useQueryClient,
-} from "../../stringConfig";
-import { GetDIContextName } from "../context/DIContext";
-import { CreateFuncName, GetRepositoryName } from "../Repository/Repository";
+import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { FETCH_ALL } from "./useFetchAll";
 import { ApiManager } from ".";
+import { error } from "console";
+import { config } from "process";
+import { rsc } from "../../rhinoStringConfig";
 
 const useCreateName = (featureName: string) => {
   return `useCreate${pascalCase(featureName)}`;
@@ -31,30 +15,30 @@ const useCreateName = (featureName: string) => {
 // prettier-ignore
 const GetUseCreateString = (featureName: string, dto: DTOSchema) => {
     return `
-import { ${useMutation}, ${useQueryClient} } from 'react-query';
+import { ${rsc.useMutation}, ${rsc.useQueryClient} } from 'react-query';
 
 export const ${useCreateName(featureName)} = () => {
-    const ${EnqueueMessage} = ${NotificationAdapterInvoke};
-    const ${queryClient} = ${useQueryClient}();
-    const ${config} = ${useDefaultRQConfig}('${useCreateName(featureName)}');
+    const ${rsc.EnqueueMessage} = ${rsc.NotificationAdapterInvoke};
+    const ${rsc.queryClient} = ${rsc.useQueryClient}();
+    const ${config} = ${rsc.useDefaultRQConfig}('${useCreateName(featureName)}');
 
-    const { ${isLoading}, ${error}, ${mutateAsync} } = ${useMutation}(
+    const { ${rsc.isLoading}, ${error}, ${rsc.mutateAsync} } = ${rsc.useMutation}(
         async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
             ${ApiManager.getCreateApiFunction(featureName, dto)}
         },
         {
             ...${config},
             onSuccess: () => {
-                ${queryClient}.${invalidateQueries}([${FETCH_ALL(featureName)}]);
-                ${EnqueueMessage}('${dto.modelName} is successfully created', 'success');
+                ${rsc.queryClient}.${rsc.invalidateQueries}([${FETCH_ALL(featureName)}]);
+                ${rsc.EnqueueMessage}('${dto.modelName} is successfully created', 'success');
             },
         }
     );
 
     return {
-        create${dto.modelName}Async: ${mutateAsync},
-        ${errorMessage}: ${error} ? ${getServerErrorMessage}(${error}) : undefined,
-        ${isLoading},
+        create${dto.modelName}Async: ${rsc.mutateAsync},
+        ${rsc.errorMessage}: ${error} ? ${rsc.getServerErrorMessage}(${error}) : undefined,
+        ${rsc.isLoading},
     };
 };`
 }
@@ -67,5 +51,5 @@ export const RQCreateHook: ITemplate = {
   getName: useCreateName,
   getBody: GetUseCreateString,
   getRoute: useCreatePath,
-  extension: defaultFileExtension,
+  extension: rsc.defaultFileExtension,
 };

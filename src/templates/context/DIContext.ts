@@ -1,6 +1,6 @@
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { IContextTemplate } from "../../interfaces/ITemplate";
-import { defaultFileExtension } from "../../stringConfig";
+import { rsc } from "../../rhinoStringConfig";
 import { GetRepositoryName } from "../Repository/Repository";
 import { GetRepositoryIntefaceName } from "../Repository/RepositoryInterface";
 
@@ -29,5 +29,5 @@ export const DIContext: IContextTemplate = {
   getName: GetDIContextName,
   getBody: GetDIContextTemplateString,
   getRoute: DIContextPath,
-  extension: defaultFileExtension,
+  extension: rsc.defaultFileExtension,
 };

@@ -1,25 +1,11 @@
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
-import {
-  config,
-  data,
-  defaultFileExtension,
-  error,
-  errorMessage,
-  getServerErrorMessage,
-  isLoading,
-  response,
-  useDefaultRQConfig,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "../../stringConfig";
-import { ModelExtensionName } from "../common/DTOTemplate";
-import { GetDIContextName } from "../context/DIContext";
-import { GetAllFuncName, GetRepositoryName } from "../Repository/Repository";
 import { ApiManager } from ".";
+import { error } from "console";
+import { config } from "process";
+import { rsc } from "../../rhinoStringConfig";
 
 export const useFetchAllName = (featureName: string) => {
   return `useFetchAll${pascalCase(featureName)}`;
@@ -32,14 +18,14 @@ export const FETCH_ALL = (featureName: string) => {
 // prettier-ignore
 export const GetUseFetchAllString = (featureName: string, dto: DTOSchema) => {
       return `
-  import { ${useMutation}, ${useQueryClient} } from 'react-query';
+  import { ${rsc.useMutation}, ${rsc.useQueryClient} } from 'react-query';
 
     export const ${FETCH_ALL(featureName)} = "${FETCH_ALL(featureName)}";
   
   export const ${useFetchAllName(featureName)} = () => {
-      const ${config} = ${useDefaultRQConfig}('${useFetchAllName(featureName)}');
+      const ${config} = ${rsc.useDefaultRQConfig}('${useFetchAllName(featureName)}');
   
-      const { ${isLoading}, ${error}, ${data} } = ${useQuery}(
+      const { ${rsc.isLoading}, ${error}, ${rsc.data} } = ${rsc.useQuery}(
           [${FETCH_ALL(featureName)}],
           async () => {
             ${ApiManager.getFetchAllApiFunction(featureName, dto)}
@@ -50,9 +36,9 @@ export const GetUseFetchAllString = (featureName: string, dto: DTOSchema) => {
       );
   
       return {
-          ${pluralCamelCase(dto.modelName)}: ${data},
-          ${errorMessage}: ${error} ? ${getServerErrorMessage}(${error}) : undefined,
-          ${isLoading},
+          ${pluralCamelCase(dto.modelName)}: ${rsc.data},
+          ${rsc.errorMessage}: ${error} ? ${rsc.getServerErrorMessage}(${error}) : undefined,
+          ${rsc.isLoading},
       };
   };`
   }
@@ -65,5 +51,5 @@ export const RQFetchAllHook: ITemplate = {
   getName: useFetchAllName,
   getBody: GetUseFetchAllString,
   getRoute: useFetchAllPath,
-  extension: defaultFileExtension,
+  extension: rsc.defaultFileExtension,
 };

@@ -1,15 +1,11 @@
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { IRepositoryTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
-import {
-  baseUrl,
-  reactComponentExtension,
-  requestDTO,
-} from "../../stringConfig";
 import { pascalCase } from "../../utils/stringUtils";
 import { AxiosTemplate } from "../dataFetching/axios";
 import { RepositoryInterface } from "./RepositoryInterface";
 import { RhinoCommand } from "../../enums/command";
+import { rsc } from "../../rhinoStringConfig";
 
 export const GetRepositoryName = (featureName: string) => {
   return `${pascalCase(featureName)}Repository`;
@@ -46,16 +42,16 @@ export const GetRepositoryString = (
 ) => {
 
   return `
-    const ${baseUrl} = process.env.${rhinoConfig.envApiUrl};
+    const ${rsc.baseUrl} = process.env.${rhinoConfig.envApiUrl};
 
     ${
         commands.find((c) => c === RhinoCommand.create) && createDTO ?
-        `${AxiosTemplate.getCreateFuncString(featureName, createDTO, requestDTO)}` : ''
+        `${AxiosTemplate.getCreateFuncString(featureName, createDTO, rsc.requestDTO)}` : ''
     }
 
     ${
         commands.find((c) => c === RhinoCommand.update) && updateDTO ?
-        `${AxiosTemplate.getUpdateFuncString(featureName, updateDTO, requestDTO)}` : ''
+        `${AxiosTemplate.getUpdateFuncString(featureName, updateDTO, rsc.requestDTO)}` : ''
     }
 
     ${
@@ -106,5 +102,5 @@ export const Repository: IRepositoryTemplate = {
   getName: GetRepositoryName,
   getBody: GetRepositoryString,
   getRoute: RepositoryPath,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

@@ -1,8 +1,4 @@
-import {
-  DTOExtensionAdd,
-  ModelExtensionAdd,
-  ModelExtensionRemove,
-} from "../rhinoConfig";
+import { rhinoConfig } from "../cli";
 
 export interface DTONames {
   create?: string | undefined;
@@ -18,38 +14,6 @@ export interface ModelNames {
   list?: string | undefined;
   delete?: string | undefined;
 }
-
-export const getDTONamesFromInput = (
-  input: {
-    command: string;
-    dtoName: string;
-  }[]
-): DTONames => {
-  let dtoNames: DTONames = {
-    create: "",
-    details: "",
-    update: "",
-    list: "",
-  };
-  input.forEach(({ command, dtoName }) => {
-    switch (command) {
-      case "create":
-        dtoNames.create = dtoName;
-        break;
-      case "details":
-        dtoNames.details = dtoName;
-        break;
-      case "update":
-        dtoNames.update = dtoName;
-        break;
-      case "list":
-        dtoNames.list = dtoName;
-        break;
-    }
-  });
-
-  return dtoNames;
-};
 
 export const getCommandsFromInput = (
   input: {
@@ -91,13 +55,16 @@ export const getModelNamesConfigured = (dtoNames: DTONames): ModelNames => {
 };
 
 export const getDtoName = (dtoName: string): string => {
-  return dtoName + DTOExtensionAdd;
+  return dtoName + rhinoConfig.DTOExtensionAdd;
 };
 
 export const getModelName = (modelName: string): string => {
-  return modelName + ModelExtensionAdd;
+  return modelName + rhinoConfig.ModelExtensionAdd;
 };
 export const getModelNameFromDtoName = (dtoName: string): string => {
-  const name = dtoName.replace(ModelExtensionRemove, ModelExtensionAdd);
+  const name = dtoName.replace(
+    rhinoConfig.ModelExtensionRemove,
+    rhinoConfig.ModelExtensionAdd
+  );
   return name;
 };

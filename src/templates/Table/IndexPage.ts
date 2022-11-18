@@ -1,12 +1,12 @@
 import { PageLayout } from "../../components/layouts/PageLayout";
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { pascalCase, plural, pluralCamelCase } from "../../utils/stringUtils";
-import { isLoading, reactComponentExtension } from "../../stringConfig";
 import { useFetchAllName } from "../Hooks/useFetchAll";
 import { RQIndexBody } from "./IndexBody";
+import { rsc } from "../../rhinoStringConfig";
 
 export const IndexPageName = (featureName: string) => {
   return `${pascalCase(featureName)}IndexPage`;
@@ -21,7 +21,7 @@ export const GetIndexPageString = (
 import React from 'react';
 
 export const ${IndexPageName(featureName)}: React.FC = () => {
-    const { ${pluralCamelCase(dto.modelName)}, ${isLoading} } = ${useFetchAllName(featureName)}();
+    const { ${pluralCamelCase(dto.modelName)}, ${rsc.isLoading} } = ${useFetchAllName(featureName)}();
     ${renderDependencyHooks(dto)}
 
     return (${PageLayout(
@@ -47,5 +47,5 @@ export const RQIndexPage: ITemplate = {
   getName: IndexPageName,
   getBody: GetIndexPageString,
   getRoute: IndexPageRoute,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

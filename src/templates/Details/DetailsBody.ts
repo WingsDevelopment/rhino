@@ -5,8 +5,8 @@ import {
 } from "../../components/fields/fieldUtils";
 import { IInvokableTemplate, ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
+import { rsc } from "../../rhinoStringConfig";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
-import { isLoading, reactComponentExtension } from "../../stringConfig";
 import { RQDetailsPage } from "./DetailsPage";
 
 const DetailsBodyName = (featureName: string) => {
@@ -18,7 +18,7 @@ const DetailsBody = (
   featureName: string,
   modelName: string,
 ) => {
-    return `<${DetailsBodyName(featureName)} ${camelCase(modelName)}={${camelCase(modelName)}} ${isLoading}={${isLoading}} />`;
+    return `<${DetailsBodyName(featureName)} ${camelCase(modelName)}={${camelCase(modelName)}} ${rsc.isLoading}={${rsc.isLoading}} />`;
 }
 // prettier-ignore
 const GetDetailsBodyString = (
@@ -28,12 +28,12 @@ const GetDetailsBodyString = (
     return `
 interface Props {
     ${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)} | undefined;
-    ${isLoading}: boolean;
+    ${rsc.isLoading}: boolean;
 }
 
-export const ${DetailsBodyName(featureName)}: React.FC<Props> = ({ ${camelCase(dto.modelName)}, ${isLoading} }) => {
+export const ${DetailsBodyName(featureName)}: React.FC<Props> = ({ ${camelCase(dto.modelName)}, ${rsc.isLoading} }) => {
     return (
-        <${LoadableCardWrapperTsx} ${isLoading}={${isLoading}}>
+        <${LoadableCardWrapperTsx} ${rsc.isLoading}={${rsc.isLoading}}>
             ${RenderDetailsBody(dto, dto.modelName)}
         </${LoadableCardWrapperTsx}>
     )
@@ -59,5 +59,5 @@ export const RQDetailsBody: IInvokableTemplate = {
   getBody: GetDetailsBodyString,
   getRoute: GetDetailsBodyRoute,
   invoke: DetailsBody,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

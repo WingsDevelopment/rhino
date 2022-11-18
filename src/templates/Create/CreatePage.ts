@@ -1,21 +1,13 @@
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
-import {
-  detailsRoute,
-  handleSubmit,
-  id,
-  isLoading,
-  navigate,
-  reactComponentExtension,
-  useNavigate,
-} from "../../stringConfig";
 import { RQCreateHook } from "../Hooks/useCreate";
 import { RQCreateForm } from "./CreateForm";
 import { GetRoutesName } from "../routes";
+import { rsc } from "../../rhinoStringConfig";
 
 const CreatePageName = (featureName: string) => {
   return `Create${pascalCase(featureName)}Page`;
@@ -28,16 +20,16 @@ const GetCreatePageString = (
 ) => {
   return `
 import React, { useMemo } from 'react';
-import { ${useNavigate} } from 'react-router';
+import { ${rsc.useNavigate} } from 'react-router';
 
 export const ${CreatePageName(featureName)}: React.FC = () => {
-    const { create${pascalCase(dto.modelName)}Async, ${isLoading} } = ${RQCreateHook.getName(featureName)}();
-    const ${navigate} = ${useNavigate}();
+    const { create${pascalCase(dto.modelName)}Async, ${rsc.isLoading} } = ${RQCreateHook.getName(featureName)}();
+    const ${rsc.navigate} = ${rsc.useNavigate}();
     ${renderDependencyHooks(dto)}
 
-    const ${handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
-        const ${id} = await create${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)});
-        ${navigate}(${GetRoutesName(featureName)}.${detailsRoute} + "/" + ${id});
+    const ${rsc.handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
+        const ${rsc.id} = await create${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)});
+        ${rsc.navigate}(${GetRoutesName(featureName)}.${rsc.detailsRoute} + "/" + ${rsc.id});
     };
 
     return (${PageLayout(
@@ -63,5 +55,5 @@ export const RQCreatePage: ITemplate = {
   getName: CreatePageName,
   getBody: GetCreatePageString,
   getRoute: GetCreatePageRoute,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

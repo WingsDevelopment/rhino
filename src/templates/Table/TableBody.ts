@@ -4,8 +4,8 @@ import {
   getPropertiesFromSchema,
   isPropertyPrimitive,
 } from "../../models/DTOSchema";
+import { rsc } from "../../rhinoStringConfig";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
-import { isLoading, reactComponentExtension } from "../../stringConfig";
 import { RQIndexPage } from "./IndexPage";
 
 export const TableBodyName = (modelName: string) => {
@@ -16,7 +16,7 @@ export const TableBodyName = (modelName: string) => {
 const TableBody = (
     modelName: string,
 ) => {
-    return `<${TableBodyName(modelName)} ${pluralCamelCase(modelName)}={${pluralCamelCase(modelName)}} ${isLoading}={${isLoading}} />`;
+    return `<${TableBodyName(modelName)} ${pluralCamelCase(modelName)}={${pluralCamelCase(modelName)}} ${rsc.isLoading}={${rsc.isLoading}} />`;
 }
 
 // prettier-ignore
@@ -27,10 +27,10 @@ const GetTableBodyString = (
     return `
 interface Props {
     ${pluralCamelCase(dto.modelName)}: ${pascalCase(dto.modelName)}[] | undefined;
-    ${isLoading}: boolean;
+    ${rsc.isLoading}: boolean;
 }
 
-export const ${pascalCase(dto.modelName)}TableBody: React.FC<Props> = ({ ${pluralCamelCase(dto.modelName)}, ${isLoading} }) => {
+export const ${pascalCase(dto.modelName)}TableBody: React.FC<Props> = ({ ${pluralCamelCase(dto.modelName)}, ${rsc.isLoading} }) => {
     const navigate = useNavigate();
 
     const rows = () => (
@@ -49,13 +49,13 @@ export const ${pascalCase(dto.modelName)}TableBody: React.FC<Props> = ({ ${plura
         </>
     );
     if (!${pluralCamelCase(dto.modelName)}) {
-        return <GenericTableBody rows={<></>} hasData={false} isLoading={${isLoading}} />;
+        return <GenericTableBody rows={<></>} hasData={false} isLoading={${rsc.isLoading}} />;
     }
     return (
         <GenericTableBody
             rows={rows()}
             hasData={${pluralCamelCase(dto.modelName)} !== undefined && ${pluralCamelCase(dto.modelName)}.length > 0}
-            isLoading={${isLoading}}
+            isLoading={${rsc.isLoading}}
         />
     );
 };
@@ -82,5 +82,5 @@ export const RQTableBody: IInvokableTemplate = {
   getBody: GetTableBodyString,
   getRoute: GetTableBodyRoute,
   invoke: TableBody,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

@@ -1,23 +1,12 @@
 import { PageLayout, TLink } from "../../components/layouts/PageLayout";
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";
 import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
-import {
-  detailsRoute,
-  handleSubmit,
-  id,
-  initialData,
-  isLoading,
-  isSubmitting,
-  navigate,
-  reactComponentExtension,
-  useNavigate,
-  useParams,
-} from "../../stringConfig";
 import { RQUpdateForm } from "./UpdateForm";
 import { GetRoutesName } from "../routes";
+import { rsc } from "../../rhinoStringConfig";
 
 const UpdatePageName = (featureName: string) => {
   return `Update${pascalCase(featureName)}Page`;
@@ -30,21 +19,21 @@ const GetUpdatePageString = (
   ) => {
     return `
 import React, { useMemo } from 'react';
-import { ${useParams}, ${useNavigate} } from 'react-router';
+import { ${rsc.useParams}, ${rsc.useNavigate} } from 'react-router';
 
 export const ${UpdatePageName(featureName)}: React.FC = () => {
-    const { ${id} } = ${useParams}<{ ${id}: string }>();
-    const ${navigate} = ${useNavigate}();
-    const { update${pascalCase(dto.modelName)}Async, ${isLoading}: ${isSubmitting} } = useUpdate${pascalCase(dto.modelName)}();
-    const { ${camelCase(dto.modelName)}, ${isLoading} } = useFetch${pascalCase(dto.modelName)}ById(${id});
+    const { ${rsc.id} } = ${rsc.useParams}<{ ${rsc.id}: string }>();
+    const ${rsc.navigate} = ${rsc.useNavigate}();
+    const { update${pascalCase(dto.modelName)}Async, ${rsc.isLoading}: ${rsc.isSubmitting} } = useUpdate${pascalCase(dto.modelName)}();
+    const { ${camelCase(dto.modelName)}, ${rsc.isLoading} } = useFetch${pascalCase(dto.modelName)}ById(${rsc.id});
     ${renderDependencyHooks(dto)}
 
-    const ${handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
-        const ${id} = await update${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)});
-        ${navigate}(${GetRoutesName(featureName)}.${detailsRoute} + '/' + ${id});
+    const ${rsc.handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
+        const ${rsc.id} = await update${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)});
+        ${rsc.navigate}(${GetRoutesName(featureName)}.${rsc.detailsRoute} + '/' + ${rsc.id});
     };
 
-    const ${initialData} = useMemo(() => (${camelCase(dto.modelName)} ? ${camelCase(dto.modelName)} : createEmpty${pascalCase(dto.modelName)}()), [${camelCase(dto.modelName)}]);
+    const ${rsc.initialData} = useMemo(() => (${camelCase(dto.modelName)} ? ${camelCase(dto.modelName)} : createEmpty${pascalCase(dto.modelName)}()), [${camelCase(dto.modelName)}]);
 
     return (${PageLayout(
       RQUpdateForm.invoke( dto.modelName, dto.modelName),
@@ -69,5 +58,5 @@ export const RQUpdatePage: ITemplate = {
   getName: UpdatePageName,
   getBody: GetUpdatePageString,
   getRoute: UpdatePageRoute,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

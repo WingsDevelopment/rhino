@@ -5,15 +5,9 @@ import {
 } from "../../enums/dictionaries";
 import { RhinoCommand } from "../../enums/command";
 import { IRoutesTemplate } from "../../interfaces/ITemplate";
-import { rhinoConfig } from "../../rhinoConfig";
-import {
-  createRoute,
-  detailsRoute,
-  indexRoute,
-  reactComponentExtension,
-  updateRoute,
-} from "../../stringConfig";
+import { rhinoConfig } from "../../cli";
 import { pascalCase } from "../../utils/stringUtils";
+import { rsc } from "../../rhinoStringConfig";
 
 const CommandsWithId: RhinoCommand[] = [
   RhinoCommand.details,
@@ -71,5 +65,5 @@ export const Routes: IRoutesTemplate = {
   getName: GetRoutesName,
   getBody: GetRoutesIndexString,
   getRoute: RoutesPath,
-  extension: reactComponentExtension,
+  extension: rsc.reactComponentExtension,
 };

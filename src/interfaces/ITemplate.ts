@@ -1,5 +1,4 @@
-import { Commands } from "..";
-import { TLink } from "../components/layouts/PageLayout";
+import { RhinoCommand } from "../enums/command";
 import { DTOSchema } from "../models/DTOSchema";
 
 export interface INesto {
@@ -27,7 +26,7 @@ export interface IRepositoryTemplate {
   getName: (featureName: string) => string;
   getBody: (
     featureName: string,
-    commands: Commands[],
+    commands: RhinoCommand[],
     createDTO?: DTOSchema,
     detailsDTO?: DTOSchema,
     updateDTO?: DTOSchema,
@@ -39,7 +38,7 @@ export interface IRepositoryTemplate {
 
 export interface IRoutesTemplate {
   getName: (featureName: string) => string;
-  getBody: (featureName: string, commands: Commands[]) => string;
+  getBody: (featureName: string, commands: RhinoCommand[]) => string;
   getRoute: (featureName: string, baseRoute: string) => string;
   extension: string;
 }

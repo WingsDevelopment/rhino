@@ -1,7 +1,7 @@
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, generateDtoProperties } from "../../models/DTOSchema";
-import { defaultFileExtension } from "../../stringConfig";
+import { rsc } from "../../rhinoStringConfig";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 
 export const DTOExtensionName = (modelName: string) => {
@@ -43,5 +43,5 @@ export const DTOTemplate: ITemplate = {
   getRoute: GetCreateDTORoute,
   getBody: GetCreateDTOString,
   getName: (dtoName: string) => dtoName,
-  extension: defaultFileExtension,
+  extension: rsc.defaultFileExtension,
 };

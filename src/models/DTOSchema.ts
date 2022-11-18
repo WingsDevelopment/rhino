@@ -1,7 +1,7 @@
 import { getDtoName, getModelName } from "../utils/consoleInputUtils";
 
 export interface DTOSchema {
-  origName: string;
+  origName?: string;
   dtoName: string;
   modelName: string;
   type: string;

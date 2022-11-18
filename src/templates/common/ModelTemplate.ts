@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { ITemplate } from "../../interfaces/ITemplate";
 import {
   DTOSchema,
@@ -6,7 +6,7 @@ import {
   getDummyValueForProperty,
   getPropertiesFromSchema,
 } from "../../models/DTOSchema";
-import { defaultFileExtension } from "../../stringConfig";
+import { rsc } from "../../rhinoStringConfig";
 import { getModelName } from "../../utils/consoleInputUtils";
 import { pascalCase } from "../../utils/stringUtils";
 
@@ -38,5 +38,5 @@ export const ModelTemplate: ITemplate = {
   getRoute: GetCreateModelRoute,
   getBody: GetCreateModelString,
   getName: (modelName: string) => modelName,
-  extension: defaultFileExtension,
+  extension: rsc.defaultFileExtension,
 };

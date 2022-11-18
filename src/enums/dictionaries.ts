@@ -1,10 +1,5 @@
-import { rhinoConfig } from "../rhinoConfig";
-import {
-  createRoute,
-  detailsRoute,
-  indexRoute,
-  updateRoute,
-} from "../stringConfig";
+import { rhinoConfig } from "../cli";
+import { rsc } from "../rhinoStringConfig";
 import { RQCreatePage } from "../templates/Create/CreatePage";
 import { RQDetailsPage } from "../templates/Details/DetailsPage";
 import { RQIndexPage } from "../templates/Table/IndexPage";
@@ -12,10 +7,10 @@ import { RQUpdatePage } from "../templates/Update/UpdatePage";
 import { RhinoCommand } from "./command";
 
 export const CommandRouteDict = {
-  [RhinoCommand.create]: createRoute,
-  [RhinoCommand.details]: detailsRoute,
-  [RhinoCommand.list]: indexRoute,
-  [RhinoCommand.update]: updateRoute,
+  [RhinoCommand.create]: rsc.createRoute,
+  [RhinoCommand.details]: rsc.detailsRoute,
+  [RhinoCommand.list]: rsc.indexRoute,
+  [RhinoCommand.update]: rsc.updateRoute,
 };
 
 export const CommandPathsDict = {

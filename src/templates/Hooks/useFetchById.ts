@@ -1,26 +1,11 @@
-import { rhinoConfig } from "../../rhinoConfig";
+import { rhinoConfig } from "../../cli";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
-import {
-  config,
-  data,
-  defaultFileExtension,
-  enabled,
-  error,
-  errorMessage,
-  getServerErrorMessage,
-  id,
-  isLoading,
-  response,
-  useDefaultRQConfig,
-  useQuery,
-  useQueryClient,
-} from "../../stringConfig";
-import { ModelExtensionName } from "../common/DTOTemplate";
-import { GetDIContextName } from "../context/DIContext";
-import { GetByIdFuncName, GetRepositoryName } from "../Repository/Repository";
 import { ApiManager } from ".";
+import { error } from "console";
+import { config } from "process";
+import { rsc } from "../../rhinoStringConfig";
 
 export const useFetchByIdName = (featureName: string) => {
   return `useFetch${pascalCase(featureName)}ById`;
@@ -33,28 +18,28 @@ export const FETCH_BY_ID = (featureName: string) => {
 // prettier-ignore
 export const GetUseFetchByIdString = (featureName: string, dto: DTOSchema) => {
       return `
-  import { ${useQuery}, ${useQueryClient} } from 'react-query';
+  import { ${rsc.useQuery}, ${rsc.useQueryClient} } from 'react-query';
   
   export const ${FETCH_BY_ID(featureName)} = "${FETCH_BY_ID(featureName)}";
   
-  export const ${useFetchByIdName(featureName)} = (${id}: string | undefined) => {
-      const ${config} = ${useDefaultRQConfig}('${useFetchByIdName(featureName)}');
+  export const ${useFetchByIdName(featureName)} = (${rsc.id}: string | undefined) => {
+      const ${config} = ${rsc.useDefaultRQConfig}('${useFetchByIdName(featureName)}');
   
-      const { ${isLoading}, ${error}, ${data} } = ${useQuery}(
-            [${FETCH_BY_ID(featureName)}, ${id}],
+      const { ${rsc.isLoading}, ${error}, ${rsc.data} } = ${rsc.useQuery}(
+            [${FETCH_BY_ID(featureName)}, ${rsc.id}],
           async () => {
             ${ApiManager.getFetchByIdApiFunction(featureName, dto)}
           },
           {
               ...${config},
-              ${enabled}: !!${id},
+              ${rsc.enabled}: !!${rsc.id},
           }
       );
   
       return {
-          ${camelCase(dto.modelName)}: ${data},
-          ${errorMessage}: ${error} ? ${getServerErrorMessage}(${error}) : undefined,
-          ${isLoading},
+          ${camelCase(dto.modelName)}: ${rsc.data},
+          ${rsc.errorMessage}: ${error} ? ${rsc.getServerErrorMessage}(${error}) : undefined,
+          ${rsc.isLoading},
       };
   };`
   }
@@ -67,5 +52,5 @@ export const RQFetchByIdHook: ITemplate = {
   getName: useFetchByIdName,
   getBody: GetUseFetchByIdString,
   getRoute: useFetchByIdPath,
-  extension: defaultFileExtension,
+  extension: rsc.defaultFileExtension,
 };
