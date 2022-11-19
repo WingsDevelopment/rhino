@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../../cli";
+import { rhinoConfig } from "../..";
 import { IRepositoryTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { AxiosTemplate } from "../dataFetching/axios";

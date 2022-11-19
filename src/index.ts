@@ -1,41 +1,67 @@
-// const definitions = getPropByString(schema, rhinoConfig.chemaDTOPath);
+#!/usr/bin/env node
 
-// if (!definitions)
-//   throw new Error(
-//     "No definitions found in schema, please edit the schemaDTOPath in config.ts"
-//   );
+import fs from "fs";
+export const rhinoConfig = JSON.parse(
+  fs.readFileSync("rhinoConfig.json", "utf8")
+);
+export const rhinoOpenApiSchema = JSON.parse(
+  fs.readFileSync("rhinoOpenApiSchema.json", "utf8")
+);
+if (rhinoConfig === undefined) {
+  throw new Error("rhinoConfig.json is not provided");
+}
+if (rhinoOpenApiSchema === undefined) {
+  throw new Error("rhinoOpenApiSchema.json is not provided");
+}
+import { getPropByString } from "./utils/objectUtils";
+import { createDTOsWithDependencies } from "./managers/DTOManager";
+import { GenerateFiles } from "./managers/FileManager";
+import { overrideRSC } from "./rhinoStringConfig";
+import { getCommands, getDTONames } from "./utils";
+const { Command } = require("commander"); // add this line
+const figlet = require("figlet");
 
-// let rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-// });
+//add the following line
+const program = new Command();
 
-// rl.question("Rhino>", (INPUT) => {
-//   let inputs = INPUT.split(" ");
-//   const basePath = inputs.shift();
-//   let featureName = inputs.shift();
-//   if (!featureName || !basePath) return;
+console.log(figlet.textSync("R H I N O"));
+program
+  .version("1.0.0")
+  .description("List of commands for code generation")
+  .option("-f, --feature <featureName>", "Feature name")
+  .option("-a, --all <dtoName>", "Generate - Read All (table) - feature")
+  .option("-d, --details <dtoName>", "Generate Details (page) - feature")
+  .option("-c, --create <dtoName>", "Generate Create (form) - feature")
+  .option("-u, --update <dtoName>", "Generate Update (form) - feature")
+  .option("-del, --del", "Generate Delete - feature")
+  .parse(process.argv);
 
-//   let commandAndDTONames: { command: string; dtoName: string }[] = [];
+export const options = program.opts();
 
-//   //todo: ne mora svaki drugi biti dtoName
-//   for (let i = 0; i < inputs.length - 1; i++) {
-//     commandAndDTONames.push({ command: inputs[i], dtoName: inputs[i + 1] });
-//     i++;
-//   }
+overrideRSC(rhinoConfig.overrideNamings);
 
-//   const dtoNames = getDTONamesFromInput(commandAndDTONames);
-//   const lcCommands = commandAndDTONames.map((c) => c.command.toLowerCase());
+const definitions = getPropByString(
+  rhinoOpenApiSchema,
+  rhinoConfig.chemaDTOPath
+);
 
-//   const allDTOs = createDTOsWithDependencies(definitions, dtoNames);
+if (!definitions)
+  throw new Error(
+    "No definitions found in schema, please edit the schemaDTOPath in rhinoConfig.json"
+  );
 
-//   //convert lcCommands to Commands enum
-//   const commands: RhinoCommand[] = lcCommands.map(
-//     (c) => RhinoCommand[c as keyof typeof RhinoCommand]
-//   );
+const commands = getCommands(options);
+const dtoNames = getDTONames(options);
 
-//   GenerateFiles(allDTOs, featureName, commands, dtoNames, basePath);
+if (options.feature === undefined) throw new Error("No feature name provided");
+const allDTOs = createDTOsWithDependencies(definitions, dtoNames);
 
-//   console.log("happy hacking :)");
-//   rl.close();
-// });
+GenerateFiles(
+  allDTOs,
+  options.feature,
+  commands,
+  dtoNames,
+  rhinoConfig.basePath
+);
+
+console.log("happy hacking :)");

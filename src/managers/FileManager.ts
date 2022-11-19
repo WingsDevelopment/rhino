@@ -1,5 +1,5 @@
 import { mkdirSync, writeFileSync } from "fs";
-import { rhinoConfig } from "../cli";
+import { rhinoConfig } from "..";
 import { RhinoCommand } from "../enums/command";
 import { DTOSchema } from "../models/DTOSchema";
 import { DTONames } from "../utils/consoleInputUtils";

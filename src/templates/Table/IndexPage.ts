@@ -1,5 +1,5 @@
 import { PageLayout } from "../../components/layouts/PageLayout";
-import { rhinoConfig } from "../../cli";
+import { rhinoConfig } from "../..";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { renderDependencyHooks } from "../../utils/renderDependencyHooks";

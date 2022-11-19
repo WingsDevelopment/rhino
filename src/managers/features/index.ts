@@ -11,7 +11,7 @@ import { Repository } from "../../templates/Repository/Repository";
 import { RepositoryInterface } from "../../templates/Repository/RepositoryInterface";
 import { Routes } from "../../templates/routes";
 import { RhinoCommand } from "../../enums/command";
-import { rhinoConfig } from "../../cli";
+import { rhinoConfig } from "../..";
 
 export const GetBaseFeatureTemplates = (
   featureName: string,

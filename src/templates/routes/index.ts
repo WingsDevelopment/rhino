@@ -5,7 +5,7 @@ import {
 } from "../../enums/dictionaries";
 import { RhinoCommand } from "../../enums/command";
 import { IRoutesTemplate } from "../../interfaces/ITemplate";
-import { rhinoConfig } from "../../cli";
+import { rhinoConfig } from "../..";
 import { pascalCase } from "../../utils/stringUtils";
 import { rsc } from "../../rhinoStringConfig";
 

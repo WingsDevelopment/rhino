@@ -10,39 +10,51 @@ npm run start:dev
 
 # Config
 
-main config file:
-/src/config/config.ts
+Add rhinoConfig.json and rhinoOpenApiSchema.json files to your root directory
 
-change your api scheme from swagger:
-/src/openApiSchema.json
+# Config rhinoOpenApiSchema
 
-rename things from "rhino" to your project needs:
-/src/stringConfig.ts
+rhinoOpenApiSchema configuration is very straightforward.
+copy the open api schema from the swagger editor and paste it in rhinoOpenApiSchema.json
+
+swagger open api schema example: https://petstore.swagger.io/v2/swagger.json
+
+# Config rhinoConfig
+
+{
+"schemaDTOPath": "components",
+"envApiUrl": "REACT_APP_YOUR_API_URL",
+"basePath": "src/features",
+"stateQueriesPath": "/state/queries",
+"stateMutationsPath": "/state/mutations",
+"repositoryPath": "/infrastructure/repositories",
+"repositoryInterfacePath": "/infrastructure/interfaces",
+"dtosPath": "/infrastructure/DTOs",
+"modelsPath": "/models",
+"detailsPath": "/pages/Details",
+"listPath": "/pages/Index",
+"createPath": "/pages/Create",
+"updatePath": "/pages/Update",
+"routesPath": "/routes",
+"contextPath": "/context",
+"useTemplate": "reactQuery",
+"generateRepository": true,
+"generateContext": true,
+"generateRepositoryInterface": true,
+"generateOnlyFolderStructure": false,
+"DTOExtensionAdd": "DTO",
+"DTOExtensionRemove": "",
+"ModelExtensionAdd": "",
+"ModelExtensionRemove": "DTO",
+"overrideNamings": {
+"initialData": "initData"
+}
+}
 
 # Usage
 
-Command example:
-C:\repos\clean-code-poc\clean-code-poc\src\backoffice-app-code\features Retailer details RetailerDto create NewRetailerDto update NewRetailerDto list RetailerDto <br />
+After adding config files you can list all the available commands by running: <br />
+<strong>npx rhino -h</strong>
 
-Command exlanation
-C:\repos\clean-code-poc\clean-code-poc\src\backoffice-app-code\features - path to the features folder <br />
-Retailer - name of the feature <br />
-details - name of the command <br />
-RetailerDto - name of the dto for details <br />
-create - name of the command <br />
-NewRetailerDto - name of the dto for create <br />
-update - name of the command <br />
-NewRetailerDto - name of the dto for update <br />
-list - name of the command <br />
-RetailerDto - name of the dto for list <br />
-
-Command pattern <br />
-path featureName command dtoName command dtoName command dtoName command dtoName
-
-# More on configuring the project
-
-inside config.ts you must set chemaDTOPath
-correct chemaDTOPath value can be simply by following path to 'schemas'
-correct value example from picture would be: "components.schemas"
-
-![alt text](./rhino%20instructio.png)
+full rhino command example: <br />
+<strong>npx rhino -f tag -c NewTagDto -u UpdateTagDto -d TagDto -a TagDto</strong>

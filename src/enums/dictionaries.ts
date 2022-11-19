@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../cli";
+import { rhinoConfig } from "..";
 import { rsc } from "../rhinoStringConfig";
 import { RQCreatePage } from "../templates/Create/CreatePage";
 import { RQDetailsPage } from "../templates/Details/DetailsPage";

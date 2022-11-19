@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../cli";
+import { rhinoConfig } from "..";
 
 export interface DTONames {
   create?: string | undefined;

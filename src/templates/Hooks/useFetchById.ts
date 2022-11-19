@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../../cli";
+import { rhinoConfig } from "../..";
 import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";

@@ -1,4 +1,4 @@
-import { rhinoConfig } from "../../cli";
+import { rhinoConfig } from "../..";
 import { IContextTemplate } from "../../interfaces/ITemplate";
 import { rsc } from "../../rhinoStringConfig";
 import { GetRepositoryName } from "../Repository/Repository";

@@ -1,7 +1,7 @@
 {
-  "name": "rhino-cg",
+  "name": "react-crud-generator",
   "version": "1.0.2",
-  "description": "Rhino, master of all tools",
+  "description": "This is architecture opiniated react crud generator, built on top of axios and react-query",
   "main": "src/index.js",
   "source": "src/index.ts",
   "scripts": {
@@ -17,7 +17,7 @@
     "url": "git+https://github.com/WingsDevelopment/rhino"
   },
   "bin": {
-    "rhino-cg": "dist/index.js"
+    "rhino": "dist/index.js"
   },
   "publishConfig": {
     "access": "public"
