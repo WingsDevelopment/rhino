@@ -2,8 +2,6 @@ Installation
 
 npm i react-crud-generator
 
-npx rhino -h
-
 # Usage
 
 After adding config files you can list all the available commands by running: <br />
