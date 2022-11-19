@@ -30,6 +30,8 @@ rhinoOpenApiSchema configuration is very straightforward.
 copy the open api schema from the swagger editor and paste it in rhinoOpenApiSchema.json
 
 swagger open api schema example: https://petstore.swagger.io/v2/swagger.json
+<strong>for quick test</strong>, copy json from this link and paste it in rhinoOpenApiSchema.json
+run the command: npx rhino -f anyName -c Tag
 
 # Config rhinoConfig
 
