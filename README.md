@@ -1,6 +1,6 @@
 Installation
 
-npm i react-crud-generator
+npm i react-crud-generator --save-dev
 
 # Usage
 
@@ -36,6 +36,8 @@ run the command: npx rhino -f anyName -c Tag <br />
 
 # Config rhinoConfig
 
+This is default config that is suggested to be a starting point. <br />
+
 <pre>
 {
 "schemaDTOPath": "components",
@@ -55,7 +57,7 @@ run the command: npx rhino -f anyName -c Tag <br />
 "contextPath": "/context",
 "useTemplate": "reactQuery",
 "generateRepository": true,
-"generateContext": true,
+"generateContext": false,
 "generateRepositoryInterface": true,
 "generateOnlyFolderStructure": false,
 "DTOExtensionAdd": "DTO",
