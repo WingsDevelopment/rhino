@@ -12,12 +12,12 @@ full rhino command example: <br />
 
 <pre>
 <strong>Command list:</strong>
-Feature name: -f, --feature <featureName>
-Add Read All (table) to the feature: -a, --all <dtoName>
-Add Details (page) to the feature: -d, --details <dtoName>
-Add Create (form) to the feature: -c, --create <dtoName>
-Add Update (form) to the feature: -u, --update <dtoName>
-Add Delete to the feature: -del, --del
+Feature name: -f dtoName or --feature featureName
+Add Read All (table) to the feature: -a dtoName or --all dtoName
+Add Details (page) to the feature: -d dtoName or --details dtoName
+Add Create (form) to the feature: -c dtoName or --create dtoName
+Add Update (form) to the feature: -u dtoName or --update dtoName
+Add Delete to the feature: -del or --del
 </pre>
 
 # Config
