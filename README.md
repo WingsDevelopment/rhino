@@ -12,7 +12,7 @@ full rhino command example: <br />
 
 <pre>
 <strong>Command list:</strong>
--f dtoName or --feature featureName : Feature name:
+-f dtoName or --feature featureName : Feature name
 -a dtoName or --all dtoName         : Add Read All (table) to the feature
 -d dtoName or --details dtoName     : Add Details (page) to the feature
 -c dtoName or --create dtoName      : Add Create (form) to the feature
