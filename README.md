@@ -10,6 +10,7 @@ After adding config files you can list all the available commands by running: <b
 full rhino command example: <br />
 <strong>npx rhino -f tag -c NewTagDto -u UpdateTagDto -d TagDto -a TagDto</strong>
 
+<pre>
 <strong>Command list:</strong>
 Feature name: -f, --feature <featureName>
 Add Read All (table) to the feature: -a, --all <dtoName>
@@ -17,6 +18,7 @@ Add Details (page) to the feature: -d, --details <dtoName>
 Add Create (form) to the feature: -c, --create <dtoName>
 Add Update (form) to the feature: -u, --update <dtoName>
 Add Delete to the feature: -del, --del
+</pre>
 
 # Config
 
