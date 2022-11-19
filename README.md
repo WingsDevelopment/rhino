@@ -1,12 +1,16 @@
-# WELCOME TO RHINO
+Installation
 
-# Installation
+npm i react-crud-generator
 
-npm install
+npx rhino -h
 
-# Start
+# Usage
 
-npm run start:dev
+After adding config files you can list all the available commands by running: <br />
+<strong>npx rhino -h</strong>
+
+full rhino command example: <br />
+<strong>npx rhino -f tag -c NewTagDto -u UpdateTagDto -d TagDto -a TagDto</strong>
 
 # Config
 
@@ -50,11 +54,3 @@ swagger open api schema example: https://petstore.swagger.io/v2/swagger.json
 "initialData": "initData"
 }
 }
-
-# Usage
-
-After adding config files you can list all the available commands by running: <br />
-<strong>npx rhino -h</strong>
-
-full rhino command example: <br />
-<strong>npx rhino -f tag -c NewTagDto -u UpdateTagDto -d TagDto -a TagDto</strong>
