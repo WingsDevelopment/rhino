@@ -17,12 +17,96 @@ full rhino command example: <br />
 -d dtoName or --details dtoName     : Add Details (page) to the feature
 -c dtoName or --create dtoName      : Add Create (form) to the feature
 -u dtoName or --update dtoName      : Add Update (form) to the feature
--del or --del                       : Add Delete to the feature
 </pre>
 
 # Config
 
 Add rhinoConfig.json and rhinoOpenApiSchema.json files to your root directory
+More about how to config those files can after about.
+
+# About
+
+<strong>Rhino</strong> is a code generator for React projects. It generates a CRUD for a given feature. <br />
+Rhino is currently very opiniated with data fetching and state management technologies, it uses
+<strong>axios</strong> and <strong>react-query</strong> for data fetching and state management. <br />
+<br />
+
+Folder structure and architecture is semi opiniated, but also very configurable. <br />
+By default this is the folder structure: <br />
+
+<pre>
+features/tag
+├── infrastructure
+│   ├── DTOs                    # Data transfer objects - generated from OpenAPI schema
+|   ├── interfaces              # Interfaces for the - repository
+│   └── repositories            # Data fetching - axios implementation
+├── models                      # Models - also generated from OpenAPI schema, used in views, extendable with your needs.
+├── pages                       # Views - generated depending on the commands you run and DTOs from schema.
+|   ├── Create
+|   |   ├── components          # Components used in the view
+|   |   └── CreateTagPage.tsx   # Page that contains Form component
+|   ├── Details
+|   |   ├── components
+|   |   └── DetailsTagPage.tsx  # Page that contains Details component
+|   ├── Update
+|   |   ├── components
+|   |   └── UpdateTagPage.tsx   # Page that contains Form component
+|   └── Index
+|       ├── components
+|       └── IndexTagPage.tsx    # Page that contains Table component
+|── routes                      # Routes for the feature & RouteObject, used for navigation
+|   └── TagRoutes.tsx
+└── state                       # State management - react-query implementation
+    ├── hooks                   # Hooks for the feature
+    └── queries                 # Queries for the feature
+</pre>
+
+<strong>This folder structure can be configured!</strong>
+if you take a look at the rhinoConfig.json file you will see that you can change the folder structure.
+notice this part of configuration: <br />
+
+<pre>
+"basePath": "src/features",
+"stateQueriesPath": "/state/queries",
+"stateMutationsPath": "/state/mutations",
+"repositoryPath": "/infrastructure/repositories",
+"repositoryInterfacePath": "/infrastructure/interfaces",
+"dtosPath": "/infrastructure/DTOs",
+"modelsPath": "/models",
+"detailsPath": "/pages/Details",
+"listPath": "/pages/Index",
+"createPath": "/pages/Create",
+"updatePath": "/pages/Update",
+"routesPath": "/routes",
+"contextPath": "/context",
+</pre>
+
+by changing the values you can change the folder structure.
+
+# Dependencies
+
+Rhino won't work without the following dependencies: <br />
+<strong>axios</strong> <br />
+<strong>react-query</strong> <br />
+<strong>react-router-dom</strong> <br />
+<strong>typescript</strong> <br />
+
+Also you will need to provide few components, wrappers for the generated components. <br />
+
+<strong>DefaultPageWithBreadcrumbs</strong> <br />
+<strong>GenericPaginableTable</strong> <br />
+<strong>TableRow</strong> <br />
+<strong>TableCell</strong> <br />
+<strong>GenericTableBody</strong> <br />
+<strong>TableButtonWithDetailsIcon</strong> <br />
+<strong>LoadableCardWrapper</strong> <br />
+<strong>DefaultSingleColumnFormCard</strong> <br />
+<strong>DoubleColumnBox</strong> <br />
+<strong>SingleColumnBox</strong> <br />
+
+Coming soon: <br />
+Configurable renaming of the components. <br />
+Configurable file extensions, enabling jsx & js files instead of tsx & ts <br />
 
 # Config rhinoOpenApiSchema
 

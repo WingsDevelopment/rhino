@@ -73,7 +73,7 @@ const createDTOsFromDTONames = (definitions: any, dtoNames: DTONames) => {
         modelName: getModelNameFromDtoName(modifiedDtoName),
       };
       if (DTO) {
-        if (dtos[fullDtoName]) console.log("-.-'");
+        if (dtos[fullDtoName]) console.log("");
         else dtos[fullDtoName] = { ...DTO };
       }
     }

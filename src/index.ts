@@ -38,6 +38,7 @@ program
 
 export const options = program.opts();
 
+if (options.feature === undefined) throw new Error("No feature name provided");
 overrideRSC(rhinoConfig.overrideNamings);
 
 const definitions = getPropByString(
@@ -53,7 +54,6 @@ if (!definitions)
 const commands = getCommands(options);
 const dtoNames = getDTONames(options);
 
-if (options.feature === undefined) throw new Error("No feature name provided");
 const allDTOs = createDTOsWithDependencies(definitions, dtoNames);
 
 GenerateFiles(
