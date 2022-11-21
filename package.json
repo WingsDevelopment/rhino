@@ -1,6 +1,6 @@
 {
   "name": "react-crud-generator",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "This is architecture opiniated react crud generator, built on top of axios and react-query",
   "main": "src/index.js",
   "source": "src/index.ts",
@@ -38,6 +38,7 @@
   "dependencies": {
     "commander": "^9.4.1",
     "esm": "^3.2.25",
-    "figlet": "^1.5.2"
+    "figlet": "^1.5.2",
+    "fs-extra": "^10.1.0"
   }
 }
