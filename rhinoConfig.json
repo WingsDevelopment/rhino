@@ -1,5 +1,5 @@
 {
-  "schemaDTOPath": "components",
+  "schemaDTOPath": "definitions",
   "envApiUrl": "REACT_APP_YOUR_API_URL",
   "basePath": "src/features",
   "initComponentsBasePath": "src/rComponents",

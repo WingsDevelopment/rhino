@@ -6,7 +6,6 @@ coverage
 
 /src
 /test
-/dist
 
 rhinoConfig.js
 rhinoOpenApiSchema.js

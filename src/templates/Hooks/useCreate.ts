@@ -15,7 +15,7 @@ const GetUseCreateString = (featureName: string, dto: DTOSchema) => {
     return `
 import { ${rsc.useMutation}, ${rsc.useQueryClient} } from 'react-query';
 
-const export const ${FETCH_ALL(featureName)} = "${FETCH_ALL(featureName)}"; 
+export const ${FETCH_ALL(featureName)} = "${FETCH_ALL(featureName)}"; 
 
 export const ${useCreateName(featureName)} = () => {
     const { ${rsc.EnqueueMessage} } = ${rsc.GlobalDIContext}.${rsc.NotificationService};

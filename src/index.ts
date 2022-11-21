@@ -9,21 +9,18 @@ export let rhinoConfig = JSON.parse(
 export let rhinoOpenApiSchema = JSON.parse(
   fs.readFileSync("rhinoOpenApiSchema.json", "utf8")
 );
+if (rhinoConfig === undefined) {
+  throw new Error("rhinoConfig.json not found");
+}
+if (rhinoOpenApiSchema === undefined) {
+  throw new Error("rhinoOpenApiSchema.json not found");
+}
 import { getPropByString } from "./utils/objectUtils";
 import { createDTOsWithDependencies } from "./managers/DTOManager";
 import { GenerateFiles, GenerateInitFiles } from "./managers/FileManager";
 import { overrideRSC } from "./rhinoStringConfig";
 import { getCommands, getDTONames } from "./utils";
-import { defaultRhinoConfig } from "./defaultConfig/defaultRhinoConfig";
-import { defaultRhinoOpenApiSchema } from "./defaultConfig/rhinoOpenApiSchema";
-if (rhinoConfig === undefined) {
-  console.warn("Rhino config file not found");
-  rhinoConfig = defaultRhinoConfig;
-}
-if (rhinoOpenApiSchema === undefined) {
-  console.warn("Rhino OpenApi schema file not found");
-  rhinoOpenApiSchema = defaultRhinoOpenApiSchema;
-}
+
 //add the following line
 const program = new Command();
 

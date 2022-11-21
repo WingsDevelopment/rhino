@@ -4,6 +4,10 @@ npm i react-crud-generator --save-dev
 
 # Usage
 
+For easier understanding how can you use this package, you can download the example project from here.
+https://github.com/WingsDevelopment/rhino-consumer
+After downloading the project, you can run it by following the instructions in the README.md file.
+
 After adding config files you can list all the available commands by running: <br />
 <strong>npx rhino -h</strong>
 

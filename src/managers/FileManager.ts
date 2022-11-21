@@ -1,12 +1,10 @@
 import { mkdirSync, writeFileSync } from "fs";
-import { rhinoConfig, rhinoOpenApiSchema } from "..";
-import { defaultRhinoConfig } from "../defaultConfig/defaultRhinoConfig";
-import { defaultRhinoOpenApiSchema } from "../defaultConfig/rhinoOpenApiSchema";
+import { rhinoConfig } from "..";
 import { RhinoCommand } from "../enums/command";
 import { DTOSchema } from "../models/DTOSchema";
 import { DTONames } from "../utils/consoleInputUtils";
 import { GetFinalTemplateData } from "./features/FeatureManager";
-var fs = require("fs-extra");
+const fse = require("fs-extra");
 
 export const GenerateFiles = (
   allDTOs: {
@@ -35,25 +33,12 @@ export const GenerateFiles = (
 };
 
 export const GenerateInitFiles = () => {
-  var rootComponents = "node_modules/react-crud-generator/src/init/rhino";
-  var rootComponentsDestination = "src/rhino";
+  var source = "node_modules/react-crud-generator/src/init/rhino";
+  var destination = "src/rhino";
 
-  // copy source folder to destination
-  fs.copy(rootComponents, rootComponentsDestination, function (err: any) {
-    if (err) {
-      console.log("An error occured while copying the folder.");
-      return console.error(err);
-    }
-  });
-
-  // writeFileSync(rhinoConfig, JSON.stringify(defaultRhinoConfig, null, 2));
-  //refactore code above, create file if not exist
-
-  // mkdirSync(rhinoConfig, { recursive: true });
-  // writeFileSync(rhinoConfig, JSON.stringify(defaultRhinoConfig, null, 2));
-  // mkdirSync(rhinoOpenApiSchema, { recursive: true });
-  // writeFileSync(
-  //   rhinoOpenApiSchema,
-  //   JSON.stringify(defaultRhinoOpenApiSchema, null, 2)
-  // );
+  try {
+    fse.copySync(source, destination);
+  } catch (err) {
+    console.error(err);
+  }
 };
