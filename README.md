@@ -99,19 +99,10 @@ Rhino won't work without the following dependencies: <br />
 <strong>react-query</strong> <br />
 <strong>react-router-dom</strong> <br />
 <strong>typescript</strong> <br />
+<strong>react-hook-form</strong> <br />
 
 Also you will need to provide few components, wrappers for the generated components. <br />
-
-<strong>DefaultPageWithBreadcrumbs</strong> <br />
-<strong>GenericPaginableTable</strong> <br />
-<strong>TableRow</strong> <br />
-<strong>TableCell</strong> <br />
-<strong>GenericTableBody</strong> <br />
-<strong>TableButtonWithDetailsIcon</strong> <br />
-<strong>LoadableCardWrapper</strong> <br />
-<strong>DefaultSingleColumnFormCard</strong> <br />
-<strong>DoubleColumnBox</strong> <br />
-<strong>SingleColumnBox</strong> <br />
+You can eaither implement it yourself, or generate it by running init command.
 
 Coming soon: <br />
 Configurable renaming of the components. <br />
