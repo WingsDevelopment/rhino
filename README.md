@@ -2,16 +2,25 @@ Installation
 
 npm i react-crud-generator --save-dev
 
-# Usage
+# Usage with example project
 
 For easier understanding how can you use this package, you can download the example project from here.
 https://github.com/WingsDevelopment/rhino-consumer
 After downloading the project, you can run it by following the instructions in the README.md file.
 
-After adding config files you can list all the available commands by running: <br />
+# Usage
+
+<strong>After adding config files</strong> you can list all the available commands by running: <br />
 <strong>npx rhino -h</strong>
 
-full rhino command example: <br />
+<pre>
+<strong>Command list:</strong>
+-f dtoName or --feature featureName : Feature name
+-a dtoName or --all dtoName         : Add Read All (table) to the feature
+-d dtoName or --details dtoName     : Add Details (page) to the feature
+-c dtoName or --create dtoName      : Add Create (form) to the feature
+-u dtoName or --update dtoName      : Add Update (form) to the feature
+</pre>
 
 First you can add all dependency components implementation by running the following command: <br />
 <strong>npx rhino -i</strong>
@@ -22,15 +31,6 @@ Then you can generate the CRUD by running the following command (if you copied j
 Imports inside of components and prittier doesn't come out of the box for at this moment,
 so you need to add import on save to vscode settings.json file: <br />
 or import manually.
-
-<pre>
-<strong>Command list:</strong>
--f dtoName or --feature featureName : Feature name
--a dtoName or --all dtoName         : Add Read All (table) to the feature
--d dtoName or --details dtoName     : Add Details (page) to the feature
--c dtoName or --create dtoName      : Add Create (form) to the feature
--u dtoName or --update dtoName      : Add Update (form) to the feature
-</pre>
 
 # Config
 
