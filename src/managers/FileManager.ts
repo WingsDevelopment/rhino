@@ -1,7 +1,7 @@
 import { mkdirSync, writeFileSync } from "fs";
 import { rhinoConfig, rhinoOpenApiSchema } from "..";
-import { defaultRhinoConfig } from "../init/defaultRhinoConfig";
-import { defaultRhinoOpenApiSchema } from "../init/rhinoOpenApiSchema";
+import { defaultRhinoConfig } from "../defaultConfig/defaultRhinoConfig";
+import { defaultRhinoOpenApiSchema } from "../defaultConfig/rhinoOpenApiSchema";
 import { RhinoCommand } from "../enums/command";
 import { DTOSchema } from "../models/DTOSchema";
 import { DTONames } from "../utils/consoleInputUtils";
@@ -46,9 +46,14 @@ export const GenerateInitFiles = () => {
     }
   });
 
-  writeFileSync(rhinoConfig, JSON.stringify(defaultRhinoConfig, null, 2));
-  writeFileSync(
-    rhinoOpenApiSchema,
-    JSON.stringify(defaultRhinoOpenApiSchema, null, 2)
-  );
+  // writeFileSync(rhinoConfig, JSON.stringify(defaultRhinoConfig, null, 2));
+  //refactore code above, create file if not exist
+
+  // mkdirSync(rhinoConfig, { recursive: true });
+  // writeFileSync(rhinoConfig, JSON.stringify(defaultRhinoConfig, null, 2));
+  // mkdirSync(rhinoOpenApiSchema, { recursive: true });
+  // writeFileSync(
+  //   rhinoOpenApiSchema,
+  //   JSON.stringify(defaultRhinoOpenApiSchema, null, 2)
+  // );
 };

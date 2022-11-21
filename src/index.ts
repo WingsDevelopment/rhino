@@ -1,26 +1,29 @@
 #!/usr/bin/env node
-
+const { Command } = require("commander"); // add this line
+const figlet = require("figlet");
 import fs from "fs";
-export const rhinoConfig = JSON.parse(
+
+export let rhinoConfig = JSON.parse(
   fs.readFileSync("rhinoConfig.json", "utf8")
 );
-export const rhinoOpenApiSchema = JSON.parse(
+export let rhinoOpenApiSchema = JSON.parse(
   fs.readFileSync("rhinoOpenApiSchema.json", "utf8")
 );
-if (rhinoConfig === undefined) {
-  throw new Error("rhinoConfig.json is not provided");
-}
-if (rhinoOpenApiSchema === undefined) {
-  throw new Error("rhinoOpenApiSchema.json is not provided");
-}
 import { getPropByString } from "./utils/objectUtils";
 import { createDTOsWithDependencies } from "./managers/DTOManager";
 import { GenerateFiles, GenerateInitFiles } from "./managers/FileManager";
 import { overrideRSC } from "./rhinoStringConfig";
 import { getCommands, getDTONames } from "./utils";
-const { Command } = require("commander"); // add this line
-const figlet = require("figlet");
-
+import { defaultRhinoConfig } from "./defaultConfig/defaultRhinoConfig";
+import { defaultRhinoOpenApiSchema } from "./defaultConfig/rhinoOpenApiSchema";
+if (rhinoConfig === undefined) {
+  console.warn("Rhino config file not found");
+  rhinoConfig = defaultRhinoConfig;
+}
+if (rhinoOpenApiSchema === undefined) {
+  console.warn("Rhino OpenApi schema file not found");
+  rhinoOpenApiSchema = defaultRhinoOpenApiSchema;
+}
 //add the following line
 const program = new Command();
 
@@ -38,11 +41,13 @@ program
   .parse(process.argv);
 
 export const options = program.opts();
-
 if (options.init) {
   console.log("Creating default rhino components");
   GenerateInitFiles();
+  console.log("Finished");
+  process.exit(0);
 }
+
 if (!options.init) {
   if (options.feature === undefined)
     throw new Error("No feature name provided");
