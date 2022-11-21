@@ -17,7 +17,7 @@ After downloading the project, you can run it by following the instructions in t
 
 <pre>
 <strong>Command list:</strong>
--i --init                           : Initialize the project
+-i --init                           : Initialize dependency components
 -f dtoName or --feature featureName : Feature name
 -a dtoName or --all dtoName         : Add Read All (table) to the feature
 -d dtoName or --details dtoName     : Add Details (page) to the feature
