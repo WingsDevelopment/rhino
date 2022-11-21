@@ -1,6 +1,8 @@
 Installation
 
-npm i react-crud-generator --save-dev
+<strong>npm i react-crud-generator --save-dev</strong><br />
+OR<br />
+<strong>yarn add react-crud-generator --save-dev</strong><br />
 
 # Usage with example project
 
