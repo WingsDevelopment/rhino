@@ -3,8 +3,6 @@ import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
 import { ApiManager } from ".";
-import { error } from "console";
-import { config } from "process";
 import { rsc } from "../../rhinoStringConfig";
 
 export const useFetchAllName = (featureName: string) => {
@@ -23,21 +21,21 @@ export const GetUseFetchAllString = (featureName: string, dto: DTOSchema) => {
     export const ${FETCH_ALL(featureName)} = "${FETCH_ALL(featureName)}";
   
   export const ${useFetchAllName(featureName)} = () => {
-      const ${config} = ${rsc.useDefaultRQConfig}('${useFetchAllName(featureName)}');
+      const ${rsc.config} = ${rsc.useDefaultRQConfig}('${useFetchAllName(featureName)}');
   
-      const { ${rsc.isLoading}, ${error}, ${rsc.data} } = ${rsc.useQuery}(
+      const { ${rsc.isLoading}, ${rsc.error}, ${rsc.data} } = ${rsc.useQuery}(
           [${FETCH_ALL(featureName)}],
           async () => {
             ${ApiManager.getFetchAllApiFunction(featureName, dto)}
           },
           {
-              ...${config},
+              ...${rsc.config},
           }
       );
   
       return {
           ${pluralCamelCase(dto.modelName)}: ${rsc.data},
-          ${rsc.errorMessage}: ${error} ? ${rsc.getServerErrorMessage}(${error}) : undefined,
+          ${rsc.errorMessage}: ${rsc.error} ? ${rsc.getServerErrorMessage}(${rsc.error}) : undefined,
           ${rsc.isLoading},
       };
   };`

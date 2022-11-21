@@ -1,4 +1,4 @@
-import { DefaultPageWithBreadcrumbsTsx } from "..";
+import { rsc } from "../../rhinoStringConfig";
 
 export interface TLink {
   name: string;
@@ -6,6 +6,7 @@ export interface TLink {
   icon?: any;
 }
 
+//prettier-ignore
 export const PageLayout = (
   bodyComponent: string,
   title: string,
@@ -16,7 +17,7 @@ export const PageLayout = (
   //todo: nullale icon
   const linksStr =
     links?.length > 0
-      ? "links={[" +
+      ? `${rsc.breadcrumbsLinks}` + "={[" +
         links.map((link) => {
           return `
         {
@@ -28,11 +29,11 @@ export const PageLayout = (
       : "";
 
   return `
-      <${DefaultPageWithBreadcrumbsTsx}
-          title="${title}"
-          ${linksStr}
-          ${bcaStr}  
-      >
-          ${bodyComponent}
-      </${DefaultPageWithBreadcrumbsTsx}>`;
+    <${rsc.RPage}
+        ${rsc.title}="${rsc.title}"
+        ${linksStr}
+        ${bcaStr}  
+    >
+        ${bodyComponent}
+    </${rsc.RPage}>`;
 };

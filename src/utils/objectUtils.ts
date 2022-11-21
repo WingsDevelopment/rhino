@@ -7,6 +7,10 @@ export const getNumberOfKeysFromObject = <T extends {}>(model: T): number => {
 export const getPropByString = (obj: any, propString: string) => {
   if (!propString) return obj;
 
+  console.log("getPropByString");
+  console.log(obj);
+  console.log(propString);
+
   var prop,
     props = propString.split(".");
 

@@ -18,8 +18,9 @@ export const GetRoutesName = (featureName: string) => {
   return `${pascalCase(featureName)}Routes`;
 };
 
+//prettier-ignore
 const getPath = (command: RhinoCommand, featureName: string) => {
-  const path = `${featureName}Routes.${(CommandRouteDict as any)[command]}`;
+  const path = `${pascalCase(featureName)}Routes.${(CommandRouteDict as any)[command]}`;
   if (CommandsWithId.includes(command)) {
     return path + `+ "/:id"`;
   }
@@ -49,7 +50,7 @@ export const GetRoutesIndexString = (
     };
 
     export const ${featureName}RouteObject: RouteObject = {
-        path: ${featureName}Routes.root,
+        path: ${pascalCase(featureName)}Routes.root,
         children: [
             ${commands.map(c => `{ path: ${getPath(c, featureName)}, element: <${(CommandPageNameDict as any)[c](featureName)} /> },`).join("\n")}
         ],

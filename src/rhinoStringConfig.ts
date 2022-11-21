@@ -1,6 +1,7 @@
 export let rsc = {
   handleSubmit: "handleSubmit",
   isLoading: "isLoading",
+  isContentLoading: "isContentLoading",
   isSubmitting: "isSubmitting",
   initialData: "initialData",
   result: "result",
@@ -13,6 +14,7 @@ export let rsc = {
   reset: "reset",
   onSubmit: "onSubmit",
   SubmitHandler: "SubmitHandler",
+  Submit: "Submit",
   submitHandler: "submitHandler",
   dataToShow: "dataToShow",
   page: "page",
@@ -23,6 +25,8 @@ export let rsc = {
   usePaginableSortedData: "usePaginableSortedData",
   tableLabels: "tableLabels",
   EnqueueMessage: "EnqueueMessage",
+  GlobalDIContext: "GlobalDIContext",
+  NotificationService: "NotificationService",
   NotificationAdapterInvoke: "NotificationAdapter()",
   queryClient: "queryClient",
   useQueryClient: "useQueryClient",
@@ -37,6 +41,7 @@ export let rsc = {
   response: "response",
   invalidateQueries: "invalidateQueries",
   errorMessage: "errorMessage",
+  contentErrorMessage: "contentErrorMessage",
   getServerErrorMessage: "getServerErrorMessage",
   data: "data",
   detailsRoute: "details",
@@ -54,6 +59,25 @@ export let rsc = {
   requestDTO: "requestDTO",
   reactComponentExtension: ".tsx",
   defaultFileExtension: ".ts",
+
+  //
+  RRHFTextField: "RRHFTextField",
+  MyFormProvider: "MyFormProvider",
+  button: "button",
+  RPage: "RPage",
+  RPageContent: "RPageContent",
+  RAsyncPage: "RAsyncPage",
+  RSingleColumnBox: "RSingleColumnBox",
+  RBreadcrumbs: "RBreadcrumbs",
+  RContainer: "RContainer",
+  RContent: "RContent",
+  RAsyncContent: "RAsyncContent",
+  Card: "Card",
+  breadcrumbAction: "breadcrumbAction",
+  breadcrumbsLinks: "breadcrumbsLinks",
+  title: "title",
+  heading: "heading",
+  links: "links",
 };
 
 export const overrideRSC = (overrideDict: { [key: string]: string }) => {

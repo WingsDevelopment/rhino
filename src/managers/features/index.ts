@@ -141,3 +141,21 @@ export const GetModelTemplatesDataFromDTOs = (
 
   return nesto;
 };
+
+export const GetInitTemplatesData = (
+  basePath: string,
+  templates: (ITemplate | IInvokableTemplate)[]
+): INesto[] => {
+  let nesto: INesto[] = [];
+
+  templates.forEach((template) => {
+    nesto.push({
+      name: template.getName(""),
+      body: template.getBody("", {} as DTOSchema),
+      route: template.getRoute("", basePath),
+      extension: template.extension,
+    });
+  });
+
+  return nesto;
+};

@@ -4,6 +4,10 @@ npm i react-crud-generator --save-dev
 
 # Note
 
+BETA VERSION STARTS 1.12.2022
+
+Release is published only for private use until 1.12.2022.
+
 Rhino is published few days ago, and still need some work in order to be stable.
 Current problems:
 

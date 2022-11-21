@@ -3,8 +3,6 @@ import { ITemplate } from "../../interfaces/ITemplate";
 import { DTOSchema } from "../../models/DTOSchema";
 import { camelCase, pascalCase } from "../../utils/stringUtils";
 import { ApiManager } from ".";
-import { error } from "console";
-import { config } from "process";
 import { rsc } from "../../rhinoStringConfig";
 
 export const useFetchByIdName = (featureName: string) => {
@@ -23,22 +21,22 @@ export const GetUseFetchByIdString = (featureName: string, dto: DTOSchema) => {
   export const ${FETCH_BY_ID(featureName)} = "${FETCH_BY_ID(featureName)}";
   
   export const ${useFetchByIdName(featureName)} = (${rsc.id}: string | undefined) => {
-      const ${config} = ${rsc.useDefaultRQConfig}('${useFetchByIdName(featureName)}');
+      const ${rsc.config} = ${rsc.useDefaultRQConfig}('${useFetchByIdName(featureName)}');
   
-      const { ${rsc.isLoading}, ${error}, ${rsc.data} } = ${rsc.useQuery}(
+      const { ${rsc.isLoading}, ${rsc.error}, ${rsc.data} } = ${rsc.useQuery}(
             [${FETCH_BY_ID(featureName)}, ${rsc.id}],
           async () => {
             ${ApiManager.getFetchByIdApiFunction(featureName, dto)}
           },
           {
-              ...${config},
+              ...${rsc.config},
               ${rsc.enabled}: !!${rsc.id},
           }
       );
   
       return {
           ${camelCase(dto.modelName)}: ${rsc.data},
-          ${rsc.errorMessage}: ${error} ? ${rsc.getServerErrorMessage}(${error}) : undefined,
+          ${rsc.errorMessage}: ${rsc.error} ? ${rsc.getServerErrorMessage}(${rsc.error}) : undefined,
           ${rsc.isLoading},
       };
   };`

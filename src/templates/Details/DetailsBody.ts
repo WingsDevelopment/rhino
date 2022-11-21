@@ -1,5 +1,6 @@
 import { LoadableCardWrapperTsx } from "../../components";
 import {
+  RenderReadonlyFields,
   SingleColumnReadonlyBody,
   TwoColumnReadonlyBody,
 } from "../../components/fields/fieldUtils";
@@ -33,9 +34,11 @@ interface Props {
 
 export const ${DetailsBodyName(featureName)}: React.FC<Props> = ({ ${camelCase(dto.modelName)}, ${rsc.isLoading} }) => {
     return (
-        <${LoadableCardWrapperTsx} ${rsc.isLoading}={${rsc.isLoading}}>
+        <${rsc.RAsyncContent} ${rsc.isLoading}={${rsc.isLoading}}>
+          <${rsc.RSingleColumnBox}>
             ${RenderDetailsBody(dto, dto.modelName)}
-        </${LoadableCardWrapperTsx}>
+          </${rsc.RSingleColumnBox}>
+        </${rsc.RAsyncContent}>
     )
 }
 `
@@ -44,9 +47,7 @@ export const ${DetailsBodyName(featureName)}: React.FC<Props> = ({ ${camelCase(d
 const RenderDetailsBody = (model: DTOSchema, modelName: string) => {
   const numberOfKeys = getPropertiesFromSchema(model).length;
   //todo add 5 to config ?
-  return numberOfKeys > 5
-    ? SingleColumnReadonlyBody(model, modelName)
-    : TwoColumnReadonlyBody(model, modelName);
+  return RenderReadonlyFields(model, modelName);
 };
 
 const GetDetailsBodyRoute = (featureName: string, baseRoute: string) => {

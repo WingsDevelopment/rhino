@@ -2,6 +2,7 @@
   "schemaDTOPath": "components",
   "envApiUrl": "REACT_APP_YOUR_API_URL",
   "basePath": "src/features",
+  "initComponentsBasePath": "src/rComponents",
   "stateQueriesPath": "/state/queries",
   "stateMutationsPath": "/state/mutations",
   "repositoryPath": "/infrastructure/repositories",

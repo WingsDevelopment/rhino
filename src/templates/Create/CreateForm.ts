@@ -1,8 +1,4 @@
-import { MyFormProviderWithCardLayoutTsx } from "../../components";
-import {
-  SingleColumnBody,
-  TwoColumnBody,
-} from "../../components/fields/fieldUtils";
+import { RenderFields } from "../../components/fields/fieldUtils";
 import { IInvokableTemplate } from "../../interfaces/ITemplate";
 import { DTOSchema, getPropertiesFromSchema } from "../../models/DTOSchema";
 import { rsc } from "../../rhinoStringConfig";
@@ -40,23 +36,23 @@ export const ${CreateFormName(featureName)}: React.FC<Props> = ({ ${rsc.submitHa
     };
     
     return (
-        <${MyFormProviderWithCardLayoutTsx}
-          ${rsc.methods}={${rsc.methods}}
-            ${rsc.onSubmit}={${rsc.handleSubmit}(${rsc.onSubmit})}
-            ${rsc.isLoading}={${rsc.isLoading}}
-        >
-            ${RenderFormBody(dto, dto.modelName)}
-        </${MyFormProviderWithCardLayoutTsx}>
+      <${rsc.Card}>
+        <${rsc.RAsyncContent} ${rsc.isLoading}={${rsc.isLoading}}>
+          <${rsc.MyFormProvider} ${rsc.methods}={${rsc.methods}} ${rsc.onSubmit}={${rsc.handleSubmit}(${rsc.onSubmit})}>
+            <${rsc.RSingleColumnBox}>
+                ${RenderFormBody(dto, dto.modelName)}
+              <${rsc.button} type="submit">${rsc.Submit}</${rsc.button}>
+            </${rsc.RSingleColumnBox}>
+          </${rsc.MyFormProvider}>
+        </${rsc.RAsyncContent}>
+      </${rsc.Card}>
     );
 };`;
 };
 
 const RenderFormBody = (model: DTOSchema, modelName: string) => {
   const numberOfKeys = getPropertiesFromSchema(model).length;
-  //todo add 5 to config ?
-  return numberOfKeys > 5
-    ? SingleColumnBody(model, modelName)
-    : TwoColumnBody(model, modelName);
+  return RenderFields(model, modelName);
 };
 
 const GetCreateFormRoute = (featureName: string, baseRoute: string) => {

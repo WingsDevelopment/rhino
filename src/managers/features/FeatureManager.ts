@@ -1,6 +1,7 @@
 import {
   GetBaseFeatureTemplates,
   GetDTOTemplatesDataFromDTOs,
+  GetInitTemplatesData,
   GetModelTemplatesDataFromDTOs,
 } from ".";
 import { RhinoCommand } from "../../enums/command";
