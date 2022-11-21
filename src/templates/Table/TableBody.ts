@@ -13,10 +13,11 @@ export const TableBodyName = (modelName: string) => {
 };
 
 // prettier-ignore
-const TableBody = (
+export const TableBody = (
     modelName: string,
+    dataToShow: string,
 ) => {
-    return `<${TableBodyName(modelName)} ${pluralCamelCase(modelName)}={${pluralCamelCase(modelName)}} ${rsc.isLoading}={${rsc.isLoading}} />`;
+    return `<${TableBodyName(modelName)} ${pluralCamelCase(modelName)}={${dataToShow}} ${rsc.isLoading}={${rsc.isLoading}} />`;
 }
 
 // prettier-ignore
@@ -81,6 +82,7 @@ export const RQTableBody: IInvokableTemplate = {
   getName: TableBodyName,
   getBody: GetTableBodyString,
   getRoute: GetTableBodyRoute,
-  invoke: TableBody,
+  //todo refaktor this... its actually (modelname, datatoshow)
+  invoke: (featureName, modelName) => TableBody(featureName, modelName),
   extension: rsc.reactComponentExtension,
 };

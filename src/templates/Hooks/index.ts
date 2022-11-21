@@ -4,7 +4,12 @@ import { rsc } from "../../rhinoStringConfig";
 import { camelCase } from "../../utils/stringUtils";
 import { ModelExtensionName } from "../common/DTOTemplate";
 import { GetDIContextName } from "../context/DIContext";
-import { AxiosTemplate, GetByIdFuncName } from "../dataFetching/axios";
+import {
+  AxiosTemplate,
+  DeleteFuncName,
+  GetAllFuncName,
+  GetByIdFuncName,
+} from "../dataFetching/axios";
 import {
   GetRepositoryName,
   CreateFuncName,
@@ -41,10 +46,10 @@ const getUpdateApiFunction = (featureName: string, dto: DTOSchema) => {
 //prettier-ignore
 const getFetchAllApiFunction = (featureName: string, dto: DTOSchema) => {
     if (rhinoConfig.generateRepository && rhinoConfig.generateContext) {
-        return `const ${rsc.response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${CreateFuncName(featureName)}();
+        return `const ${rsc.response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${GetAllFuncName(featureName)}();
         return ${rsc.response};`;
     } else if (rhinoConfig.generateRepository && !rhinoConfig.generateContext) {
-        return `const ${rsc.response} = await ${GetRepositoryName(featureName)}.${FETCH_ALL(featureName)}();
+        return `const ${rsc.response} = await ${GetRepositoryName(featureName)}.${GetAllFuncName(featureName)}();
         return ${rsc.response};`;
     } else {
         return `${AxiosTemplate.getGetAllImplString(dto)}`;
@@ -66,10 +71,10 @@ const getFetchByIdApiFunction = (featureName: string, dto: DTOSchema) => {
 //prettier-ignore
 export const getDeleteApiFunction = (featureName: string, dto: DTOSchema) => {
     if (rhinoConfig.generateRepository && rhinoConfig.generateContext) {
-        return `const ${rsc.response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${GetByIdFuncName(featureName)}(${rsc.id}!);
+        return `const ${rsc.response} = await ${GetDIContextName()}.${GetRepositoryName(featureName)}.${DeleteFuncName(featureName)}(${rsc.id}!);
         return ${rsc.response};`;
     } else if (rhinoConfig.generateRepository && !rhinoConfig.generateContext) {
-        return `const ${rsc.response} = await ${GetRepositoryName(featureName)}.${GetByIdFuncName(featureName)}(${rsc.id}!);
+        return `const ${rsc.response} = await ${GetRepositoryName(featureName)}.${DeleteFuncName(featureName)}(${rsc.id}!);
         return ${rsc.response};`;
     } else {
         return `${AxiosTemplate.getDeleteImplString()}`;

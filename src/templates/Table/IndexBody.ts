@@ -8,7 +8,7 @@ import { rsc } from "../../rhinoStringConfig";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
 import { RQUpdatePage } from "../Update/UpdatePage";
 import { RQIndexPage } from "./IndexPage";
-import { RQTableBody } from "./TableBody";
+import { RQTableBody, TableBody } from "./TableBody";
 
 const IndexBodyName = (modelName: string) => {
   return `Index${pascalCase(modelName)}Body`;
@@ -50,7 +50,7 @@ export const ${IndexBodyName(dto.modelName)}: React.FC<Props> = ({ ${pluralCamel
             sortByHandler={${rsc.setSortBy}}
             itemsPerPage={${rsc.rowsPerPage}}
             tableBodyComponent={
-                <${RQTableBody.invoke(featureName, dto.modelName)}/>
+                ${TableBody(dto.modelName, rsc.dataToShow)}
             }
             tableLabels={${rsc.tableLabels}}
         />
