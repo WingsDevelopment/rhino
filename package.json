@@ -1,6 +1,6 @@
 {
   "name": "react-crud-generator",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "This is architecture opiniated react crud generator, built on top of axios and react-query",
   "main": "src/index.js",
   "source": "src/index.ts",
@@ -10,7 +10,7 @@
     "build": "rollup -c rollup.config.mjs",
     "dev": "tsc -w",
     "up": "npm version patch -f",
-    "pub": "yarn up && npm publish"
+    "pub": "zx build-cli.mjs"
   },
   "repository": {
     "type": "git",
@@ -37,7 +37,8 @@
     "rollup": "^3.3.0",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.1",
-    "typescript": "^4.8.4"
+    "typescript": "^4.8.4",
+    "zx": "^7.1.1"
   },
   "dependencies": {
     "commander": "^9.4.1",
