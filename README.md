@@ -128,7 +128,7 @@ This is default config that is suggested to be a starting point. <br />
 
 <pre>
 {
-"schemaDTOPath": "components",
+"schemaDTOPath": "definitions",
 "envApiUrl": "REACT_APP_YOUR_API_URL",
 "basePath": "src/features",
 "stateQueriesPath": "/state/queries",
