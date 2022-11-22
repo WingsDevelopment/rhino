@@ -21,12 +21,12 @@ After downloading the project, you can run it by following the instructions in t
 
 <pre>
 <strong>Command list:</strong>
--i --init                           : Initialize dependency components
--f dtoName or --feature featureName : Feature name
--a dtoName or --all dtoName         : Add Read All (table) to the feature
--d dtoName or --details dtoName     : Add Details (page) to the feature
--c dtoName or --create dtoName      : Add Create (form) to the feature
--u dtoName or --update dtoName      : Add Update (form) to the feature
+-i --init                               : Initialize dependency components
+-f featureName or --feature featureName : Feature name
+-a dtoName or --all dtoName             : Add Read All (table) to the feature
+-d dtoName or --details dtoName         : Add Details (page) to the feature
+-c dtoName or --create dtoName          : Add Create (form) to the feature
+-u dtoName or --update dtoName          : Add Update (form) to the feature
 </pre>
 
 First you can add all dependency components implementation by running the following command: <br />

@@ -17,7 +17,7 @@
   "contextPath": "/context",
   "useTemplate": "reactQuery",
   "generateRepository": true,
-  "generateContext": true,
+  "generateContext": false,
   "generateRepositoryInterface": true,
   "generateOnlyFolderStructure": false,
   "DTOExtensionAdd": "DTO",
