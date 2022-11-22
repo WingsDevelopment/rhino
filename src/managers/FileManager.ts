@@ -34,7 +34,7 @@ export const GenerateFiles = (
 
 export const GenerateInitFiles = () => {
   var source = "node_modules/react-crud-generator/src/init/rhino";
-  var destination = "src/rhino";
+  var destination = rhinoConfig.initComponentsBasePath;
 
   try {
     fse.copySync(source, destination);

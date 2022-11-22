@@ -3,18 +3,29 @@ const { Command } = require("commander"); // add this line
 const figlet = require("figlet");
 import fs from "fs";
 
-export let rhinoConfig = JSON.parse(
-  fs.readFileSync("rhinoConfig.json", "utf8")
-);
-export let rhinoOpenApiSchema = JSON.parse(
-  fs.readFileSync("rhinoOpenApiSchema.json", "utf8")
-);
-if (rhinoConfig === undefined) {
-  throw new Error("rhinoConfig.json not found");
+//check if the file exists
+export let rhinoConfig: any = {};
+export let rhinoOpenApiSchema: any = {};
+if (fs.existsSync("rhinoConfig.json")) {
+  rhinoConfig = JSON.parse(fs.readFileSync("rhinoConfig.json", "utf8"));
+} else {
+  console.log(
+    "rhinoConfig.json file not found, make sure you add it to the root!"
+  );
+  process.exit(1);
 }
-if (rhinoOpenApiSchema === undefined) {
-  throw new Error("rhinoOpenApiSchema.json not found");
+
+if (fs.existsSync("rhinoOpenApiSchema.json")) {
+  rhinoOpenApiSchema = JSON.parse(
+    fs.readFileSync("rhinoOpenApiSchema.json", "utf8")
+  );
+} else {
+  console.log(
+    "rhinoOpenApiSchema.json file not found, make sure you add it to the root!"
+  );
+  process.exit(1);
 }
+
 import { getPropByString } from "./utils/objectUtils";
 import { createDTOsWithDependencies } from "./managers/DTOManager";
 import { GenerateFiles, GenerateInitFiles } from "./managers/FileManager";

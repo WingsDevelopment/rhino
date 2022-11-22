@@ -69,7 +69,7 @@ export const GetRepositoryString = (
         `${AxiosTemplate.getGetAllFuncString(featureName, listDTO)}` : ''
     }
 
-    export const ${GetRepositoryName(featureName)}: ${RepositoryInterface.getName(featureName)} = {
+    export const ${GetRepositoryName(featureName)} ${rhinoConfig.generateRepositoryInterface ? `: ${RepositoryInterface.getName(featureName)}` : ""} = {
         ${
             commands.find((c) => c === RhinoCommand.create) ?
             `${AxiosTemplate.getCreateFuncName(featureName)},` : ''
