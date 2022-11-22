@@ -6,8 +6,12 @@ OR<br />
 
 # Usage with example project
 
-For easier understanding how can you use this package, you can download the example project from here.
+You can also read this guide: https://medium.com/@bans.cowboy/rhino-react-crud-generator-complete-guide-bfc5e71e812a
+<br />
+
+For easier understanding how can you use this package, you can download the example project from here. <br />
 https://github.com/WingsDevelopment/rhino-consumer
+<br />
 After downloading the project, you can run it by following the instructions in the README.md file.
 
 # Usage

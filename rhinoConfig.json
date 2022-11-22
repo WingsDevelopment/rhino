@@ -1,6 +1,6 @@
 {
   "schemaDTOPath": "definitions",
-  "envApiUrl": "REACT_APP_YOUR_API_URL",
+  "envApiUrl": "`${import.meta.env.VITE_WEB_API_URL}`",
   "basePath": "src/features",
   "initComponentsBasePath": "src/rComponents",
   "stateQueriesPath": "/state/queries",

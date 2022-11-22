@@ -42,7 +42,7 @@ export const GetRepositoryString = (
 ) => {
 
   return `
-    const ${rsc.baseUrl} = process.env.${rhinoConfig.envApiUrl};
+    const ${rsc.baseUrl} = ${rhinoConfig.envApiUrl};
 
     ${
         commands.find((c) => c === RhinoCommand.create) && createDTO ?
