@@ -1,6 +1,6 @@
 {
   "name": "react-crud-generator",
-  "version": "1.0.52",
+  "version": "1.0.53",
   "description": "This is architecture opiniated react crud generator, built on top of axios and react-query",
   "main": "src/index.js",
   "source": "src/index.ts",
@@ -23,11 +23,16 @@
     "access": "public"
   },
   "keywords": [
+    "react",
+    "crud",
+    "generator",
+    "react-crud-generator",
+    "npm",
     "cli",
     "rhino"
   ],
   "author": "Srdjan Rakic",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.8.5",
     "nodemon": "^2.0.20",
