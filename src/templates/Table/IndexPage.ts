@@ -25,7 +25,7 @@ export const ${IndexPageName(featureName)}: React.FC = () => {
     ${renderDependencyHooks(dto)}
 
     return (${PageLayout(
-      RQIndexBody.invoke(featureName, dto.modelName),
+      RQIndexBody.invoke(dto.modelName, dto.modelName),
       `List ${featureName}`,
       [
         {

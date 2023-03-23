@@ -36,7 +36,7 @@ export const ${UpdatePageName(featureName)}: React.FC = () => {
     const ${rsc.initialData} = useMemo(() => (${camelCase(dto.modelName)} ? ${camelCase(dto.modelName)} : createEmpty${pascalCase(dto.modelName)}()), [${camelCase(dto.modelName)}]);
 
     return (${PageLayout(
-      RQUpdateForm.invoke( dto.modelName, dto.modelName),
+      RQUpdateForm.invoke( featureName, dto.modelName),
       `Update ${featureName}`,
       [
         {
