@@ -78,6 +78,17 @@ export let rsc = {
   title: "title",
   heading: "heading",
   links: "links",
+
+  DefaultPageWithBreadcrumbs: "DefaultPageWithBreadcrumbs",
+  LoadableCardWrapper: "LoadableCardWrapper",
+  MyFormProviderWithCardLayout: "DefaultSingleColumnFormCard",
+  SingleColumnBox: "SingleColumnBox",
+  TwoColumnBox: "DoubleColumnBox",
+  RHFTextField: "RHFTextField",
+  RHFNumberField: "RHFNumberField",
+  DefaultReadOnlyTextField: "DefaultReadOnlyTextField",
+
+  GenericPaginableTable: "GenericPaginableTable",
 };
 
 export const overrideRSC = (overrideDict: { [key: string]: string }) => {

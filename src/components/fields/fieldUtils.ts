@@ -1,15 +1,14 @@
-import { SingleColumnBoxTsx, TwoColumnBoxTsx } from "..";
 import {
   DTOSchema,
   getPropertiesFromSchema,
   isPropertyPrimitive,
 } from "../../models/DTOSchema";
+import { rsc } from "../../rhinoStringConfig";
 import {
   camelCase,
   pascalSplitedWithSpaceForEveryCapitalLetter,
 } from "../../utils/stringUtils";
 import { DefaultReadOnlyTextField } from "./DefaultReadOnlyTextField";
-import { RHFNumberField } from "./RHFNumberField";
 import { RHFTextField } from "./RHFTextField";
 
 export const RenderFields = (model: DTOSchema, modelName: string) => {
@@ -34,16 +33,16 @@ export const SingleColumnReadonlyBody = (
   modelName: string
 ) => {
   return `
-      <${SingleColumnBoxTsx}>
+      <${rsc.SingleColumnBox}>
         ${RenderReadonlyFields(model, modelName)}
-      </${SingleColumnBoxTsx}>`;
+      </${rsc.SingleColumnBox}>`;
 };
 
 export const TwoColumnReadonlyBody = (model: DTOSchema, modelName: string) => {
   return `
-    <${TwoColumnBoxTsx}>
+    <${rsc.TwoColumnBox}>
         ${RenderReadonlyFields(model, modelName)}
-    </${TwoColumnBoxTsx}>`;
+    </${rsc.TwoColumnBox}>`;
 };
 
 export const RenderReadonlyFields = (model: DTOSchema, modelName: string) => {

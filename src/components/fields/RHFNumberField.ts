@@ -1,4 +1,4 @@
-import { RHFNumberFieldTsx } from "..";
+import { rsc } from "../../rhinoStringConfig";
 import { getRequired } from "./utils";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 export const RHFNumberField = ({ name, label, nullable }: Props) => {
   return `
-  <${RHFNumberFieldTsx} 
+  <${rsc.RHFNumberField} 
     name="${name}" 
     label="${label}" 
     ${getRequired(nullable)} />`;

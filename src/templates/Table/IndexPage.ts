@@ -7,6 +7,8 @@ import { pascalCase, plural, pluralCamelCase } from "../../utils/stringUtils";
 import { useFetchAllName } from "../Hooks/useFetchAll";
 import { RQIndexBody } from "./IndexBody";
 import { rsc } from "../../rhinoStringConfig";
+import { GetRoutesName } from "../routes";
+import { CommandRouteDict } from "../../enums/dictionaries";
 
 export const IndexPageName = (featureName: string) => {
   return `${pascalCase(featureName)}IndexPage`;
@@ -30,7 +32,7 @@ export const ${IndexPageName(featureName)}: React.FC = () => {
       [
         {
           name: `${dto.modelName} table`,
-          href: `/${plural(dto.modelName)}`,
+          href: `${GetRoutesName(featureName)}.${CommandRouteDict.list}`,
         },
       ]
     )});

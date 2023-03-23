@@ -6,9 +6,8 @@ import {
 } from "../../models/DTOSchema";
 import { rsc } from "../../rhinoStringConfig";
 import { pascalCase, pluralCamelCase } from "../../utils/stringUtils";
-import { RQUpdatePage } from "../Update/UpdatePage";
 import { RQIndexPage } from "./IndexPage";
-import { RQTableBody, TableBody } from "./TableBody";
+import { TableBody } from "./TableBody";
 
 const IndexBodyName = (modelName: string) => {
   return `Index${pascalCase(modelName)}Body`;
@@ -29,7 +28,8 @@ interface Props {
 
 export const ${IndexBodyName(dto.modelName)}: React.FC<Props> = ({ ${pluralCamelCase(dto.modelName)}, ${rsc.isLoading} }) => {
     const { ${rsc.dataToShow}, ${rsc.page}, ${rsc.setPage}, ${rsc.rowsPerPage}, ${rsc.setRowsPerPage}, ${rsc.setSortBy} } =
-     ${rsc.usePaginableSortedData}(${pluralCamelCase(dto.modelName)}, ''); 
+     ${rsc.usePaginableSortedData}(${pluralCamelCase(dto.modelName)}, '');
+     //test 
 
      const ${rsc.tableLabels} = useMemo(
         () => [
@@ -40,7 +40,7 @@ export const ${IndexBodyName(dto.modelName)}: React.FC<Props> = ({ ${pluralCamel
     );
 
     return (
-        <GenericPaginableTable
+        <${rsc.GenericPaginableTable}
             subheader="Tabela ${dto.modelName}"
             ${rsc.isLoading}={${rsc.isLoading}}
             totalCount={${pluralCamelCase(dto.modelName)}?.length}

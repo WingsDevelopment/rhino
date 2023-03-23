@@ -7,6 +7,8 @@ import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
 import { useFetchByIdName } from "../Hooks/useFetchById";
 import { RQDetailsBody } from "./DetailsBody";
 import { rsc } from "../../rhinoStringConfig";
+import { CommandRouteDict } from "../../enums/dictionaries";
+import { GetRoutesName } from "../routes";
 
 const DetailsPageName = (featureName: string) => {
   return `Details${pascalCase(featureName)}Page`;
@@ -32,7 +34,7 @@ export const ${DetailsPageName(featureName)}: React.FC = () => {
       [
         {
           name: `Details ${dto.modelName}`,
-          href: `/${plural(dto.modelName)}`,
+          href: `${GetRoutesName(featureName)}.${CommandRouteDict.list}`,
         },
       ]
     )});

@@ -8,6 +8,7 @@ import { RQCreateHook } from "../Hooks/useCreate";
 import { RQCreateForm } from "./CreateForm";
 import { GetRoutesName } from "../routes";
 import { rsc } from "../../rhinoStringConfig";
+import { CommandRouteDict } from "../../enums/dictionaries";
 
 const CreatePageName = (featureName: string) => {
   return `Create${pascalCase(featureName)}Page`;
@@ -38,7 +39,7 @@ export const ${CreatePageName(featureName)}: React.FC = () => {
         [
           {
             name: `Create ${dto.modelName}`,
-            href: `/${plural(dto.modelName)}`,
+            href: `${GetRoutesName(featureName)}.${CommandRouteDict.list}`,
           },
         ]
     )});

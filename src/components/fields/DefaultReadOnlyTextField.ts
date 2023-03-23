@@ -1,4 +1,4 @@
-import { DefaultReadOnlyTextFieldTsx } from "..";
+import { rsc } from "../../rhinoStringConfig";
 
 interface Props {
   propertyName: string;
@@ -7,7 +7,7 @@ interface Props {
 
 export const DefaultReadOnlyTextField = ({ propertyName, label }: Props) => {
   return `
-    <${DefaultReadOnlyTextFieldTsx} 
+    <${rsc.DefaultReadOnlyTextField} 
         value={${propertyName}}
         label="${label}" />`;
 };

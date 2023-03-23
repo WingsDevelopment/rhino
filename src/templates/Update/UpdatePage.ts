@@ -7,6 +7,7 @@ import { camelCase, pascalCase, plural } from "../../utils/stringUtils";
 import { RQUpdateForm } from "./UpdateForm";
 import { GetRoutesName } from "../routes";
 import { rsc } from "../../rhinoStringConfig";
+import { CommandRouteDict } from "../../enums/dictionaries";
 
 const UpdatePageName = (featureName: string) => {
   return `Update${pascalCase(featureName)}Page`;
@@ -41,7 +42,7 @@ export const ${UpdatePageName(featureName)}: React.FC = () => {
       [
         {
           name: `Update ${dto.modelName}`,
-          href: `/${plural(dto.modelName)}`,
+          href: `${GetRoutesName(featureName)}.${CommandRouteDict.list}`,
         },
       ]
     )});
