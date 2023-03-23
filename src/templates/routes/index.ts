@@ -35,14 +35,15 @@ export const GetRoutesIndexString = (
     return `
     import { lazy } from "react";
     import { RouteObject } from "react-router-dom";
+    import LocalLoadable from 'src/components/LocalLoadable';
 
-    ${commands.map(c => `const ${(CommandPageNameDict as any)[c](featureName)} = lazy(() => import("../${
+    ${commands.map(c => `const ${(CommandPageNameDict as any)[c](featureName)} = LocalLoadable(lazy(() => import("../${
         (CommandPathsDict as any)[c]
     }/${
         (CommandPageNameDict as any)[c](featureName)
-    }"));`).join("\n")}
+    }")));`).join("\n")}
 
-    const ${pascalCase(featureName)}Root = \`/${featureName}\`;
+    const ${pascalCase(featureName)}Root = \`/${rsc.AppBasePath}/${featureName}\`;
     export const ${GetRoutesName(featureName)} = {
         root: ${pascalCase(featureName)}Root,
         ${commands.map((c: RhinoCommand) => 

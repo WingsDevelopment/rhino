@@ -9,7 +9,12 @@ import {
   pascalSplitedWithSpaceForEveryCapitalLetter,
 } from "../../utils/stringUtils";
 import { DefaultReadOnlyTextField } from "./DefaultReadOnlyTextField";
-import { RHFTextField } from "./RHFTextField";
+import {
+  RHFCheckbox,
+  RHFDatePicker,
+  RHFNumberField,
+  RHFTextField,
+} from "./FieldInput";
 
 export const RenderFields = (model: DTOSchema, modelName: string) => {
   return `
@@ -63,16 +68,19 @@ export const RenderReadonlyFields = (model: DTOSchema, modelName: string) => {
 
 export const GetFieldByKeyType = (
   modelName: string,
-  keyType: string,
+  keyType: string, //"string" | "number" | "boolean" | "Date"
   name: string,
   label: string,
   nullable?: boolean
 ) => {
   //TODO SWITCH
-  return RHFTextField({
-    modelName,
-    name,
-    label,
-    nullable,
-  });
+  if (keyType === "string")
+    return RHFTextField({ modelName, name, label, nullable });
+  if (keyType === "number")
+    return RHFNumberField({ modelName, name, label, nullable });
+  if (keyType === "boolean")
+    return RHFCheckbox({ modelName, name, label, nullable });
+  if (keyType === "Date")
+    return RHFDatePicker({ modelName, name, label, nullable });
+  return "";
 };

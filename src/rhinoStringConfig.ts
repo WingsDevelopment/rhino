@@ -62,6 +62,9 @@ export let rsc = {
 
   //
   RRHFTextField: "RRHFTextField",
+  RRHFNumberField: "RRHFNumberField",
+  RRHFDatePicker: "RRHFDatePicker",
+  RHFCheckbox: "RHFCheckbox",
   MyFormProvider: "MyFormProvider",
   button: "button",
   RPage: "RPage",
@@ -89,6 +92,7 @@ export let rsc = {
   DefaultReadOnlyTextField: "DefaultReadOnlyTextField",
 
   GenericPaginableTable: "GenericPaginableTable",
+  AppBasePath: "backoffice",
 };
 
 export const overrideRSC = (overrideDict: { [key: string]: string }) => {
