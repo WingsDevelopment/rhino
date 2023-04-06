@@ -1,4 +1,5 @@
 export let rsc = {
+  WebApiResponse: "WebApiResponse",
   handleSubmit: "handleSubmit",
   isLoading: "isLoading",
   isContentLoading: "isContentLoading",

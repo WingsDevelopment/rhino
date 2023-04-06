@@ -34,7 +34,12 @@ export const ${IndexPageName(featureName)}: React.FC = () => {
           name: `${dto.modelName} table`,
           href: `${GetRoutesName(featureName)}.${CommandRouteDict.list}`,
         },
-      ]
+      ],
+      `breadcrumbsAction={
+        <RedirectButtonWithCreateIcon label="Create" route={${
+          GetRoutesName(featureName)}.${CommandRouteDict.create
+        }} />
+      }`
     )});
 }
 

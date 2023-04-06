@@ -35,7 +35,7 @@ import { getCommands, getDTONames } from "./utils";
 //add the following line
 const program = new Command();
 
-console.log(figlet.textSync("TF CLI"));
+console.log(figlet.textSync("RHINO"));
 program
   .version("1.0.0")
   .description("List of commands for code generation")

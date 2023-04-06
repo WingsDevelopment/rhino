@@ -122,6 +122,8 @@ export const getDummyValueForProperty = (
       return "0";
     case "boolean":
       return "false";
+    case "Date":
+      return "new Date()";
     default:
       return "undefined";
   }

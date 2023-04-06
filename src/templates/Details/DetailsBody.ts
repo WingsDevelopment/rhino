@@ -34,9 +34,11 @@ interface Props {
 export const ${DetailsBodyName(featureName)}: React.FC<Props> = ({ ${camelCase(dto.modelName)}, ${rsc.isLoading} }) => {
     return (
         <${rsc.RAsyncContent} ${rsc.isLoading}={${rsc.isLoading}}>
-          <${rsc.RSingleColumnBox}>
-            ${RenderDetailsBody(dto, dto.modelName)}
-          </${rsc.RSingleColumnBox}>
+          <${rsc.Card}>
+            <${rsc.RSingleColumnBox}>
+              ${RenderDetailsBody(dto, dto.modelName)}
+            </${rsc.RSingleColumnBox}>
+          </${rsc.Card}>
         </${rsc.RAsyncContent}>
     )
 }

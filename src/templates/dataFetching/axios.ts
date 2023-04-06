@@ -12,15 +12,16 @@ const GetCreateFuncString = (featureName: string, createDTO: DTOSchema, paramsNa
         ${GetCreateImplString(createDTO, paramsName)}
     };`;
 };
+//WebApiResponse todo add this
 
 //prettier-ignore
 const GetCreateImplString = (createDTO: DTOSchema, paramsName: string) => {
-  return `const response: AxiosResponse<string> = await ${rsc.axios}.${rsc.axiosPost}(
+  return `const response: AxiosResponse<${rsc.WebApiResponse}<string | undefined>> = await ${rsc.axios}.${rsc.axiosPost}(
       \`\${${rsc.baseUrl}}/create\`,
       ${paramsName}
   );
 
-  return response.data;`
+  return response.data?.result;`
 };
 
 export const GetByIdFuncName = (featureName: string): string => {
@@ -35,11 +36,11 @@ const GetGetByIdFuncString = (featureName: string, detailsDTO: DTOSchema) => {
 }
 
 const GetGetByIdImplString = (detailsDTO: DTOSchema) => {
-  return `const response: AxiosResponse<${detailsDTO?.dtoName}> = await ${rsc.axios}.${rsc.axiosGet}(
-        \`\${${rsc.baseUrl}}/\${id}\`
+  return `const response: AxiosResponse<${rsc.WebApiResponse}<${detailsDTO?.dtoName}>> = await ${rsc.axios}.${rsc.axiosGet}(
+        \`\${${rsc.baseUrl}}/getById/\${id}\`
     );
 
-    return response.data;`;
+    return response.data?.result;`;
 };
 
 export const DeleteFuncName = (featureName: string): string => {
@@ -55,11 +56,11 @@ const GetDeleteFuncString = (featureName: string) => {
 
 //prettier-ignore
 const GetDeleteImplString = () => {
-  return `const response: AxiosResponse<string> = await ${rsc.axios}.${rsc.axiosDelete}(
+  return `const response: AxiosResponse<${rsc.WebApiResponse}<string>> = await ${rsc.axios}.${rsc.axiosDelete}(
         \`\${${rsc.baseUrl}}/\${id}\`
     );
 
-    return response.data;`;
+    return response.data?.result;`;
 };
 
 const UpdateFuncName = (featureName: string): string => {
@@ -75,12 +76,12 @@ const GetUpdateFuncString = (featureName: string, updateDTO: DTOSchema, paramsNa
 
 //prettier-ignore
 const GetUpdateImplString = (updateDTO: DTOSchema, paramsName: string) => {
-    return `const response: AxiosResponse<string> = await ${rsc.axios}.${rsc.axiosPut}(
+    return `const response: AxiosResponse<${rsc.WebApiResponse}<string | undefined>> = await ${rsc.axios}.${rsc.axiosPut}(
         \`\${${rsc.baseUrl}}/update\`,
         ${paramsName}
     );
 
-    return response.data;`
+    return response.data?.result;`
 }
 
 export const GetAllFuncName = (featureName: string): string => {
@@ -97,11 +98,11 @@ const GetGetAllFuncString = (featureName: string, listDTO: DTOSchema) => {
 
 //prettier-ignore
 const GetGetAllImplString = (listDTO: DTOSchema) => {
-    return `const response: AxiosResponse<${listDTO?.dtoName}[]> = await ${rsc.axios}.${rsc.axiosGet}(
+    return `const response: AxiosResponse<${rsc.WebApiResponse}<${listDTO?.dtoName}[] | undefined>> = await ${rsc.axios}.${rsc.axiosGet}(
         \`\${${rsc.baseUrl}}/getAll\`
     );
 
-    return response.data;`;
+    return response.data?.result;`;
 };
 
 export const AxiosTemplate = {

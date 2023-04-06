@@ -46,7 +46,7 @@ export const ${UpdateFormName(featureName)}: React.FC<Props> = ({ ${rsc.submitHa
           <${rsc.MyFormProvider} ${rsc.methods}={${rsc.methods}} ${rsc.onSubmit}={${rsc.handleSubmit}(${rsc.onSubmit})}>
             <${rsc.RSingleColumnBox}>
                 ${RenderFormBody(dto, dto.modelName)}
-              <${rsc.button} type="submit">${rsc.Submit}</button>
+              <${rsc.button} type="submit">${rsc.Submit}</${rsc.button}>
             </${rsc.RSingleColumnBox}>
           </${rsc.MyFormProvider}>
         </${rsc.RAsyncContent}>

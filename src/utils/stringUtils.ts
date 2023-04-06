@@ -15,10 +15,16 @@ export const pascalCase = (str: string) => {
 };
 
 export const pluralCamelCase = (str: string) => {
+  if (str.endsWith("y")) {
+    return camelCase(str.slice(0, -1) + "ies");
+  }
   return camelCase(str) + "s";
 };
 
 export const pluralPascaleCase = (str: string) => {
+  if (str.endsWith("y")) {
+    return pascalCase(str.slice(0, -1) + "ies");
+  }
   return pascalCase(str) + "s";
 };
 

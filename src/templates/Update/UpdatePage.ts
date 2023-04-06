@@ -26,7 +26,7 @@ export const ${UpdatePageName(featureName)}: React.FC = () => {
     const { ${rsc.id} } = ${rsc.useParams}<{ ${rsc.id}: string }>();
     const ${rsc.navigate} = ${rsc.useNavigate}();
     const { update${pascalCase(dto.modelName)}Async, ${rsc.isLoading}: ${rsc.isSubmitting} } = useUpdate${pascalCase(dto.modelName)}();
-    const { ${camelCase(dto.modelName)}, ${rsc.isLoading} } = useFetch${pascalCase(dto.modelName)}ById(${rsc.id});
+    const { ${camelCase(featureName)}, ${rsc.isLoading} } = useFetch${pascalCase(featureName)}ById(${rsc.id});
     ${renderDependencyHooks(dto)}
 
     const ${rsc.handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
@@ -34,7 +34,7 @@ export const ${UpdatePageName(featureName)}: React.FC = () => {
         ${rsc.navigate}(${GetRoutesName(featureName)}.${rsc.detailsRoute} + '/' + ${rsc.id});
     };
 
-    const ${rsc.initialData} = useMemo(() => (${camelCase(dto.modelName)} ? ${camelCase(dto.modelName)} : createEmpty${pascalCase(dto.modelName)}()), [${camelCase(dto.modelName)}]);
+    const ${rsc.initialData} = useMemo(() => (createEmpty${pascalCase(dto.modelName)}()), [${camelCase(featureName)}]);
 
     return (${PageLayout(
       RQUpdateForm.invoke( featureName, dto.modelName),
@@ -48,7 +48,7 @@ export const ${UpdatePageName(featureName)}: React.FC = () => {
     )});
 };
 
-export default Update${pascalCase(dto.modelName)}Page;`;
+export default ${UpdatePageName(featureName)};`;
 };
 
 const UpdatePageRoute = (featureName: string, baseRoute: string) => {
