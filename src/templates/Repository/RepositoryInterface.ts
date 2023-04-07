@@ -23,7 +23,7 @@ export const GetRepositoryInterfaceString = (
     export interface I${GetRepositoryName(featureName)} {
         ${
           commands.find((c) => c === RhinoCommand.create)
-            ? `${AxiosTemplate.getCreateFuncName(featureName)}: (dto: ${createDTO?.dtoName}) => Promise<string | undefined>;`
+            ? `${AxiosTemplate.getCreateFuncName(featureName)}: (dto: ${createDTO?.dtoName}) => Promise<${createDTO?.dtoName} | undefined>;`
             : ""
         }
         ${

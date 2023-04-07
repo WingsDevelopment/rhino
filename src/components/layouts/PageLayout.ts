@@ -22,7 +22,7 @@ export const PageLayout = (
           return `
         {
             name:"${link.name}",
-            href:"${link.href}",
+            href: ${link.href},
         },`;
         }) +
         "]}"

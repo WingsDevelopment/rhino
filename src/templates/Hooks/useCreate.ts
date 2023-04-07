@@ -18,7 +18,7 @@ import { ${rsc.useMutation}, ${rsc.useQueryClient} } from 'react-query';
 export const ${FETCH_ALL(featureName)} = "${FETCH_ALL(featureName)}"; 
 
 export const ${useCreateName(featureName)} = () => {
-    const { ${rsc.EnqueueMessage} } = ${rsc.GlobalDIContext}.${rsc.NotificationService};
+    //const { ${rsc.EnqueueMessage} } = ${rsc.GlobalDIContext}.${rsc.NotificationService};
     const ${rsc.queryClient} = ${rsc.useQueryClient}();
     const ${rsc.config} = ${rsc.useDefaultRQConfig}('${useCreateName(featureName)}');
 
@@ -30,7 +30,7 @@ export const ${useCreateName(featureName)} = () => {
             ...${rsc.config},
             onSuccess: () => {
                 ${rsc.queryClient}.${rsc.invalidateQueries}([${FETCH_ALL(featureName)}]);
-                ${rsc.EnqueueMessage}('${dto.modelName} is successfully created', 'success');
+                //${rsc.EnqueueMessage}('${dto.modelName} is successfully created', 'success');
             },
         }
     );

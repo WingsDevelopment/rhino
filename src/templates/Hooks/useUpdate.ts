@@ -16,7 +16,7 @@ export const GetUseUpdateString = (featureName: string, dto: DTOSchema) => {
   import { ${rsc.useMutation}, ${rsc.useQueryClient} } from 'react-query';
   
   export const ${useUpdateName(dto.modelName)} = () => {
-      const { ${rsc.EnqueueMessage} } = ${rsc.GlobalDIContext}.${rsc.NotificationService};
+      //const { ${rsc.EnqueueMessage} } = ${rsc.GlobalDIContext}.${rsc.NotificationService};
       const ${rsc.queryClient} = ${rsc.useQueryClient}();
       const ${rsc.config} = ${rsc.useDefaultRQConfig}('useUpdate${dto.modelName}');
   
@@ -28,7 +28,7 @@ export const GetUseUpdateString = (featureName: string, dto: DTOSchema) => {
               ...${rsc.config},
               onSuccess: () => {
                   ${rsc.queryClient}.${rsc.invalidateQueries}([${FETCH_ALL(featureName)}]);
-                  ${rsc.EnqueueMessage}('${dto.modelName} is successfully updated', 'success');
+                  //${rsc.EnqueueMessage}('${dto.modelName} is successfully updated', 'success');
               },
           }
       );

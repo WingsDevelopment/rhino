@@ -73,6 +73,17 @@ export const GetFieldByKeyType = (
   label: string,
   nullable?: boolean
 ) => {
+  if (name === undefined) return "";
+  if (name === null) return "";
+  if (name === "") return "";
+  if (name === "id") return "";
+  if (name === "Id") return "";
+  if (name === "ID") return "";
+  if (label.includes("id")) return "";
+  if (label.includes("Id")) return "";
+  if (name.includes("id")) return "";
+  if (name.includes("Id")) return "";
+  if (name.includes("ID")) return "";
   //TODO SWITCH
   if (keyType === "string")
     return RHFTextField({ modelName, name, label, nullable });
@@ -80,7 +91,7 @@ export const GetFieldByKeyType = (
     return RHFNumberField({ modelName, name, label, nullable });
   if (keyType === "boolean")
     return RHFCheckbox({ modelName, name, label, nullable });
-  if (keyType === "Date")
+  if (keyType === "Date" || keyType === "date")
     return RHFDatePicker({ modelName, name, label, nullable });
   return "";
 };

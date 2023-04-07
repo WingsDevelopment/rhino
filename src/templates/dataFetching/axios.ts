@@ -8,7 +8,7 @@ const CreateFuncName = (featureName: string): string => {
 
 //prettier-ignore
 const GetCreateFuncString = (featureName: string, createDTO: DTOSchema, paramsName: string) => {
-  return `const ${CreateFuncName(featureName)} = async (${paramsName}: ${createDTO?.dtoName}): Promise<string | undefined> => {
+  return `const ${CreateFuncName(featureName)} = async (${paramsName}: ${createDTO?.dtoName}): Promise<${createDTO?.dtoName} | undefined> => {
         ${GetCreateImplString(createDTO, paramsName)}
     };`;
 };
@@ -16,7 +16,7 @@ const GetCreateFuncString = (featureName: string, createDTO: DTOSchema, paramsNa
 
 //prettier-ignore
 const GetCreateImplString = (createDTO: DTOSchema, paramsName: string) => {
-  return `const response: AxiosResponse<${rsc.WebApiResponse}<string | undefined>> = await ${rsc.axios}.${rsc.axiosPost}(
+  return `const response: AxiosResponse<${rsc.WebApiResponse}<${createDTO?.dtoName} | undefined>> = await ${rsc.axios}.${rsc.axiosPost}(
       \`\${${rsc.baseUrl}}/create\`,
       ${paramsName}
   );

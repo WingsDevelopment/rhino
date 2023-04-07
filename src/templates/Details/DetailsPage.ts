@@ -33,7 +33,7 @@ export const ${DetailsPageName(featureName)}: React.FC = () => {
       `Details ${featureName}`,
       [
         {
-          name: `Details ${dto.modelName}`,
+          name: `List ${dto.modelName}`,
           href: `${GetRoutesName(featureName)}.${CommandRouteDict.list}`,
         },
       ],

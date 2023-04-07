@@ -29,8 +29,8 @@ export const ${CreatePageName(featureName)}: React.FC = () => {
     ${renderDependencyHooks(dto)}
 
     const ${rsc.handleSubmit} = async (${camelCase(dto.modelName)}: ${pascalCase(dto.modelName)}) => {
-        const ${rsc.id} = await create${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)});
-        ${rsc.navigate}(${GetRoutesName(featureName)}.${rsc.detailsRoute} + "/" + ${rsc.id});
+        const ${rsc.result} = await create${pascalCase(dto.modelName)}Async(${camelCase(dto.modelName)});
+        ${rsc.navigate}(${GetRoutesName(featureName)}.${rsc.detailsRoute} + "/" + ${rsc.result}?.${rsc.id});
     };
 
     return (${PageLayout(
